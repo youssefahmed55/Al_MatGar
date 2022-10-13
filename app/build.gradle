@@ -88,6 +88,9 @@ dependencies {
     //Recycler
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
+    // dependency for slider view
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
 }
 kapt {
     correctErrorTypes = true

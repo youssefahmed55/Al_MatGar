@@ -9,5 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4CAF50</color>
     <color name="color1">#737373</color>
+    <color name="color2">#E7E5E5</color>
+    <color name="searchBackgroundColor">#F3F3F3</color>
     <color name="hintColor">#B0B0B0</color>
+    <color name="iconColor">#CCCCCC</color>
+    <color name="itemBackgroundColor">#FAFAFA</color>
 </resources>
