@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/lineartop_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_vectorup">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TheShop"
+                android:fontFamily="@font/hsishraq_bold"
+                android:textSize="@dimen/_30ssp"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:src="@drawable/ic_logo"
+                android:contentDescription="@string/appicon" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/signUpText_signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lineartop_signUp"
+            app:layout_constraintBottom_toTopOf="@id/edittextfullname_signUp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/sign_up"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+
+            />
+
+        <EditText
+            android:id="@+id/edittextfullname_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/shape1"
+            android:textCursorDrawable="@null"
+            app:layout_constraintTop_toBottomOf="@id/signUpText_signUp"
+            app:layout_constraintBottom_toTopOf="@id/editTextEmailAddress_signUp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:hint="@string/full_name"
+            android:paddingStart="@dimen/_8sdp"
+            android:textSize="@dimen/_12ssp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:maxLength="20"
+            android:fontFamily="@font/poppins_regular" />
+
+        <EditText
+            android:id="@+id/editTextEmailAddress_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/shape1"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintTop_toBottomOf="@id/edittextfullname_signUp"
+            app:layout_constraintBottom_toTopOf="@id/editTextPhoneNumber_signUp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:hint="@string/email_address"
+            android:paddingStart="@dimen/_8sdp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingEnd="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular" />
+
+        <EditText
+            android:id="@+id/editTextPhoneNumber_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/shape1"
+            android:textCursorDrawable="@null"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmailAddress_signUp"
+            app:layout_constraintBottom_toTopOf="@id/editTextPassword_signUp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:hint="@string/phone_number"
+            android:paddingStart="@dimen/_8sdp"
+            android:inputType="phone"
+            android:textSize="@dimen/_12ssp"
+            android:maxLines="1"
+            android:maxLength="13"
+            android:paddingEnd="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular" />
+
+        <EditText
+            android:id="@+id/editTextPassword_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/shape1"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintTop_toBottomOf="@id/editTextPhoneNumber_signUp"
+            app:layout_constraintBottom_toTopOf="@id/editTextConfirmPassword_signUp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:hint="@string/password"
+            android:paddingStart="@dimen/_8sdp"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:paddingEnd="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular" />
+
+        <EditText
+            android:id="@+id/editTextConfirmPassword_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/shape1"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintTop_toBottomOf="@id/editTextPassword_signUp"
+            app:layout_constraintBottom_toTopOf="@id/signUpButton_signUp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:hint="@string/confirm_password"
+            android:paddingStart="@dimen/_8sdp"
+            android:inputType="textPassword"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textAlignment="viewStart"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/signUpButton_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextConfirmPassword_signUp"
+            app:layout_constraintBottom_toTopOf="@id/vectordown_signUp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/btnshape"
+            android:text="@string/sign_up"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:textAllCaps="false"
+
+            />
+
+
+        <ImageView
+            android:id="@+id/vectordown_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:src="@drawable/ic_vectordown"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/green_logo"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
