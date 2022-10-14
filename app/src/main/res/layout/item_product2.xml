@@ -9,13 +9,13 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/_90sdp"
+        android:layout_width="@dimen/_135sdp"
         android:layout_height="@dimen/_200sdp"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardBackgroundColor="@color/itemBackgroundColor"
         android:layout_marginTop="@dimen/_5sdp"
         app:cardElevation="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_10sdp">
+        android:layout_marginEnd="@dimen/_5sdp">
 
 
         <LinearLayout
@@ -26,16 +26,16 @@
             >
 
             <ImageView
-                android:id="@+id/image_productHome"
+                android:id="@+id/image_product2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="@dimen/_120sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher_background"
                 imageUrl="@{product.images.get(0)}"
                 />
 
             <TextView
-                android:id="@+id/name_productHome"
+                android:id="@+id/name_product2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -51,7 +51,7 @@
                 android:fontFamily="@font/poppins_medium" />
 
             <TextView
-                android:id="@+id/price_productHome"
+                android:id="@+id/price_product2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

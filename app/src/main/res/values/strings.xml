@@ -25,4 +25,5 @@
     <string name="beauty">Beauty</string>
     <string name="food">Food</string>
     <string name="search">Search</string>
+    <string name="back_icon">back Icon</string>
 </resources>

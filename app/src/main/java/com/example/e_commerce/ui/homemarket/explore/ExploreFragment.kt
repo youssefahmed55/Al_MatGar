@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.e_commerce.R
+import com.example.e_commerce.adapters.ProductsExploreRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentExploreBinding
 import com.example.e_commerce.pojo.Product
@@ -36,7 +37,7 @@ class ExploreFragment : Fragment() {
 
 
     private lateinit var binding : FragmentExploreBinding
-    private val searchRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
+    private val searchRecyclerAdapter : ProductsExploreRecyclerAdapter by lazy { ProductsExploreRecyclerAdapter() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,7 +52,7 @@ class ExploreFragment : Fragment() {
             , Product(59,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"))
         )
 
-        searchRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
+        searchRecyclerAdapter.setOnItemClickListener(object : ProductsExploreRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
                 //TODO("Not yet implemented")
             }

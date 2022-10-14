@@ -5,6 +5,12 @@
 
     <data>
 
+        <variable
+            name="categoryName"
+            type="String" />
+        <variable
+            name="imageUrl"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +19,7 @@
         >
 
         <LinearLayout
-            android:id="@+id/linear_exploreFragment"
+            android:id="@+id/linear_subCategoryFragment"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_110sdp"
             android:orientation="vertical"
@@ -27,25 +33,27 @@
                 android:layout_height="0dp"
                 >
 
-                <TextView
-                    android:id="@+id/welcomeText_exploreFragment"
+                <ImageView
+                    android:id="@+id/backIcon_subCategoryFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Welcome Back, May"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/back_icon"
+                    app:srcCompat = "@drawable/ic_arrow_back"
+                     />
 
                 <TextView
+                    android:id="@+id/nameOfCategory_subCategoryFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/welcomeText_exploreFragment"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Wish you have a good day"
-                    android:textColor="@color/color2"
-                    android:textSize="@dimen/_10ssp" />
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    android:text="@{categoryName}"
+                    />
+
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="@dimen/_40sdp"
@@ -54,12 +62,14 @@
                     app:cardCornerRadius="@dimen/_40sdp">
 
                     <ImageView
-                        android:id="@+id/profileImage_exploreFragment"
+                        android:id="@+id/profileImage_subCategoryFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:contentDescription="@string/profile_image"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/ic_launcher_background"
+                        imageUrl="@{imageUrl}"
+                        />
 
                 </androidx.cardview.widget.CardView>
 
@@ -102,12 +112,12 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_exploreFragment"
+            android:id="@+id/recycler_subCategoryFragment"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_exploreFragment"
+            app:layout_constraintTop_toBottomOf="@id/linear_subCategoryFragment"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_2sdp"

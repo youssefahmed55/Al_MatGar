@@ -1,12 +1,11 @@
 package com.example.e_commerce.ui.homemarket.home
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
@@ -14,6 +13,7 @@ import com.example.e_commerce.adapters.SliderAdapter
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.ui.subcategory.SubCategoryFragment
 import com.smarteist.autoimageslider.SliderView
 
 // TODO: Rename parameter arguments, choose names that match
@@ -58,7 +58,15 @@ class HomeFragment : Fragment() {
 
         categoriesRecyclerAdapter.setOnItemClickListener(object : CategoriesRecyclerAdapter.OnClickOnItem{
             override fun onClick1(cat: Category) {
-                //TODO("Not yet implemented")
+                val args = Bundle()
+                args.putSerializable("catName", cat)
+                args.putString("imageUrl" , "https://thumbs.dreamstime.com/b/nice-to-talk-smart-person-indoor-shot-attractive-interesting-caucasian-guy-smiling-broadly-nice-to-112345489.jpg")
+                val subCategoryFragment = SubCategoryFragment()
+                subCategoryFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, subCategoryFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         })
         setCategoriesRecyclerAdapter(listOfCat)
