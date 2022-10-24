@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.example.e_commerce.ui.login.signin.SignInViewModel" />
 
     </data>
 
@@ -70,7 +73,9 @@
             android:textSize="@dimen/_12ssp"
             android:maxLines="1"
             android:inputType="textEmailAddress"
-            android:fontFamily="@font/poppins_regular" />
+            android:fontFamily="@font/poppins_regular"
+            android:text="@={viewModel._email}"
+            />
 
 
         <EditText
@@ -91,6 +96,7 @@
             android:maxLines="1"
             android:textAlignment="viewStart"
             android:paddingEnd="@dimen/_5sdp"
+            android:text="@={viewModel._password}"
             android:fontFamily="@font/poppins_regular" />
 
         <TextView
@@ -106,6 +112,18 @@
             app:layout_constraintTop_toBottomOf="@id/editTextPassword_signIn"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <ProgressBar
+            android:id="@+id/myProgress_signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/signInButton_signIn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:indeterminate="true"
+            android:visibility="gone"
+            />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signInButton_signIn"
             android:layout_width="match_parent"
@@ -115,6 +133,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:onClick="@{() -> viewModel.signInFirebase()}"
             android:background="@drawable/btnshape"
             android:text="@string/sign_in"
             android:textColor="@color/white"
@@ -123,12 +142,62 @@
 
             />
 
+        <TextView
+            android:id="@+id/hintText_signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/signInButton_signIn"
+            app:layout_constraintBottom_toTopOf="@id/google_signIn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/you_also_can_sign_in_with"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/hintColor"
+            />
 
         <LinearLayout
+            android:id="@+id/google_signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/shape1"
+            android:onClick="@{() -> viewModel.signInGoogle()}"
+            app:layout_constraintTop_toBottomOf="@id/hintText_signIn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_google_icon"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:scaleType="fitXY"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/orange"
+                android:text="@string/google"
+                android:textSize="@dimen/_10ssp"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/signInButton_signIn"
+            app:layout_constraintTop_toBottomOf="@id/google_signIn"
             android:gravity="center"
             app:layout_constraintBottom_toTopOf="@id/vectordown_signIn">
 
@@ -141,7 +210,7 @@
                 android:fontFamily="@font/poppins_regular" />
 
             <TextView
-                android:id="@+id/signUptextview_signIn"
+                android:id="@+id/signUpTextView_signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_13ssp"

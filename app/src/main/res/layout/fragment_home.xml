@@ -40,7 +40,18 @@
                 android:textColor="@color/color2"
                 android:textSize="@dimen/_10ssp" />
 
+            <ImageView
+                android:id="@+id/logout_homeFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_logout_24"
+                android:layout_toStartOf="@id/profileCard_homeFragment"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/_15sdp"
+                />
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/profileCard_homeFragment"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"

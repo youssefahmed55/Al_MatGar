@@ -20,6 +20,7 @@ class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListe
         setContentView(R.layout.activity_home)
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu)
         bottomNavigationView.setOnItemSelectedListener(this)
         bottomNavigationView.selectedItemId = R.id.home
         supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()

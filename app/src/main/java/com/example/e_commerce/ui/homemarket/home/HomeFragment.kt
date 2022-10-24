@@ -73,11 +73,11 @@ class HomeFragment : Fragment() {
 
 
 
-        val listOfProductBeauty = listOf<Product>(Product(55,"BeautyCounterBeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"))
-                                            ,Product(56,"Beauty","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"))
-                                            ,Product(57,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"))
-                                            ,Product(58,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"))
-                                            ,Product(59,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg")))
+        val listOfProductBeauty = listOf<Product>(Product(55,"BeautyCounterBeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+                                            ,Product(56,"Beauty","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+                                            ,Product(57,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+                                            ,Product(58,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+                                            ,Product(59,"BeautyCounter","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1))
 
         beautyRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
@@ -89,11 +89,11 @@ class HomeFragment : Fragment() {
         setBeautyRecyclerAdapter(listOfProductBeauty)
 
 
-        val listOfProductFood = listOf<Product>(Product(55,"FoodFoodFoodFoodFoodFood","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(70,"Food","Food","dddd",60.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(80,"Food","Food","dddd",70.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(90,"Food","Food","dddd",80.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(100,"Food","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg")))
+        val listOfProductFood = listOf<Product>(Product(55,"FoodFoodFoodFoodFoodFood","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
+            ,Product(70,"Food","Food","dddd",60.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
+            ,Product(80,"Food","Food","dddd",70.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
+            ,Product(90,"Food","Food","dddd",80.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
+            ,Product(100,"Food","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1))
 
         foodRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {

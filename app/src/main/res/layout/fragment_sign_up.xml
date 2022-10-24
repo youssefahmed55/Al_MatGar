@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+         <variable
+             name="viewModel"
+             type="com.example.e_commerce.ui.login.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/lineartop_signUp"
-            app:layout_constraintBottom_toTopOf="@id/edittextfullname_signUp"
+            app:layout_constraintBottom_toTopOf="@id/editTextFullName_signUp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/_10sdp"
             android:text="@string/sign_up"
@@ -53,7 +55,7 @@
             />
 
         <EditText
-            android:id="@+id/edittextfullname_signUp"
+            android:id="@+id/editTextFullName_signUp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/shape1"
@@ -71,7 +73,9 @@
             android:maxLines="1"
             android:inputType="text"
             android:maxLength="20"
-            android:fontFamily="@font/poppins_regular" />
+            android:fontFamily="@font/poppins_regular"
+            android:text="@={viewModel._fullName}"
+            />
 
         <EditText
             android:id="@+id/editTextEmailAddress_signUp"
@@ -80,7 +84,7 @@
             android:background="@drawable/shape1"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintTop_toBottomOf="@id/edittextfullname_signUp"
+            app:layout_constraintTop_toBottomOf="@id/editTextFullName_signUp"
             app:layout_constraintBottom_toTopOf="@id/editTextPhoneNumber_signUp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
@@ -90,7 +94,10 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:paddingEnd="@dimen/_5sdp"
-            android:fontFamily="@font/poppins_regular" />
+            android:fontFamily="@font/poppins_regular"
+            android:text="@={viewModel._email}"
+
+            />
 
         <EditText
             android:id="@+id/editTextPhoneNumber_signUp"
@@ -110,7 +117,9 @@
             android:maxLines="1"
             android:maxLength="13"
             android:paddingEnd="@dimen/_5sdp"
-            android:fontFamily="@font/poppins_regular" />
+            android:fontFamily="@font/poppins_regular"
+            android:text="@={viewModel._phone}"
+            />
 
         <EditText
             android:id="@+id/editTextPassword_signUp"
@@ -130,7 +139,11 @@
             android:maxLines="1"
             android:textAlignment="viewStart"
             android:paddingEnd="@dimen/_5sdp"
-            android:fontFamily="@font/poppins_regular" />
+            android:fontFamily="@font/poppins_regular"
+            android:text="@={viewModel._password}"
+
+
+            />
 
         <EditText
             android:id="@+id/editTextConfirmPassword_signUp"
@@ -149,7 +162,9 @@
             android:paddingEnd="@dimen/_5sdp"
             android:textAlignment="viewStart"
             android:fontFamily="@font/poppins_regular"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:text="@={viewModel._confirmPassword}"
+            />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signUpButton_signUp"
@@ -157,18 +172,78 @@
             android:layout_height="@dimen/_37sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextConfirmPassword_signUp"
-            app:layout_constraintBottom_toTopOf="@id/vectordown_signUp"
+            app:layout_constraintBottom_toTopOf="@id/hintText_signUp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:background="@drawable/btnshape"
             android:text="@string/sign_up"
+            android:onClick="@{() -> viewModel.signUpFirebase()}"
             android:textColor="@color/white"
             android:fontFamily="@font/poppins_bold"
             android:textAllCaps="false"
-
             />
 
+        <ProgressBar
+            android:id="@+id/myProgress_signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/signUpButton_signUp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:indeterminate="true"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/hintText_signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/signUpButton_signUp"
+            app:layout_constraintBottom_toTopOf="@id/google_signUp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/you_also_can_sign_up_with"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/hintColor"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/google_signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/shape1"
+            app:layout_constraintTop_toBottomOf="@id/hintText_signUp"
+            app:layout_constraintBottom_toTopOf="@id/vectordown_signUp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> viewModel.signInGoogle()}"
+            android:padding="@dimen/_8sdp"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_google_icon"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:scaleType="fitXY"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/orange"
+                android:text="@string/google"
+                android:textSize="@dimen/_10ssp"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/vectordown_signUp"

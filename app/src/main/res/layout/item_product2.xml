@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
       <variable
           name="product"
           type="com.example.e_commerce.pojo.Product" />
@@ -50,18 +51,36 @@
                 android:maxLines="2"
                 android:fontFamily="@font/poppins_medium" />
 
-            <TextView
-                android:id="@+id/price_product2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:orientation="horizontal"
                 android:layout_margin="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp"
-                price="@{product.price}"
-                android:maxLines="1"
-                android:fontFamily="@font/poppins_medium" />
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/price_product2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    price="@{product.price}"
+                    android:maxLines="1"
+                    android:fontFamily="@font/poppins_medium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_10ssp"
+                    strikeThrough="@{product.offerPrice}"
+                    android:visibility="@{product.hasOffer ? View.VISIBLE : View.INVISIBLE}"
+                    android:textColor="@color/hintColor"
+                    android:fontFamily="@font/poppins_semibold" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

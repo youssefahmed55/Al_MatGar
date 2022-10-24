@@ -51,16 +51,23 @@ class SubCategoryFragment : Fragment() {
         if (imageUrl != null){binding.imageUrl = imageUrl}
         setOnClickOnBackIcon()
 
-        val listOfProducts = listOf<Product>(Product(55,"FoodFoodFoodFoodFoodFood","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(70,"Food","Food","dddd",60.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(80,"Food","Food","dddd",70.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(90,"Food","Food","dddd",80.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"))
-            ,Product(100,"Food","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg")))
+        val listOfProducts = listOf<Product>(Product(55,"MJ Hair USA Leave In Conditioner with keratin and protein,Anti Frizz (500 ml)","MJ HAIR USA\n" + "Hair type\tAll\n" + "Liquid volume\t16.9 Fluid Ounces","This is an International Product from the US and may differ from local products, including labelling language and information, allergen disclosures, ingredients and instructions. Read the product information carefully to determine if this product is appropriate for you. Actual product packaging and materials may contain more and different information than what is shown on our website. We recommend that you do not rely solely on the information presented and that you always read labels, warnings, and directions before using or consuming a product.",55.00, listOf("https://cdn11.bigcommerce.com/s-rxzabllq/images/stencil/1280x1280/products/293/20782/Green-Stedman-Classic-Cotton-Blank-Tshirt-Junior-Kids__43974.1579611697.jpg","https://explosiontshirt.com/wp-content/uploads/2018/10/men-irish-green-tshirt-gildan-adult-front1.jpg","https://i5.walmartimages.com/asr/ac8f818d-2e8c-4bdd-b432-73692dd3d4c3.475e7e04faa39a9bc6e5f2d1c4cea2d2.jpeg"),true,44.0,1)
+            ,Product(70,"Food","Food","dddd",60.00, listOf("https://cdn11.bigcommerce.com/s-rxzabllq/images/stencil/1280x1280/products/293/20782/Green-Stedman-Classic-Cotton-Blank-Tshirt-Junior-Kids__43974.1579611697.jpg","https://explosiontshirt.com/wp-content/uploads/2018/10/men-irish-green-tshirt-gildan-adult-front1.jpg","https://i5.walmartimages.com/asr/ac8f818d-2e8c-4bdd-b432-73692dd3d4c3.475e7e04faa39a9bc6e5f2d1c4cea2d2.jpeg"),true,44.0,1)
+            ,Product(80,"Food","Food","dddd",70.00, listOf("https://cdn11.bigcommerce.com/s-rxzabllq/images/stencil/1280x1280/products/293/20782/Green-Stedman-Classic-Cotton-Blank-Tshirt-Junior-Kids__43974.1579611697.jpg","https://explosiontshirt.com/wp-content/uploads/2018/10/men-irish-green-tshirt-gildan-adult-front1.jpg","https://i5.walmartimages.com/asr/ac8f818d-2e8c-4bdd-b432-73692dd3d4c3.475e7e04faa39a9bc6e5f2d1c4cea2d2.jpeg"),true,44.0,1)
+            ,Product(90,"Food","Food","dddd",80.00, listOf("https://cdn11.bigcommerce.com/s-rxzabllq/images/stencil/1280x1280/products/293/20782/Green-Stedman-Classic-Cotton-Blank-Tshirt-Junior-Kids__43974.1579611697.jpg","https://explosiontshirt.com/wp-content/uploads/2018/10/men-irish-green-tshirt-gildan-adult-front1.jpg","https://i5.walmartimages.com/asr/ac8f818d-2e8c-4bdd-b432-73692dd3d4c3.475e7e04faa39a9bc6e5f2d1c4cea2d2.jpeg"),true,44.0,1)
+            ,Product(100,"Food","Food","dddd",55.00, listOf("https://cdn11.bigcommerce.com/s-rxzabllq/images/stencil/1280x1280/products/293/20782/Green-Stedman-Classic-Cotton-Blank-Tshirt-Junior-Kids__43974.1579611697.jpg","https://explosiontshirt.com/wp-content/uploads/2018/10/men-irish-green-tshirt-gildan-adult-front1.jpg","https://i5.walmartimages.com/asr/ac8f818d-2e8c-4bdd-b432-73692dd3d4c3.475e7e04faa39a9bc6e5f2d1c4cea2d2.jpeg"),true,44.0,1))
 
 
         productsRecyclerAdapter.setOnItemClickListener(object : ProductsExploreRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                //TODO("Not yet implemented")
+                val args = Bundle()
+                args.putSerializable("product", product)
+                val productDetailsFragment = ProductDetailsFragment()
+                productDetailsFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, productDetailsFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
 
 

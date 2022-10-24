@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.homemarket.cart.SuccessOrderFragment">
+
+    <ImageView
+        android:id="@+id/vectorAbove_successOrderFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vectorup"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/green_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_15sdp"
+        app:cardCornerRadius="@dimen/_40sdp">
+
+        <ImageView
+            android:id="@+id/profileImage_successOrderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/profile_image"
+            android:src="@drawable/ic_launcher_background" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/vectorAbove_successOrderFragment"
+        app:layout_constraintBottom_toTopOf="@id/vectorDown_successOrderFragment"
+        android:layout_margin="@dimen/_20sdp"
+        android:gravity="center"
+        android:background="@color/itemBackgroundColor"
+
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat = "@drawable/ic_success_icon"
+            android:contentDescription="@string/success_icon"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/success"
+            android:textSize="@dimen/_16ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/thank_you_for_shopping_using_our_store"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/color1"
+            android:fontFamily="@font/poppins_medium"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/backToHomeButton_successOrderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/btnshape"
+            android:text="@string/back_to_home"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:textAllCaps="false"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/vectorDown_successOrderFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_vectordown"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/green_logo"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

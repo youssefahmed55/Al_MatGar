@@ -14,4 +14,5 @@
     <color name="hintColor">#B0B0B0</color>
     <color name="iconColor">#CCCCCC</color>
     <color name="itemBackgroundColor">#FAFAFA</color>
+    <color name="orange">#FF3D00</color>
 </resources>
