@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.homemarket.cart.OrdersPurchasedFragment">
+
+    <RelativeLayout
+        android:id="@+id/relative1_orderPurchasedFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_top"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/backIcon_orderPurchasedFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/back_icon"
+            app:srcCompat = "@drawable/ic_arrow_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/order_purchased"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profileCard_orderPurchasedFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            app:cardCornerRadius="@dimen/_40sdp">
+
+            <ImageView
+                android:id="@+id/profileImage_cartFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/profile_image"
+                android:src="@drawable/ic_launcher_background" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_orderPurchasedFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@id/relative1_orderPurchasedFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/_5sdp"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

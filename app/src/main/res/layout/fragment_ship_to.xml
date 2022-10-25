@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.homemarket.cart.ShipToFragment">
+
+    <RelativeLayout
+        android:id="@+id/relative1_shipToFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_top"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/backIcon_shipToFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/back_icon"
+            app:srcCompat = "@drawable/ic_arrow_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/ship_to"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profileCard_shipToFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            app:cardCornerRadius="@dimen/_40sdp">
+
+            <ImageView
+                android:id="@+id/profileImage_shipToFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/profile_image"
+                android:src="@drawable/ic_launcher_background" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/relative1_shipToFragment"
+        android:layout_margin="@dimen/_13sdp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/your_shipping_details"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_semibold"
+            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/itemBackgroundColor"
+            android:layout_marginTop="@dimen/_10sdp"
+            >
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:padding="@dimen/_10sdp"
+               >
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   >
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:text="@string/receiver_name"
+                       android:layout_marginEnd="@dimen/_40sdp"
+                       android:textColor="@color/color1"
+                       android:textSize="@dimen/_9ssp"
+                       android:fontFamily="@font/poppins_semibold"
+                       />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:text="Khaled elgharably"
+                       android:layout_marginEnd="@dimen/_10sdp"
+                       android:textColor="@color/black"
+                       android:textSize="@dimen/_9ssp"
+                       android:fontFamily="@font/poppins_semibold"
+                       />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   >
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:text="@string/receiver_address"
+                       android:layout_marginEnd="@dimen/_30sdp"
+                       android:textColor="@color/color1"
+                       android:textSize="@dimen/_9ssp"
+                       android:fontFamily="@font/poppins_semibold"
+                       />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:text="Abu Dhabi 11070 Emirates"
+                       android:layout_marginEnd="@dimen/_10sdp"
+                       android:textColor="@color/black"
+                       android:textSize="@dimen/_9ssp"
+                       android:fontFamily="@font/poppins_semibold"
+                       />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   >
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:text="@string/receiver_phone"
+                       android:layout_marginEnd="@dimen/_40sdp"
+                       android:textColor="@color/color1"
+                       android:textSize="@dimen/_9ssp"
+                       android:fontFamily="@font/poppins_semibold"
+                       />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:text="+971-89-2273489"
+                       android:layout_marginEnd="@dimen/_10sdp"
+                       android:textColor="@color/black"
+                       android:textSize="@dimen/_9ssp"
+                       android:fontFamily="@font/poppins_semibold"
+                       />
+
+               </LinearLayout>
+
+                   <androidx.appcompat.widget.AppCompatButton
+                       android:id="@+id/editButton_shipToFragment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="@dimen/_27sdp"
+                       android:layout_marginTop="@dimen/_15sdp"
+                       android:background="@drawable/btnshape"
+                       android:text="@string/edit"
+                       android:textColor="@color/white"
+                       android:fontFamily="@font/poppins_bold"
+                       android:textAllCaps="false"
+                       android:layout_gravity="end"
+
+                       />
+
+           </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/your_receipt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_semibold"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/itemBackgroundColor"
+            android:layout_marginTop="@dimen/_10sdp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Items (2)"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:textColor="@color/color1"
+                        android:textSize="@dimen/_9ssp"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="500$"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:textColor="@color/black"
+                        android:gravity="end"
+                        android:textSize="@dimen/_9ssp"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/shipping"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:textColor="@color/color1"
+                        android:textSize="@dimen/_9ssp"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="200$"
+                        android:gravity="end"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/total_price"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9ssp"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="700$"
+                        android:gravity="end"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_9ssp"
+                        android:fontFamily="@font/poppins_semibold"
+                        />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cashOnDeliveryButton_shipToFragment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/btnshape"
+            android:text="@string/cash_on_delivery"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:textAllCaps="false"
+
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

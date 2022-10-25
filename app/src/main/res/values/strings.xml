@@ -51,4 +51,21 @@
     <string name="you_also_can_sign_in_with">You also can sign in with</string>
     <string name="estimated_delivery_days">Estimated Delivery Days :</string>
     <string name="clothes">Clothes</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="your_orders_process">Your orders Process</string>
+    <string name="your_orders_in_cart">Your Orders In Cart</string>
+    <string name="next">Next</string>
+    <string name="orders_purchased">Orders Purchased</string>
+    <string name="date">Date</string>
+    <string name="order_purchased">Order Purchased</string>
+    <string name="ship_to">Ship to</string>
+    <string name="your_shipping_details">Your shipping details</string>
+    <string name="receiver_name">Receiver Name</string>
+    <string name="receiver_address">Receiver Address</string>
+    <string name="receiver_phone">Receiver Phone</string>
+    <string name="edit">Edit</string>
+    <string name="your_receipt">Your receipt</string>
+    <string name="shipping">Shipping</string>
+    <string name="total_price">Total Price</string>
+    <string name="cash_on_delivery">Cash On Delivery</string>
 </resources>

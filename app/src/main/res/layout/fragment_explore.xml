@@ -31,21 +31,12 @@
                     android:id="@+id/welcomeText_exploreFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Welcome Back, May"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/categories"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_13ssp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/welcomeText_exploreFragment"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Wish you have a good day"
-                    android:textColor="@color/color2"
-                    android:textSize="@dimen/_10ssp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="@dimen/_40sdp"
