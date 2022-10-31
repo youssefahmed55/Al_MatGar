@@ -83,7 +83,7 @@ class SubCategoryFragment : Fragment() {
     }
 
     private fun setOnClickOnBackIcon() {
-      binding.backIconSubCategoryFragment.setOnClickListener {
+      binding.backCardSubCategoryFragment.setOnClickListener {
           activity!!.supportFragmentManager.popBackStack()
       }
     }

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.utils.LoginUtil
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -35,21 +36,22 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
         set(value) = _password.set(value)
 
 
-    private val _errorMessage = MutableLiveData(0)
-    val liveDataErrorMessage : LiveData<Int> get() = _errorMessage
+    private val _errorMessage = MutableLiveData<String>()
+    val liveDataErrorMessage : LiveData<String> get() = _errorMessage
 
 
 
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
     val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
 
-    val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!)}
+    val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!) ; _mutableStateFlow.value = LoginStates.Idle}
 
     private val  _mutableLiveDataGoogleSignInClient  = MutableLiveData<GoogleSignInClient>()
     val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient
 
     fun signInFirebase() {
-        if (checkIfAllDataValid()) {
+        val result = LoginUtil.checkSignInValid(getApplication<Application>().applicationContext,email.toString(),password.toString())
+        if (result == "Success") {
             viewModelScope.launch(handler) {
                    if (_mutableStateFlow.value != LoginStates.Loading) {
                        _mutableStateFlow.value = LoginStates.Loading
@@ -57,13 +59,17 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
                        withContext(Dispatchers.IO) {
                            FirebaseAuth.getInstance().signInWithEmailAndPassword(email.toString().trim(), password.toString().trim()).await()
                        }
+                       Log.d(TAG, "signInFirebase: "  + FirebaseAuth.getInstance().currentUser)
                        if (FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
                            _mutableStateFlow.value = LoginStates.Success("Sign In Successfully")
                        } else {
-                           _mutableStateFlow.value = LoginStates.Error("please verify your email address,it may take few minutes")
+                           throw Exception("please verify your email address,it may take few minutes")
                        }
                    }
             }
+        }else{
+            _errorMessage.value = result
+            _errorMessage.value = ""
         }
     }
 
@@ -90,17 +96,4 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
 
 
     }
-
-
-
-
-    private fun checkIfAllDataValid(): Boolean {
-        Log.d(TAG, "checkIfAllDataValid: ")
-        if(email.toString().trim().isEmpty()){_errorMessage.value= 2 ;_errorMessage.value= 0 ; return false}
-        if(password.toString().trim().isEmpty()){_errorMessage.value = 4 ;_errorMessage.value= 0; return false}
-
-        return true
-    }
-
-
 }

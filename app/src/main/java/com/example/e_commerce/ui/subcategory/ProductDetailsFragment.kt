@@ -60,7 +60,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun setOnClickOnBackIcon() {
-        binding.backArrowProductDetailsFragment.setOnClickListener {
+        binding.backCardProductDetailsFragment.setOnClickListener {
             activity!!.supportFragmentManager.popBackStack()
         }
     }

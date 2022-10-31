@@ -59,31 +59,59 @@
                     android:fontFamily="@font/poppins_regular"
                     android:text="500$" />
 
-                <LinearLayout
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_8ssp"
+                            android:text="@string/date"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_regular" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_8ssp"
+                            android:text="01/10/2022"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_regular" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/statusImage_itemInProcess"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        app:srcCompat="@drawable/success2_icon"
+                        />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_8ssp"
-                        android:text="@string/date"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_9ssp"
+                        android:textColor="@color/green"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_regular" />
+                        android:layout_toStartOf="@+id/statusImage_itemInProcess"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Completed" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_8ssp"
-                        android:text="01/10/2022"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_regular" />
+                </RelativeLayout>
 
-                </LinearLayout>
 
             </LinearLayout>
 

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.utils.RegisterUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -49,8 +50,8 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
         get() = _confirmPassword.get()
         set(value) = _confirmPassword.set(value)
 
-    private val _errorMessage = MutableLiveData(0)
-    val liveDataErrorMessage : LiveData<Int> get() = _errorMessage
+    private val _errorMessage = MutableLiveData<String>()
+    val liveDataErrorMessage : LiveData<String> get() = _errorMessage
 
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
     val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
@@ -61,20 +62,25 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient
 
     fun signUpFirebase() {
-        if (checkIfAllDataValid()) {
+
+        val result =  RegisterUtil.checkSignUpValid(getApplication<Application>().applicationContext,fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
+        if (result == "Success") {
             viewModelScope.launch(handler) {
                 if(_mutableStateFlow.value != LoginStates.Loading) {
                     _mutableStateFlow.value = LoginStates.Loading
                     delay(2000)
                     withContext(Dispatchers.IO) {
                         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString().trim(), password.toString().trim()).await()
+                        Log.d(TAG, "signUpFirebase: " + FirebaseAuth.getInstance().currentUser!!.uid)
                         FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
-                        Firebase.firestore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(fullName.toString().trim(),email.toString().trim(),phone.toString().trim(),password.toString().trim(),"Customer","","","")).await()
+                        Firebase.firestore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(fullName.toString().trim(),email.toString().trim(),phone.toString().trim(),password.toString().trim(),"Customer","","","","")).await()
                     }
                     _mutableStateFlow.value = LoginStates.Success("Please Check Your Email to Verification")
                 }
 
             }
+        }else{
+            _errorMessage.value = result
         }
     }
 
@@ -103,19 +109,6 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-
-
-    private fun checkIfAllDataValid(): Boolean {
-        Log.d("Hiiii", "checkIfAllDataValid: ")
-        if(fullName.toString().trim().isEmpty()){_errorMessage.value =1 ; return false}
-        if(email.toString().trim().isEmpty()){_errorMessage.value= 2 ; return false}
-        if(phone.toString().trim().isEmpty()){_errorMessage.value= 3 ; return false}
-        if(password.toString().trim().isEmpty()){_errorMessage.value = 4 ; return false}
-        if(confirmPassword.toString().trim().isEmpty()){_errorMessage.value = 5 ; return false}
-        if(password.toString().trim() != confirmPassword.toString().trim()){_errorMessage.value = 6 ; return false}
-
-        return true
-    }
 
 
 }

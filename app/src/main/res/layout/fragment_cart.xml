@@ -65,6 +65,7 @@
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 android:textSize="@dimen/_12ssp"
                 android:background="@color/itemBackgroundColor"
                 android:fontFamily="@font/poppins_semibold"
@@ -78,6 +79,8 @@
                 android:text="@string/your_orders_process"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_semibold"
                 />
 
@@ -86,6 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 />
@@ -95,6 +100,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/your_orders_in_cart"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 android:textSize="@dimen/_12ssp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_semibold"
@@ -105,6 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 />

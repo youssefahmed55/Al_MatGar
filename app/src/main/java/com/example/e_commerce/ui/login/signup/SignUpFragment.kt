@@ -122,12 +122,12 @@ class SignUpFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
             when(it){
-                1 -> binding.editTextFullNameSignUp.error =  getString(R.string.FullName_Is_Required)
-                2 -> binding.editTextEmailAddressSignUp.error =  getString(R.string.Email_Is_Required)
-                3 -> binding.editTextPhoneNumberSignUp.error =  getString(R.string.Phone_Number_Is_Required)
-                4 -> binding.editTextPasswordSignUp.error =  getString(R.string.Password_Is_Required)
-                5 -> binding.editTextConfirmPasswordSignUp.error =  getString(R.string.Confirm_Password_Is_Required)
-                6 -> binding.editTextConfirmPasswordSignUp.error = getString(R.string.Password_Donot_match)
+                getString(R.string.FullName_Is_Required) -> binding.editTextFullNameSignUp.error =  getString(R.string.FullName_Is_Required)
+                getString(R.string.Email_Is_Required) -> binding.editTextEmailAddressSignUp.error =  getString(R.string.Email_Is_Required)
+                getString(R.string.Phone_Number_Is_Required) -> binding.editTextPhoneNumberSignUp.error =  getString(R.string.Phone_Number_Is_Required)
+                getString(R.string.Password_Is_Required) -> binding.editTextPasswordSignUp.error =  getString(R.string.Password_Is_Required)
+                getString(R.string.Confirm_Password_Is_Required) -> binding.editTextConfirmPasswordSignUp.error =  getString(R.string.Confirm_Password_Is_Required)
+                getString(R.string.Password_Donot_match) -> binding.editTextConfirmPasswordSignUp.error = getString(R.string.Password_Donot_match)
             }
         })
     }

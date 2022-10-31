@@ -20,6 +20,7 @@ import com.example.e_commerce.ui.homemarket.HomeActivity
 import com.example.e_commerce.ui.login.LoginStates
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.Job
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,6 +48,7 @@ class SignInFragment : Fragment() {
     }
     private lateinit var binding : FragmentSignInBinding
     private val viewModel: SignInViewModel by lazy { ViewModelProvider(this)[SignInViewModel::class.java] }
+    private var job : Job ?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +59,6 @@ class SignInFragment : Fragment() {
 
         observeErrorMessage()
         observeGoogleSignInClient()
-        render()
         setOnClickOnSignUp()
         return binding.root
     }
@@ -91,7 +92,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun render() {
-        lifecycleScope.launchWhenStarted {
+         job = lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
                     is LoginStates.Loading -> {binding.myProgressSignIn.visibility = View.VISIBLE}
@@ -102,6 +103,7 @@ class SignInFragment : Fragment() {
                         activity?.finish()
                     }
                     is LoginStates.Error -> {
+                        Log.d(TAG, "render: Error")
                         Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
                         binding.myProgressSignIn.visibility = View.GONE
                     }
@@ -113,11 +115,28 @@ class SignInFragment : Fragment() {
 
     }
 
+    override fun onDestroy() {
+        job?.cancel()
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
+        job?.cancel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+        render()
+    }
+
     private fun observeErrorMessage() {
         viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
             when(it){
-                2 -> binding.editTextEmailSignIn.error =  getString(R.string.Email_Is_Required)
-                4 -> binding.editTextPasswordSignIn.error =  getString(R.string.Password_Is_Required)
+                getString(R.string.Email_Is_Required) -> binding.editTextEmailSignIn.error =  getString(R.string.Email_Is_Required)
+                getString(R.string.Password_Is_Required) -> binding.editTextPasswordSignIn.error =  getString(R.string.Password_Is_Required)
             }
         })
     }

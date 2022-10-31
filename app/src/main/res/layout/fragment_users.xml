@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -13,7 +12,7 @@
         >
 
         <LinearLayout
-            android:id="@+id/linear_exploreFragment"
+            android:id="@+id/linear_usersFragment"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_110sdp"
             android:orientation="vertical"
@@ -28,12 +27,12 @@
                 >
 
                 <TextView
-                    android:id="@+id/welcomeText_exploreFragment"
+                    android:id="@+id/welcomeText_usersFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/categories"
+                    android:text="@string/users"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp" />
 
@@ -45,7 +44,7 @@
                     app:cardCornerRadius="@dimen/_40sdp">
 
                     <ImageView
-                        android:id="@+id/profileImage_exploreFragment"
+                        android:id="@+id/profileImage_usersFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
@@ -92,33 +91,28 @@
 
         </LinearLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/scroll_exploreFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:measureAllChildren="false"
-            android:scrollbars="none"
-            app:layout_constraintTop_toBottomOf="@id/linear_exploreFragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/linear1_usersFragment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/linear_usersFragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 >
 
                 <TextView
-                    android:id="@+id/beauty_exploreFragment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/all_usersFragment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
-                    android:text="@string/beauty"
+                    android:text="@string/all"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape2"
@@ -126,11 +120,13 @@
                     android:layout_marginEnd="@dimen/_10sdp" />
 
                 <TextView
-                    android:id="@+id/clothes_exploreFragment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/users_usersFragment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
-                    android:text="@string/clothes"
+                    android:text="@string/users"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
@@ -138,11 +134,13 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/food_exploreFragment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/merchants_usersFragment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
-                    android:text="@string/food"
+                    android:text="@string/merchants"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
@@ -150,48 +148,48 @@
                     android:layout_marginEnd="@dimen/_10sdp" />
 
                 <TextView
-                    android:id="@+id/houseWare_exploreFragment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/admins_usersFragment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
-                    android:text="@string/houseware"
+                    android:text="@string/admins"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
                     android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/favorite_exploreFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/favorite"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/shape3"
-                    android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_10sdp" />
+                    />
 
             </LinearLayout>
 
-        </HorizontalScrollView>
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_exploreFragment"
-            android:layout_width="wrap_content"
+            android:id="@+id/recycler_usersFragment"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scroll_exploreFragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_2sdp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@id/linear1_usersFragment"
+            app:layout_constraintBottom_toTopOf="@+id/addFloatingButton_usersFragment"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addFloatingButton_usersFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="@dimen/_40sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/ic_plus2"
+            app:tint="@android:color/white"
+            app:backgroundTint="@color/green"
 
             />
 
