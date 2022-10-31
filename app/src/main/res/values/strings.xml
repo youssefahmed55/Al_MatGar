@@ -80,4 +80,6 @@
     <string name="houseware">HouseWare</string>
     <string name="my_products">My Products</string>
     <string name="products">Products</string>
+    <string name="receive_password">Receive Password</string>
+    <string name="please_Check_your_email_address">Please check your email address, it may take few minutes, Make Sure To Check Spam Messages</string>
 </resources>

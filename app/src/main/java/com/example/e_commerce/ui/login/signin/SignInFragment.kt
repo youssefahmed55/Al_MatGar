@@ -60,7 +60,14 @@ class SignInFragment : Fragment() {
         observeErrorMessage()
         observeGoogleSignInClient()
         setOnClickOnSignUp()
+        setOnClickOnForgetPassword()
         return binding.root
+    }
+
+    private fun setOnClickOnForgetPassword() {
+        binding.forgetPasswordSignIn.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_forgetPasswordFragment)
+        }
     }
 
     private fun observeGoogleSignInClient() {

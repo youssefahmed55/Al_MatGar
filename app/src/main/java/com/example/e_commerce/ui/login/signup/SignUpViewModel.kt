@@ -75,7 +75,7 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
                         FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
                         Firebase.firestore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(fullName.toString().trim(),email.toString().trim(),phone.toString().trim(),password.toString().trim(),"Customer","","","","")).await()
                     }
-                    _mutableStateFlow.value = LoginStates.Success("Please Check Your Email to Verification")
+                    _mutableStateFlow.value = LoginStates.Success("Please Check Your Email to Verification, Make Sure To Check Spam Messages")
                 }
 
             }
