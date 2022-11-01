@@ -112,7 +112,7 @@
                 android:gravity="center_vertical"
                 >
                 <TextView
-                    android:id="@+id/favorite_exploreFragment"
+                    android:id="@+id/favorite_myProductsFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
@@ -123,7 +123,7 @@
                     android:textColor="@color/white"
                     android:layout_marginEnd="@dimen/_10sdp" />
                 <TextView
-                    android:id="@+id/beauty_exploreFragment"
+                    android:id="@+id/beauty_myProductsFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
@@ -135,7 +135,7 @@
                     android:layout_marginEnd="@dimen/_10sdp" />
 
                 <TextView
-                    android:id="@+id/clothes_exploreFragment"
+                    android:id="@+id/clothes_myProductsFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
@@ -147,7 +147,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/food_exploreFragment"
+                    android:id="@+id/food_myProductsFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
@@ -159,7 +159,7 @@
                     android:layout_marginEnd="@dimen/_10sdp" />
 
                 <TextView
-                    android:id="@+id/houseWare_exploreFragment"
+                    android:id="@+id/houseWare_myProductsFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
@@ -185,9 +185,7 @@
             app:layout_constrainedHeight="true"
             app:layout_constraintTop_toBottomOf="@id/scroll_myProductsFragment"
             app:layout_constraintBottom_toTopOf="@+id/addFloatingButton_myProductsFragment"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_margin="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
             />
@@ -206,7 +204,19 @@
 
             />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/ordersPurchasedFloatingButton_myProductsFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="@dimen/_40sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/addFloatingButton_myProductsFragment"
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/ic_baseline_list_alt_24"
+            app:tint="@android:color/white"
+            app:backgroundTint="@color/green"
 
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

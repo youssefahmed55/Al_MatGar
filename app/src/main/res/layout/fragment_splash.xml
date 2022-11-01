@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+      <variable
+          name="viewModel"
+          type="com.example.e_commerce.ui.login.splash.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +28,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:drawableBottomCompat="@drawable/ic_logo" />
 
-
+        <ProgressBar
+            android:id="@+id/myProgress_Splash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/linear_Splash"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:indeterminate="true"
+            android:visibility="gone"
+            />
         <LinearLayout
             android:id="@+id/linear_Splash"
             android:layout_width="match_parent"
@@ -36,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:splitMotionEvents="false"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signIn_Splash"
@@ -59,6 +70,7 @@
                 android:background="@drawable/btnshape2"
                 android:text="@string/explore"
                 android:textColor="@color/white"
+                android:onClick="@{() -> viewModel.signInAnonymous()}"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginStart="@dimen/_10sdp"

@@ -1,16 +1,24 @@
 package com.example.e_commerce.ui.login.splash
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSplashBinding
+import com.example.e_commerce.ui.homemarket.HomeActivity
+import com.example.e_commerce.ui.login.LoginStates
+import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SplashFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+private const val TAG = "SplashFragment"
 class SplashFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -36,38 +45,67 @@ class SplashFragment : Fragment() {
     }
 
     private lateinit var binding : FragmentSplashBinding
+    private val viewModel: SplashViewModel by lazy { ViewModelProvider(this)[SplashViewModel::class.java] }
+    private var job : Job?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_splash, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         // Inflate the layout for this fragment
-        Handler(Looper.getMainLooper()).postDelayed(Runnable { binding.linearSplash.visibility = View.VISIBLE ; setOnClickOnSignInButton() }, 3000)
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            binding.linearSplash.visibility = View.VISIBLE
+            setOnClickOnSignInButton() }, 3000)
 
         return binding.root
     }
 
-    private fun setOnClickOnSignInButton() {
-        binding.signInSplash.setOnClickListener { findNavController().navigate(R.id.action_splashFragment_to_signInFragment)}
+    private fun render() {
+     job = lifecycleScope.launchWhenStarted {
+         viewModel.states.collect{
+             when(it){
+                 is LoginStates.Loading -> {binding.myProgressSplash.visibility = View.VISIBLE}
+                 is LoginStates.Success -> {
+                     Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
+                     binding.myProgressSplash.visibility = View.GONE
+                     activity?.startActivity(Intent(activity, HomeActivity::class.java))
+                     activity?.finish()
+                 }
+                 is LoginStates.Error -> {
+                     Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
+                     binding.myProgressSplash.visibility = View.GONE
+                 }
+
+                 else -> {}
+             }
+
+         }
+
+      }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SplashFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SplashFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroy() {
+        job?.cancel()
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
+        job?.cancel()
+        job = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+        render()
+    }
+
+
+    private fun setOnClickOnSignInButton() {
+        binding.signInSplash.setOnClickListener { findNavController().navigate(R.id.action_splashFragment_to_signInFragment)}
     }
 }

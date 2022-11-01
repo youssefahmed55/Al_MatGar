@@ -44,7 +44,7 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
     val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
 
-    val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!) ; _mutableStateFlow.value = LoginStates.Idle}
+    private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!) ; _mutableStateFlow.value = LoginStates.Idle}
 
     private val  _mutableLiveDataGoogleSignInClient  = MutableLiveData<GoogleSignInClient>()
     val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient

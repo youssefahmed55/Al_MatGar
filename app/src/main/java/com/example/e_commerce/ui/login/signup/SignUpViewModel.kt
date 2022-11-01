@@ -56,7 +56,7 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
     val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
 
-    val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!)}
+    private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!)}
 
     private val  _mutableLiveDataGoogleSignInClient  = MutableLiveData<GoogleSignInClient>()
     val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient
@@ -73,7 +73,7 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
                         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString().trim(), password.toString().trim()).await()
                         Log.d(TAG, "signUpFirebase: " + FirebaseAuth.getInstance().currentUser!!.uid)
                         FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
-                        Firebase.firestore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(fullName.toString().trim(),email.toString().trim(),phone.toString().trim(),password.toString().trim(),"Customer","","","","")).await()
+                        Firebase.firestore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(fullName.toString().trim(),email.toString().trim(),phone.toString().trim(),"Customer","","","","")).await()
                     }
                     _mutableStateFlow.value = LoginStates.Success("Please Check Your Email to Verification, Make Sure To Check Spam Messages")
                 }
