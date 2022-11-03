@@ -18,6 +18,8 @@ import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSplashBinding
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.utils.SharedPrefsUtil
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,8 +58,15 @@ class SplashFragment : Fragment() {
         binding.viewModel = viewModel
         // Inflate the layout for this fragment
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            binding.linearSplash.visibility = View.VISIBLE
-            setOnClickOnSignInButton() }, 3000)
+            val user = SharedPrefsUtil.getUserModel(requireContext())
+            if (user != null && FirebaseAuth.getInstance().currentUser != null){
+                activity?.startActivity(Intent(activity, HomeActivity::class.java))
+                activity?.finish()
+            }else {
+                binding.linearSplash.visibility = View.VISIBLE
+                setOnClickOnSignInButton()
+            }
+                 }, 3000)
 
         return binding.root
     }

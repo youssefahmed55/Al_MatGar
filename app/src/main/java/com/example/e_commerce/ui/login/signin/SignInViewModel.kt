@@ -66,7 +66,7 @@ class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo, @A
     fun signInGoogle(){
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("703335808379-bgiibd78b4oh15ips6an9dgbl259flhk.apps.googleusercontent.com")
+            .requestIdToken(appContext.getString(R.string.request_google))
             .requestEmail()
             .build()
 

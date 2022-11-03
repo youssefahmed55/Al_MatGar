@@ -55,8 +55,6 @@ class SignInRepo @Inject constructor(@ApplicationContext private val appContext:
 
     }
 
-
-
     private suspend fun getUserModelFromFireStore(): UserModel = withContext(Dispatchers.IO) {
              return@withContext db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).collection("Info").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await().toObject(UserModel::class.java)!!
         }

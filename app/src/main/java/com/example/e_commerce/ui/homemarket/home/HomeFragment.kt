@@ -1,5 +1,7 @@
 package com.example.e_commerce.ui.homemarket.home
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +15,14 @@ import com.example.e_commerce.adapters.SliderAdapter
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
+import com.example.e_commerce.ui.login.MainActivity
 import com.example.e_commerce.ui.subcategory.SubCategoryFragment
+import com.example.e_commerce.utils.SharedPrefsUtil
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.smarteist.autoimageslider.SliderView
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,6 +56,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
+
+        onClickOnLogoutIcon() //TODO example
 
         val list = listOf<String>("https://media.centrepointstores.com/i/centrepoint/SP_Offers_Block06MAR18.jpg","https://media.centrepointstores.com/i/centrepoint/SP_Offers_Block02MAR18.jpg","https://media.centrepointstores.com/i/centrepoint/SP_Offers_Block01MAR18.jpg")
         setSliderAdapter(list)
@@ -106,6 +117,40 @@ class HomeFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun onClickOnLogoutIcon() {
+        binding.logoutHomeFragment.setOnClickListener {
+            showDialog()
+
+        }
+    }
+
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Are you sure you want to Logout ?")
+            .setCancelable(true)
+            .setPositiveButton("Yes") { dialog, _ ->
+
+                FirebaseAuth.getInstance().signOut()
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.request_google))
+                    .requestEmail()
+                    .build()
+                val googleClient = GoogleSignIn.getClient(requireContext(), gso)
+                googleClient.signOut()
+                SharedPrefsUtil.clearUserModel(requireContext())
+                activity?.startActivity(Intent(activity, MainActivity::class.java))
+                activity?.finish()
+
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                // Dismiss the dialog
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
     }
 
     private fun setFoodRecyclerAdapter(listOfProductFood: List<Product>) {
