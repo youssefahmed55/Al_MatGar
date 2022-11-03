@@ -1,9 +1,11 @@
-package com.example.e_commerce.ui.homemarket
+package com.example.e_commerce.ui.homemarket.homeactivity
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce.R
+import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.homemarket.account.AccountFragment
 import com.example.e_commerce.ui.homemarket.cart.CartFragment
 import com.example.e_commerce.ui.homemarket.explore.ExploreFragment
@@ -11,18 +13,37 @@ import com.example.e_commerce.ui.homemarket.home.HomeFragment
 import com.example.e_commerce.ui.homemarket.myproducts.MyProductsFragment
 import com.example.e_commerce.ui.homemarket.offer.OfferFragment
 import com.example.e_commerce.ui.homemarket.users.UsersFragment
+import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListener {
 
     private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        val userModel = SharedPrefsUtil.getUserModel(this)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu3)
+        if(userModel != null){
+            when (userModel.type) {
+                "Merchant" -> {
+                    bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu3)
+                }
+                "Admin" -> {
+                    bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu2)
+                }
+                else -> {
+                    bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu)
+                }
+            }
+        }
+
+
         bottomNavigationView.setOnItemSelectedListener(this)
         bottomNavigationView.selectedItemId = R.id.home
         supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()

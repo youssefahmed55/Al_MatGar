@@ -15,12 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSignUpBinding
-import com.example.e_commerce.ui.Constants.GOOGLE_SIGN_IN
-import com.example.e_commerce.ui.homemarket.HomeActivity
+import com.example.e_commerce.Constants.GOOGLE_SIGN_IN
+import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.LoginStates
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +33,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 private const val TAG = "SignUpFragment"
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -57,56 +58,26 @@ class SignUpFragment : Fragment() {
         binding.viewModel = viewModel
         observeErrorMessage()
         render()
-        observeGoogleSignInClient()
+
 
 
         return binding.root
     }
 
-    private fun observeGoogleSignInClient() {
-        viewModel.googleSignInClient.observe(viewLifecycleOwner, Observer {
-            val signInIntent: Intent = it.signInIntent
-            startActivityForResult(signInIntent,GOOGLE_SIGN_IN)
-        })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == GOOGLE_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-                account.idToken?.let { viewModel.firebaseAuthWithGoogle(it) }
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Toast.makeText(requireActivity(),"Google sign in failed: ${e.message}",Toast.LENGTH_SHORT).show()
-                Log.w(TAG, "Google sign in failed", e)
-            }
-        }
-    }
 
 
     private fun render() {
         lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
-
                 when(it){
                     is LoginStates.Loading -> {binding.myProgressSignUp.visibility = View.VISIBLE}
                     is LoginStates.Success -> {
                         Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
                         binding.myProgressSignUp.visibility = View.GONE
-                        if (it.toastMessage == "Sign In With Google Account Successfully"){
-                            activity?.startActivity(Intent(activity, HomeActivity::class.java))
-                            activity?.finish()
-                        }else {
-                            findNavController().popBackStack()
-                        }
+                        findNavController().popBackStack()
                     }
                     is LoginStates.Error -> {
+                        Log.d(TAG, "render: " + it.error )
                         Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
                         binding.myProgressSignUp.visibility = View.GONE
                     }

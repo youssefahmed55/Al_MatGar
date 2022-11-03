@@ -1,28 +1,22 @@
 package com.example.e_commerce.ui.login.signup
 
-import android.app.Application
-import android.util.Log
+
+import android.content.Context
 import androidx.databinding.ObservableField
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.login.LoginStates
 import com.example.e_commerce.utils.RegisterUtil
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 private const val TAG = "SignUpViewModel"
-class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo, @ApplicationContext private val appContext: Context) : ViewModel() {
 
 
     val _fullName = ObservableField("")
@@ -58,24 +52,17 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!)}
 
-    private val  _mutableLiveDataGoogleSignInClient  = MutableLiveData<GoogleSignInClient>()
-    val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient
 
     fun signUpFirebase() {
 
-        val result =  RegisterUtil.checkSignUpValid(getApplication<Application>().applicationContext,fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
-        if (result == "Success") {
+        val result =  RegisterUtil.checkSignUpValid(appContext,fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
+        if (result == appContext.getString(R.string.success)) {
             viewModelScope.launch(handler) {
                 if(_mutableStateFlow.value != LoginStates.Loading) {
                     _mutableStateFlow.value = LoginStates.Loading
                     delay(2000)
-                    withContext(Dispatchers.IO) {
-                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString().trim(), password.toString().trim()).await()
-                        Log.d(TAG, "signUpFirebase: " + FirebaseAuth.getInstance().currentUser!!.uid)
-                        FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
-                        Firebase.firestore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(fullName.toString().trim(),email.toString().trim(),phone.toString().trim(),"Customer","","","","")).await()
-                    }
-                    _mutableStateFlow.value = LoginStates.Success("Please Check Your Email to Verification, Make Sure To Check Spam Messages")
+                    signUpRepo.createUserFireBase(email.toString().trim(),password.toString().trim(),phone.toString().trim(),fullName.toString().trim())
+                    _mutableStateFlow.value = LoginStates.Success(appContext.getString(R.string.Please_Check_Your_Email_to_Verification_Make_Sure_To_Check_Spam_Messages))
                 }
 
             }
@@ -84,29 +71,14 @@ class SignUpViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun signInGoogle(){
-
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("703335808379-bgiibd78b4oh15ips6an9dgbl259flhk.apps.googleusercontent.com")
-                .requestEmail()
-                .build()
-
-        _mutableLiveDataGoogleSignInClient.value = GoogleSignIn.getClient(getApplication<Application>().applicationContext, gso)
-
-    }
-
-     fun firebaseAuthWithGoogle(idToken : String){
-        viewModelScope.launch {
-            val credential = GoogleAuthProvider.getCredential(idToken, null)
-            withContext(Dispatchers.IO){
-                FirebaseAuth.getInstance().signInWithCredential(credential).await()
-            }
-            _mutableStateFlow.value = LoginStates.Success("Sign In With Google Account Successfully")
-
-        }
 
 
-    }
+   /* private suspend fun getDocuments(): List<DocumentSnapshot> {
+        val querySnapshot = Firebase.firestore.collection("Users")
+            .get()
+            .await()
+        return querySnapshot.documents
+    }*/
 
 
 

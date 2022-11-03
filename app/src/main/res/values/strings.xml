@@ -87,4 +87,9 @@
     <string name="canceled">Canceled</string>
     <string name="location">Location</string>signInAnonymous
     <string name="Sign_In_Anonymous_Successfully">Sign In Anonymous Successfully</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="profile">Profile</string>
+    <string name="Sign_In_With_Google_Account_Successfully">Sign In With Google Account Successfully</string>
+    <string name="Please_Check_Your_Email_to_Verification_Make_Sure_To_Check_Spam_Messages">Please Check Your Email to Verification, Make Sure To Check Spam Messages</string>
+    <string name="Sign_In_Successfully">Sign In Successfully</string>
 </resources>

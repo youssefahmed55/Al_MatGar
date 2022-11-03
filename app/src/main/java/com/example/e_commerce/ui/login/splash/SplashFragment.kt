@@ -16,7 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSplashBinding
-import com.example.e_commerce.ui.homemarket.HomeActivity
+import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.LoginStates
 import kotlinx.coroutines.Job
 

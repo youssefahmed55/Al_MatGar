@@ -15,11 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSignInBinding
-import com.example.e_commerce.ui.Constants.GOOGLE_SIGN_IN
-import com.example.e_commerce.ui.homemarket.HomeActivity
+import com.example.e_commerce.Constants.GOOGLE_SIGN_IN
+import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.LoginStates
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
 
@@ -34,6 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 private const val TAG = "SignInFragment"
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -106,7 +108,7 @@ class SignInFragment : Fragment() {
                     is LoginStates.Success -> {
                         Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
                         binding.myProgressSignIn.visibility = View.GONE
-                        activity?.startActivity(Intent(activity,HomeActivity::class.java))
+                        activity?.startActivity(Intent(activity, HomeActivity::class.java))
                         activity?.finish()
                     }
                     is LoginStates.Error -> {

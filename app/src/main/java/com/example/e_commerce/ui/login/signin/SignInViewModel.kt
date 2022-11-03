@@ -1,26 +1,23 @@
 package com.example.e_commerce.ui.login.signin
 
-import android.app.Application
-import android.util.Log
+import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
+import com.example.e_commerce.R
 import com.example.e_commerce.ui.login.LoginStates
 import com.example.e_commerce.utils.LoginUtil
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 private const val TAG = "SignInViewModel"
-class SignInViewModel(val app: Application) : AndroidViewModel(app) {
+@HiltViewModel
+class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo, @ApplicationContext private val appContext: Context ) : ViewModel() {
 
 
 
@@ -50,21 +47,14 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
     val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient
 
     fun signInFirebase() {
-        val result = LoginUtil.checkSignInValid(getApplication<Application>().applicationContext,email.toString(),password.toString())
-        if (result == "Success") {
+        val result = LoginUtil.checkSignInValid(appContext,email.toString(),password.toString())
+        if (result == appContext.getString(R.string.success)) {
             viewModelScope.launch(handler) {
                    if (_mutableStateFlow.value != LoginStates.Loading) {
                        _mutableStateFlow.value = LoginStates.Loading
                        delay(2000)
-                       withContext(Dispatchers.IO) {
-                           FirebaseAuth.getInstance().signInWithEmailAndPassword(email.toString().trim(), password.toString().trim()).await()
-                       }
-                       Log.d(TAG, "signInFirebase: "  + FirebaseAuth.getInstance().currentUser)
-                       if (FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
-                           _mutableStateFlow.value = LoginStates.Success("Sign In Successfully")
-                       } else {
-                           throw Exception("please verify your email address,it may take few minutes")
-                       }
+                       _mutableStateFlow.value = signInRepo.signInWithEmailAndPassword(email.toString().trim(), password.toString().trim())
+                       //_mutableStateFlow.value = LoginStates.Idle
                    }
             }
         }else{
@@ -80,20 +70,17 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
             .requestEmail()
             .build()
 
-        _mutableLiveDataGoogleSignInClient.value = GoogleSignIn.getClient(getApplication<Application>().applicationContext, gso)
+        _mutableLiveDataGoogleSignInClient.value = GoogleSignIn.getClient(appContext, gso)
 
     }
 
     fun firebaseAuthWithGoogle(idToken : String){
-        viewModelScope.launch {
-            val credential = GoogleAuthProvider.getCredential(idToken, null)
-            withContext(Dispatchers.IO){
-                FirebaseAuth.getInstance().signInWithCredential(credential).await()
-            }
-            _mutableStateFlow.value = LoginStates.Success("Sign In With Google Account Successfully")
-
+        viewModelScope.launch(handler) {
+             signInRepo.signInWithGoogle(idToken)
+            _mutableStateFlow.value = LoginStates.Success(appContext.getString(R.string.Sign_In_With_Google_Account_Successfully))
         }
 
 
     }
+
 }

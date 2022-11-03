@@ -172,7 +172,7 @@
             android:layout_height="@dimen/_37sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextConfirmPassword_signUp"
-            app:layout_constraintBottom_toTopOf="@id/hintText_signUp"
+            app:layout_constraintBottom_toTopOf="@id/vectordown_signUp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
@@ -195,55 +195,7 @@
             android:visibility="gone"
             />
 
-        <TextView
-            android:id="@+id/hintText_signUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/signUpButton_signUp"
-            app:layout_constraintBottom_toTopOf="@id/google_signUp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/you_also_can_sign_up_with"
-            android:textSize="@dimen/_13ssp"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/hintColor"
-            />
 
-
-        <LinearLayout
-            android:id="@+id/google_signUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/shape1"
-            app:layout_constraintTop_toBottomOf="@id/hintText_signUp"
-            app:layout_constraintBottom_toTopOf="@id/vectordown_signUp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> viewModel.signInGoogle()}"
-            android:padding="@dimen/_8sdp"
-            >
-
-            <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_google_icon"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:scaleType="fitXY"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/orange"
-                android:text="@string/google"
-                android:textSize="@dimen/_10ssp"
-                android:layout_gravity="center"
-                />
-
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/vectordown_signUp"
