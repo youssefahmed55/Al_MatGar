@@ -1,11 +1,19 @@
 package com.example.e_commerce.ui.homemarket.account
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.e_commerce.R
+import com.example.e_commerce.databinding.Bottomsheet1Binding
+import com.example.e_commerce.databinding.BottomsheetgenderBinding
+import com.example.e_commerce.databinding.FragmentAccountBinding
+import com.example.e_commerce.utils.SharedPrefsUtil
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,14 +37,60 @@ class AccountFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    private lateinit var binding : FragmentAccountBinding
+    private lateinit var bindingBottomSheetGender : BottomsheetgenderBinding
+    private lateinit var bottomSheetDialog: BottomSheetDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_account, container, false)
+        binding.lifecycleOwner = this
+        inti(inflater,container)
+        val userModel = SharedPrefsUtil.getUserModel(context!!)
+        binding.userModel = userModel
+
+        setOnclickOnGender()
+
+        return  binding.root
     }
+
+    private fun setOnclickOnGender() {
+        binding.genderLinearAccountFragment.setOnClickListener {
+            bindingBottomSheetGender.selected = binding.genderAccountFragment.text.toString()
+            bindingBottomSheetGender.radioGroupBottomSheetGender.setOnCheckedChangeListener { _, id ->
+                binding.genderAccountFragment.text = when(id){
+                    R.id.radioButtonMale_bottomSheetGender -> getString(R.string.male)
+                    R.id.radioButtonFemale_bottomSheetGender -> getString(R.string.female)
+                    else -> ""
+                }
+
+            }
+            bottomSheetDialog.setContentView(bindingBottomSheetGender.root)
+            bottomSheetDialog.show()
+
+        }
+
+    }
+
+    private fun inti(inflater: LayoutInflater, container: ViewGroup?) {
+        //Initialize bottomSheetDialog
+        bottomSheetDialog = BottomSheetDialog(context!!, R.style.AppBottomSheetDialogTheme)
+        bindingBottomSheetGender = DataBindingUtil.inflate(inflater,R.layout.bottomsheetgender, container, false)
+    }
+
+    /*private fun onClickOnAnyLinear() {
+        binding.emailLinearAccountFragment.setOnClickListener {
+            bindingBottomSheet.edittextBottomSheet1.hint = "Email"
+            bindingBottomSheet.saveButtonBottomSheet1.setOnClickListener {
+                binding.emailAccountFragment.text = bindingBottomSheet.edittextBottomSheet1.text.toString()
+            }
+            bottomSheetDialog.setContentView(bindingBottomSheet.root)
+            bottomSheetDialog.show()
+
+        }
+    }*/
+
 
     companion object {
         /**

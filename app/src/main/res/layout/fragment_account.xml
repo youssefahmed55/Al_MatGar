@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="imageUrl"
-            type="String" />
+            name="userModel"
+            type="com.example.e_commerce.pojo.UserModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,8 +53,8 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:contentDescription="@string/profile_image"
-                        android:src="@drawable/ic_launcher_background"
-                        imageUrl="@{imageUrl}"
+                        android:src="@drawable/person_image"
+                        imageUrl="@{userModel.image}"
                         />
 
                 </androidx.cardview.widget.CardView>
@@ -155,7 +155,7 @@
                             android:id="@+id/gender_accountFragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Male"
+                            android:text="@{userModel.gender}"
                             android:textSize="@dimen/_8ssp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
@@ -233,7 +233,7 @@
                             android:id="@+id/birthday_accountFragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="04-06-1999"
+                            android:text="@{userModel.birthday}"
                             android:textSize="@dimen/_8ssp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
@@ -313,7 +313,7 @@
                             android:id="@+id/email_accountFragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="joussefahmed2012@gmail.com"
+                            android:text="@{userModel.email}"
                             android:textSize="@dimen/_8ssp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
@@ -391,7 +391,7 @@
                             android:id="@+id/phoneNumber_accountFragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="(20) 01229651459"
+                            android:text="@{userModel.phone}"
                             android:textSize="@dimen/_8ssp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
@@ -550,7 +550,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="ddsssssssssssssssssssssssssssssssssssssssssf"
+                            android:text="@{userModel.location}"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textSize="@dimen/_8ssp"

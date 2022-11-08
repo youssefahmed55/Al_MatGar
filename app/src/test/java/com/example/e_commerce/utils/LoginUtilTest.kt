@@ -28,20 +28,20 @@ class LoginUtilTest {
 
     @Test
     fun `Email is Empty returns Email Is Required`() {
-        val result = LoginUtil.checkSignInValid(context,"","123456")
-        assertEquals(result,context.getString(R.string.Email_Is_Required))
+        val result = LoginUtil.checkSignInValid("","123456")
+        assertEquals(context.getString(result),context.getString(R.string.Email_Is_Required))
     }
 
     @Test
     fun `Password is Empty returns Password Is Required`() {
-        val result = LoginUtil.checkSignInValid(context,"youssefahmed505505@gmail.com","")
-        assertEquals(result,context.getString(R.string.Password_Is_Required))
+        val result = LoginUtil.checkSignInValid("youssefahmed505505@gmail.com","")
+        assertEquals(context.getString(result),context.getString(R.string.Password_Is_Required))
     }
 
     @Test
     fun `Email and Password Are Not Empty returns Success`() {
-        val result = LoginUtil.checkSignInValid(context,"youssefahmed505505@gmail.com","123456")
-        assertEquals(result,context.getString(R.string.success))
+        val result = LoginUtil.checkSignInValid("youssefahmed505505@gmail.com","123456")
+        assertEquals(context.getString(result),context.getString(R.string.success))
     }
 
 }

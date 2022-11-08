@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.e_commerce.BuildConfig
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
@@ -134,7 +135,7 @@ class HomeFragment : Fragment() {
 
                 FirebaseAuth.getInstance().signOut()
                 val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.request_google))
+                    .requestIdToken(BuildConfig.GOOGLE_API_KEY)
                     .requestEmail()
                     .build()
                 val googleClient = GoogleSignIn.getClient(requireContext(), gso)

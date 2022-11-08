@@ -14,7 +14,7 @@ object SharedPrefsUtil{
         context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE).edit().putString("userModel", json).apply()
     }
 
-    fun getUserModel(context: Context ):UserModel?{
+    fun getUserModel(context: Context):UserModel?{
         val gson = Gson()
         val json = context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE).getString("userModel", "")
 

@@ -12,13 +12,14 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
 
 class SplashViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
-    val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
+    val states : StateFlow<LoginStates> get() = _mutableStateFlow
 
     private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!) ; _mutableStateFlow.value = LoginStates.Idle  }
 

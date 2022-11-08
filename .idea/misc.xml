@@ -80,6 +80,7 @@
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/activity_home.xml" value="0.2" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/bottomsheet1.xml" value="0.3058252427184466" />
+        <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/bottomsheetgender.xml" value="0.4" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_account.xml" value="0.4" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_cart.xml" value="0.264" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_explore.xml" value="0.2" />
@@ -100,6 +101,7 @@
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_sub_category.xml" value="0.264" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_success_order.xml" value="0.2" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_users.xml" value="0.264" />
+        <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/genderbottomsheet.xml" value="0.3058252427184466" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/item_catagorie.xml" value="0.4" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/item_incart.xml" value="0.264" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/item_inproccess.xml" value="0.264" />

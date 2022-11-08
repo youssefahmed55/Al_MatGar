@@ -13,12 +13,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.e_commerce.BuildConfig
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSignInBinding
 import com.example.e_commerce.Constants.GOOGLE_SIGN_IN
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.LoginStates
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -60,7 +62,7 @@ class SignInFragment : Fragment() {
         binding.viewModel = viewModel
 
         observeErrorMessage()
-        observeGoogleSignInClient()
+        onClickOnGoogle()
         setOnClickOnSignUp()
         setOnClickOnForgetPassword()
         return binding.root
@@ -72,11 +74,18 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun observeGoogleSignInClient() {
-        viewModel.googleSignInClient.observe(viewLifecycleOwner, Observer {
-            val signInIntent: Intent = it.signInIntent
+    private fun onClickOnGoogle() {
+        binding.googleSignIn.setOnClickListener {
+           val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(BuildConfig.GOOGLE_API_KEY)
+                .requestEmail()
+                .build()
+
+            val signInIntent: Intent = GoogleSignIn.getClient(requireActivity(), gso).signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
-        })
+        }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -104,17 +113,14 @@ class SignInFragment : Fragment() {
          job = lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
-                    is LoginStates.Loading -> {binding.myProgressSignIn.visibility = View.VISIBLE}
                     is LoginStates.Success -> {
                         Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
-                        binding.myProgressSignIn.visibility = View.GONE
                         activity?.startActivity(Intent(activity, HomeActivity::class.java))
                         activity?.finish()
                     }
                     is LoginStates.Error -> {
                         Log.d(TAG, "render: Error")
                         Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
-                        binding.myProgressSignIn.visibility = View.GONE
                     }
 
                     else -> {}
@@ -124,15 +130,10 @@ class SignInFragment : Fragment() {
 
     }
 
-    override fun onDestroy() {
-        job?.cancel()
-        super.onDestroy()
-    }
-
     override fun onPause() {
-        super.onPause()
         Log.d(TAG, "onPause: ")
         job?.cancel()
+        super.onPause()
     }
 
     override fun onResume() {
@@ -144,8 +145,8 @@ class SignInFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
             when(it){
-                getString(R.string.Email_Is_Required) -> binding.editTextEmailSignIn.error =  getString(R.string.Email_Is_Required)
-                getString(R.string.Password_Is_Required) -> binding.editTextPasswordSignIn.error =  getString(R.string.Password_Is_Required)
+                R.string.Email_Is_Required -> binding.editTextEmailSignIn.error =  getString(R.string.Email_Is_Required)
+                R.string.Password_Is_Required -> binding.editTextPasswordSignIn.error =  getString(R.string.Password_Is_Required)
             }
         })
     }

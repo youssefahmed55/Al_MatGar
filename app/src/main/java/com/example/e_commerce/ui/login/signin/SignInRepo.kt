@@ -1,6 +1,7 @@
 package com.example.e_commerce.ui.login.signin
 
 import android.content.Context
+import android.util.Log
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.login.LoginStates
@@ -32,28 +33,28 @@ class SignInRepo @Inject constructor(@ApplicationContext private val appContext:
 
         }
 
-    suspend fun signInWithGoogle(idToken : String){
+    suspend fun signInWithGoogle(idToken : String) : LoginStates =
         withContext(Dispatchers.IO){
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             val userModel : UserModel
             FirebaseAuth.getInstance().signInWithCredential(credential).await()
             val firebaseUser = FirebaseAuth.getInstance().currentUser
-            val isNotExisted = db.collection("Users")
-                .whereEqualTo("id", idToken)
-                .get()
-                .await().isEmpty
+            val isNotExisted = db.collection("Users").document(firebaseUser!!.uid).get().await().exists()
 
+
+            Log.d("reeeepo", "signInWithGoogle: idToken: ${firebaseUser.uid}")
+            Log.d("reeeepo", "signInWithGoogle: idToken: $isNotExisted")
             if (isNotExisted) {
-                userModel = UserModel(firebaseUser!!.uid,firebaseUser.displayName,firebaseUser.email,"Customer")
+                userModel = UserModel(firebaseUser.uid,firebaseUser.displayName,firebaseUser.email,"Customer")
                 db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).collection("Info").document(FirebaseAuth.getInstance().currentUser!!.uid).set(userModel).await()
             }else{
                 userModel = getUserModelFromFireStore()
             }
             SharedPrefsUtil.saveUserModel(appContext,userModel)
-
+            return@withContext LoginStates.Success(appContext.getString(R.string.Sign_In_With_Google_Account_Successfully))
         }
 
-    }
+
 
     private suspend fun getUserModelFromFireStore(): UserModel = withContext(Dispatchers.IO) {
              return@withContext db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).collection("Info").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await().toObject(UserModel::class.java)!!

@@ -179,6 +179,7 @@
             android:background="@drawable/btnshape"
             android:text="@string/sign_up"
             android:onClick="@{() -> viewModel.signUpFirebase()}"
+            canClickable="@{viewModel.states}"
             android:textColor="@color/white"
             android:fontFamily="@font/poppins_bold"
             android:textAllCaps="false"
@@ -192,6 +193,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:indeterminate="true"
+            showOnLoading="@{viewModel.states}"
             android:visibility="gone"
             />
 

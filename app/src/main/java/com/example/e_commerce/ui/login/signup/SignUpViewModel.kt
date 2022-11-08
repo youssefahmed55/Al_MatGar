@@ -1,22 +1,20 @@
 package com.example.e_commerce.ui.login.signup
 
 
-import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.e_commerce.R
-import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.login.LoginStates
 import com.example.e_commerce.utils.RegisterUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 private const val TAG = "SignUpViewModel"
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo, @ApplicationContext private val appContext: Context) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo) : ViewModel() {
 
 
     val _fullName = ObservableField("")
@@ -44,27 +42,23 @@ class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo, @A
         get() = _confirmPassword.get()
         set(value) = _confirmPassword.set(value)
 
-    private val _errorMessage = MutableLiveData<String>()
-    val liveDataErrorMessage : LiveData<String> get() = _errorMessage
+    private val _errorMessage = MutableLiveData<Int>()
+    val liveDataErrorMessage : LiveData<Int> get() = _errorMessage
 
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
-    val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
+    val states : StateFlow<LoginStates> get() = _mutableStateFlow
 
     private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!)}
 
 
     fun signUpFirebase() {
 
-        val result =  RegisterUtil.checkSignUpValid(appContext,fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
-        if (result == appContext.getString(R.string.success)) {
+        val result =  RegisterUtil.checkSignUpValid(fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
+        if (result == R.string.success) {
             viewModelScope.launch(handler) {
-                if(_mutableStateFlow.value != LoginStates.Loading) {
                     _mutableStateFlow.value = LoginStates.Loading
                     delay(2000)
-                    signUpRepo.createUserFireBase(email.toString().trim(),password.toString().trim(),phone.toString().trim(),fullName.toString().trim())
-                    _mutableStateFlow.value = LoginStates.Success(appContext.getString(R.string.Please_Check_Your_Email_to_Verification_Make_Sure_To_Check_Spam_Messages))
-                }
-
+                    _mutableStateFlow.value = signUpRepo.createUserFireBase(email.toString().trim(),password.toString().trim(),phone.toString().trim(),fullName.toString().trim())
             }
         }else{
             _errorMessage.value = result

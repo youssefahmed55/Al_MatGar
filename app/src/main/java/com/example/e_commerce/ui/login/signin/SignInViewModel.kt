@@ -13,11 +13,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 private const val TAG = "SignInViewModel"
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo, @ApplicationContext private val appContext: Context ) : ViewModel() {
+class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo) : ViewModel() {
 
 
 
@@ -33,51 +34,35 @@ class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo, @A
         set(value) = _password.set(value)
 
 
-    private val _errorMessage = MutableLiveData<String>()
-    val liveDataErrorMessage : LiveData<String> get() = _errorMessage
+    private val _errorMessage = MutableLiveData<Int?>()
+    val liveDataErrorMessage : LiveData<Int?> get() = _errorMessage
 
 
 
     private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
-    val states : MutableStateFlow<LoginStates> get() = _mutableStateFlow
+    val states : StateFlow<LoginStates> get() = _mutableStateFlow
 
     private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!) ; _mutableStateFlow.value = LoginStates.Idle}
 
-    private val  _mutableLiveDataGoogleSignInClient  = MutableLiveData<GoogleSignInClient>()
-    val googleSignInClient : MutableLiveData<GoogleSignInClient> get() = _mutableLiveDataGoogleSignInClient
 
     fun signInFirebase() {
-        val result = LoginUtil.checkSignInValid(appContext,email.toString(),password.toString())
-        if (result == appContext.getString(R.string.success)) {
+        val result = LoginUtil.checkSignInValid(email.toString(),password.toString())
+        if (result == R.string.success) {
             viewModelScope.launch(handler) {
-                   if (_mutableStateFlow.value != LoginStates.Loading) {
                        _mutableStateFlow.value = LoginStates.Loading
                        delay(2000)
                        _mutableStateFlow.value = signInRepo.signInWithEmailAndPassword(email.toString().trim(), password.toString().trim())
-                       //_mutableStateFlow.value = LoginStates.Idle
-                   }
             }
         }else{
             _errorMessage.value = result
-            _errorMessage.value = ""
+            _errorMessage.value = null
         }
     }
 
-    fun signInGoogle(){
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(appContext.getString(R.string.request_google))
-            .requestEmail()
-            .build()
-
-        _mutableLiveDataGoogleSignInClient.value = GoogleSignIn.getClient(appContext, gso)
-
-    }
 
     fun firebaseAuthWithGoogle(idToken : String){
         viewModelScope.launch(handler) {
-             signInRepo.signInWithGoogle(idToken)
-            _mutableStateFlow.value = LoginStates.Success(appContext.getString(R.string.Sign_In_With_Google_Account_Successfully))
+            _mutableStateFlow.value = signInRepo.signInWithGoogle(idToken)
         }
 
 

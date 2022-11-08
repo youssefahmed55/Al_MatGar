@@ -75,16 +75,13 @@ class SplashFragment : Fragment() {
      job = lifecycleScope.launchWhenStarted {
          viewModel.states.collect{
              when(it){
-                 is LoginStates.Loading -> {binding.myProgressSplash.visibility = View.VISIBLE}
                  is LoginStates.Success -> {
                      Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
-                     binding.myProgressSplash.visibility = View.GONE
                      activity?.startActivity(Intent(activity, HomeActivity::class.java))
                      activity?.finish()
                  }
                  is LoginStates.Error -> {
                      Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
-                     binding.myProgressSplash.visibility = View.GONE
                  }
 
                  else -> {}
