@@ -1,19 +1,38 @@
 package com.example.e_commerce.ui.homemarket.account
 
+import android.app.Activity.RESULT_OK
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.e_commerce.BuildConfig
+import com.example.e_commerce.Constants.PICK_IMAGE
+import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
-import com.example.e_commerce.databinding.Bottomsheet1Binding
-import com.example.e_commerce.databinding.BottomsheetgenderBinding
-import com.example.e_commerce.databinding.FragmentAccountBinding
+import com.example.e_commerce.databinding.*
+import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
+import com.example.e_commerce.ui.login.MainActivity
+import com.example.e_commerce.ui.login.signin.SignInViewModel
 import com.example.e_commerce.utils.SharedPrefsUtil
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +44,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AccountFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class AccountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -38,21 +58,112 @@ class AccountFragment : Fragment() {
         }
     }
     private lateinit var binding : FragmentAccountBinding
+    private val viewModel: AccountViewModel by lazy { ViewModelProvider(this)[AccountViewModel::class.java] }
     private lateinit var bindingBottomSheetGender : BottomsheetgenderBinding
+    private lateinit var bindingBottomsheetemail : BottomsheetemailBinding
+    private lateinit var bindingBottomsheetphone : BottomsheetphoneBinding
+    private lateinit var bindingBottomsheetpassword : BottomsheetpasswordBinding
+    private lateinit var bindingBottomsheetdate : BottomsheetdateBinding
+    private lateinit var bindingBottomsheetlocation : BottomsheetlocationBinding
     private lateinit var bottomSheetDialog: BottomSheetDialog
+    private var imageUri : Uri? = null
+    private var passwordOfNewEmail : String ?= null
+    private var passwordOfNewPassword : String ?= null
+    private var newPassword : String ?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_account, container, false)
-        binding.lifecycleOwner = this
         inti(inflater,container)
-        val userModel = SharedPrefsUtil.getUserModel(context!!)
-        binding.userModel = userModel
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         setOnclickOnGender()
-
+        setOnclickOnBirthday()
+        setOnclickOnEmail()
+        setOnclickOnPhone()
+        setOnclickOnLocation()
+        setOnclickOnPassword()
+        setOnClickOnProfileImage()
+        setOnClickOnSaveButton()
+        render()
         return  binding.root
+    }
+
+    private fun setOnClickOnSaveButton() {
+       binding.saveButtonAccountFragment.setOnClickListener {
+
+           viewModel.saveAllChanges(binding.genderAccountFragment.text.toString().trim()
+                                    ,binding.birthdayAccountFragment.text.toString().trim()
+                                    ,binding.emailAccountFragment.text.toString().trim()
+                                    ,passwordOfNewEmail
+                                    ,binding.phoneNumberAccountFragment.text.toString().trim()
+                                    ,newPassword
+                                    ,passwordOfNewPassword
+                                    ,binding.locationAccountFragment.text.toString().trim()
+                                    ,imageUri)
+       }
+    }
+
+    private fun render() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.states.collect{
+                when(it){
+                    is DefaultStates.Success -> {
+
+                        Toast.makeText(requireActivity(),getString(R.string.Saved_Successfully), Toast.LENGTH_SHORT).show()
+
+                        imageUri = null
+                        passwordOfNewEmail = null
+                        passwordOfNewPassword = null
+                        newPassword = null
+                        bindingBottomsheetemail.passwordBottomSheetEmail.setText("")
+                        bindingBottomsheetpassword.currentPasswordBottomSheetPassword.setText("")
+                        bindingBottomsheetpassword.passwordBottomSheetPassword.setText("")
+                        bindingBottomsheetpassword.confirmPasswordBottomSheetPassword.setText("")
+
+
+                        if (it.toastMessage == "signInAgain"){
+                            FirebaseAuth.getInstance().signOut()
+                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestIdToken(BuildConfig.GOOGLE_API_KEY)
+                                .requestEmail()
+                                .build()
+                            val googleClient = GoogleSignIn.getClient(requireContext(), gso)
+                            googleClient.signOut()
+                            SharedPrefsUtil.clearUserModel(requireContext())
+                            Toast.makeText(requireActivity(),getString(R.string.please_Check_your_email_address), Toast.LENGTH_SHORT).show()
+                            activity?.startActivity(Intent(activity, MainActivity::class.java))
+                            activity?.finish()
+                        }
+                    }
+                    is DefaultStates.Error -> {
+                        Toast.makeText(requireActivity(),it.error, Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun setOnClickOnProfileImage() {
+        binding.profileImageAccountFragment.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE)
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            imageUri = data?.data
+            binding.profileImageAccountFragment.setImageURI(imageUri)
+        }
+
     }
 
     private fun setOnclickOnGender() {
@@ -68,28 +179,95 @@ class AccountFragment : Fragment() {
             }
             bottomSheetDialog.setContentView(bindingBottomSheetGender.root)
             bottomSheetDialog.show()
+        }
+    }
 
+    private fun setOnclickOnBirthday() {
+        binding.birthdayLinearAccountFragment.setOnClickListener {
+
+            bindingBottomsheetdate.calenderBottomSheetDate.setOnDateChangeListener { calendarView, i, i2, i3 ->
+                binding.birthdayAccountFragment.text = "$i3-${i2+1}-$i"
+                bottomSheetDialog.dismiss()
+            }
+            bottomSheetDialog.setContentView(bindingBottomsheetdate.root)
+            bottomSheetDialog.show()
         }
 
     }
+
+    private fun setOnclickOnEmail() {
+        binding.emailLinearAccountFragment.setOnClickListener {
+            bottomSheetDialog.setContentView(bindingBottomsheetemail.root)
+            bottomSheetDialog.show()
+            bindingBottomsheetemail.emailBottomSheetEmail.setText(binding.emailAccountFragment.text.toString())
+            bottomSheetDialog.setOnCancelListener {
+                if (bindingBottomsheetemail.emailBottomSheetEmail.text.toString().trim().isNotEmpty()&&bindingBottomsheetemail.passwordBottomSheetEmail.text.toString().trim().isNotEmpty())
+                    binding.emailAccountFragment.text =  bindingBottomsheetemail.emailBottomSheetEmail.text.toString().trim()
+                    passwordOfNewEmail = bindingBottomsheetemail.passwordBottomSheetEmail.text.toString().trim()
+            }
+        }
+
+    }
+
+    private fun setOnclickOnPhone() {
+        binding.phoneNumberLinearAccountFragment.setOnClickListener {
+            bottomSheetDialog.setContentView(bindingBottomsheetphone.root)
+            bottomSheetDialog.show()
+            bindingBottomsheetphone.phoneNumberBottomSheetPhone.setText(binding.phoneNumberAccountFragment.text.toString())
+            bottomSheetDialog.setOnCancelListener {
+                if (bindingBottomsheetphone.phoneNumberBottomSheetPhone.text.toString().trim().isNotEmpty())
+                    binding.phoneNumberAccountFragment.text =  bindingBottomsheetphone.phoneNumberBottomSheetPhone.text.toString().trim()
+            }
+        }
+
+    }
+
+    private fun setOnclickOnLocation() {
+        binding.locationLinearAccountFragment.setOnClickListener {
+            bottomSheetDialog.setContentView(bindingBottomsheetlocation.root)
+            bottomSheetDialog.show()
+            bindingBottomsheetlocation.locationBottomSheetLocation.setText(binding.locationAccountFragment.text.toString())
+            bottomSheetDialog.setOnCancelListener {
+                if (bindingBottomsheetlocation.locationBottomSheetLocation.text.toString().trim().isNotEmpty())
+                    binding.locationAccountFragment.text =  bindingBottomsheetlocation.locationBottomSheetLocation.text.toString().trim()
+            }
+        }
+    }
+
+    private fun setOnclickOnPassword() {
+        binding.changePasswordLinearAccountFragment.setOnClickListener {
+            bottomSheetDialog.setContentView(bindingBottomsheetpassword.root)
+            bottomSheetDialog.show()
+            bottomSheetDialog.setOnCancelListener {
+                val newPass = bindingBottomsheetpassword.passwordBottomSheetPassword.text.toString().trim()
+                val confirmPass = bindingBottomsheetpassword.confirmPasswordBottomSheetPassword.text.toString().trim()
+                if (newPass.isNotEmpty() && confirmPass.isNotEmpty() && bindingBottomsheetpassword.currentPasswordBottomSheetPassword.text.toString().trim().isNotEmpty()){
+                    if (newPass == confirmPass){
+                        newPassword = newPass
+                        passwordOfNewPassword = bindingBottomsheetpassword.currentPasswordBottomSheetPassword.text.toString().trim()
+                    }else{
+                        Snackbar.make(requireActivity().findViewById(R.id.flFragment),getString(R.string.Password_Donot_match),Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+
+            }
+        }
+    }
+
+
 
     private fun inti(inflater: LayoutInflater, container: ViewGroup?) {
         //Initialize bottomSheetDialog
         bottomSheetDialog = BottomSheetDialog(context!!, R.style.AppBottomSheetDialogTheme)
         bindingBottomSheetGender = DataBindingUtil.inflate(inflater,R.layout.bottomsheetgender, container, false)
+        bindingBottomsheetemail = DataBindingUtil.inflate(inflater,R.layout.bottomsheetemail, container, false)
+        bindingBottomsheetphone = DataBindingUtil.inflate(inflater,R.layout.bottomsheetphone, container, false)
+        bindingBottomsheetpassword = DataBindingUtil.inflate(inflater,R.layout.bottomsheetpassword, container, false)
+        bindingBottomsheetdate = DataBindingUtil.inflate(inflater,R.layout.bottomsheetdate, container, false)
+        bindingBottomsheetlocation = DataBindingUtil.inflate(inflater,R.layout.bottomsheetlocation, container, false)
     }
 
-    /*private fun onClickOnAnyLinear() {
-        binding.emailLinearAccountFragment.setOnClickListener {
-            bindingBottomSheet.edittextBottomSheet1.hint = "Email"
-            bindingBottomSheet.saveButtonBottomSheet1.setOnClickListener {
-                binding.emailAccountFragment.text = bindingBottomSheet.edittextBottomSheet1.text.toString()
-            }
-            bottomSheetDialog.setContentView(bindingBottomSheet.root)
-            bottomSheetDialog.show()
 
-        }
-    }*/
 
 
     companion object {

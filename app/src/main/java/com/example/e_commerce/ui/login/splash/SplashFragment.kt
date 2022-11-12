@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSplashBinding
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
-import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Job
@@ -75,12 +75,12 @@ class SplashFragment : Fragment() {
      job = lifecycleScope.launchWhenStarted {
          viewModel.states.collect{
              when(it){
-                 is LoginStates.Success -> {
+                 is DefaultStates.Success -> {
                      Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
                      activity?.startActivity(Intent(activity, HomeActivity::class.java))
                      activity?.finish()
                  }
-                 is LoginStates.Error -> {
+                 is DefaultStates.Error -> {
                      Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
                  }
 

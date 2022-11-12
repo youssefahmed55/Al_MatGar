@@ -1,5 +1,6 @@
 package com.example.e_commerce.ui.homemarket.homeactivity
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
@@ -89,5 +90,9 @@ class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListe
             }
         }
         return false
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

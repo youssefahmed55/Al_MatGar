@@ -18,7 +18,7 @@ import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSignInBinding
 import com.example.e_commerce.Constants.GOOGLE_SIGN_IN
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
-import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.DefaultStates
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -113,12 +113,12 @@ class SignInFragment : Fragment() {
          job = lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
-                    is LoginStates.Success -> {
+                    is DefaultStates.Success -> {
                         Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
                         activity?.startActivity(Intent(activity, HomeActivity::class.java))
                         activity?.finish()
                     }
-                    is LoginStates.Error -> {
+                    is DefaultStates.Error -> {
                         Log.d(TAG, "render: Error")
                         Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
                     }

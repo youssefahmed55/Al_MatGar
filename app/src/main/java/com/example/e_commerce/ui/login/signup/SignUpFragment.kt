@@ -1,6 +1,5 @@
 package com.example.e_commerce.ui.login.signup
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,11 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSignUpBinding
-import com.example.e_commerce.Constants.GOOGLE_SIGN_IN
-import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
-import com.example.e_commerce.ui.login.LoginStates
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
+import com.example.e_commerce.DefaultStates
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -70,11 +65,11 @@ class SignUpFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
-                    is LoginStates.Success -> {
+                    is DefaultStates.Success -> {
                         Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
                         findNavController().popBackStack()
                     }
-                    is LoginStates.Error -> {
+                    is DefaultStates.Error -> {
                         Log.d(TAG, "render: " + it.error )
                         Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
                     }

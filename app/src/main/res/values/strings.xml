@@ -94,4 +94,14 @@
     <string name="Sign_In_Successfully">Sign In Successfully</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
+    <string name="put_your_new_email">Put your new email</string>
+    <string name="put_your_phone_number">Put your phone number</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="put_your_location">Put your location</string>
+    <string name="put_your_password">Put your password</string>
+    <string name="Saved_Successfully">Saved Successfully</string>
+    <string name="current_password">Current password</string>
+    <string name="You_canot_change_the_email_or_password_of_Google_account">You can\'t change the email or password of Google account</string>
+
 </resources>

@@ -7,7 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.DefaultStates
 import java.text.NumberFormat
 import java.util.*
 
@@ -36,14 +36,14 @@ fun strikeThrough(textView: TextView, number: Double) {
 }
 
 @BindingAdapter("showOnLoading")
-fun ProgressBar.showOnLoading(loginStates: LoginStates) {
-    visibility = if (loginStates is LoginStates.Loading)
+fun ProgressBar.showOnLoading(defaultStates: DefaultStates) {
+    visibility = if (defaultStates is DefaultStates.Loading)
         View.VISIBLE
     else
         View.GONE
 }
 
 @BindingAdapter("canClickable")
-fun canClickable(view: View , loginStates: LoginStates ) {
-    view.isClickable = loginStates !is LoginStates.Loading
+fun canClickable(view: View, defaultStates: DefaultStates) {
+    view.isClickable = defaultStates !is DefaultStates.Loading
 }

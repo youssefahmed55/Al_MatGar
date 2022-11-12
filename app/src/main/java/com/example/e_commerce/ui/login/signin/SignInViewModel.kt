@@ -1,16 +1,11 @@
 package com.example.e_commerce.ui.login.signin
 
-import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.e_commerce.R
-import com.example.e_commerce.ui.login.LoginStates
+import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.utils.LoginUtil
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,17 +34,17 @@ class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo) : 
 
 
 
-    private val _mutableStateFlow = MutableStateFlow<LoginStates>(LoginStates.Idle)
-    val states : StateFlow<LoginStates> get() = _mutableStateFlow
+    private val _mutableStateFlow = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
+    val states : StateFlow<DefaultStates> get() = _mutableStateFlow
 
-    private val handler = CoroutineExceptionHandler() { _, throwable -> _mutableStateFlow.value = LoginStates.Error(throwable.message!!) ; _mutableStateFlow.value = LoginStates.Idle}
+    private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlow.value = DefaultStates.Error(throwable.message!!) ; _mutableStateFlow.value = DefaultStates.Idle}
 
 
     fun signInFirebase() {
         val result = LoginUtil.checkSignInValid(email.toString(),password.toString())
         if (result == R.string.success) {
             viewModelScope.launch(handler) {
-                       _mutableStateFlow.value = LoginStates.Loading
+                       _mutableStateFlow.value = DefaultStates.Loading
                        delay(2000)
                        _mutableStateFlow.value = signInRepo.signInWithEmailAndPassword(email.toString().trim(), password.toString().trim())
             }

@@ -27,7 +27,7 @@ class ForgetPasswordViewModel(val app: Application) : AndroidViewModel(app)   {
     val liveDataSentPassword : LiveData<Boolean> get() = _sentPassword
 
 
-    private val handler = CoroutineExceptionHandler() { _, throwable -> _errorToast.value = throwable.message!!}
+    private val handler = CoroutineExceptionHandler { _, throwable -> _errorToast.value = throwable.message!!}
 
 
     fun receivePassword() {
