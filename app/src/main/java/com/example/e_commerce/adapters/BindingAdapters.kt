@@ -1,15 +1,20 @@
 package com.example.e_commerce.adapters
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.e_commerce.DefaultStates
+import com.example.e_commerce.R
+import com.example.e_commerce.pojo.UserModel
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @BindingAdapter("price")
@@ -46,4 +51,42 @@ fun ProgressBar.showOnLoading(defaultStates: DefaultStates) {
 @BindingAdapter("canClickable")
 fun canClickable(view: View, defaultStates: DefaultStates) {
     view.isClickable = defaultStates !is DefaultStates.Loading
+}
+
+@BindingAdapter(*["bind:usersAdapter", "bind:usersList","bind:searchText"])
+fun setListOfUsers(view: RecyclerView, usersRecyclerAdapter: UsersRecyclerAdapter , listOfUsers : List<UserModel>, searchText : String) {
+            val list = if (searchText.trim().isNotEmpty()){getSearchUsers(searchText,listOfUsers)} else listOfUsers
+
+            usersRecyclerAdapter.setList(list)
+            view.adapter = usersRecyclerAdapter
+
+}
+
+private fun getSearchUsers(s: String, s2:List<UserModel>):  List<UserModel> {
+    val arrayList: ArrayList<UserModel> = ArrayList<UserModel>()
+
+    if (s != "")
+        s2.forEach { it ->
+            if (it.fullName?.lowercase()!![0] == s.lowercase()[0])
+                if (it.fullName.lowercase().contains(s.lowercase())) {
+                    arrayList.add(it)
+                }
+        }
+
+    return arrayList.toList()
+}
+
+
+@BindingAdapter("selectedType")
+fun selectedType(view: TextView, resource: Int) {
+
+
+        if (view.id == resource) {
+            view.setBackgroundResource(R.drawable.shape2)
+            view.setTextColor(Color.WHITE)
+        } else {
+            view.setBackgroundResource(R.drawable.shape3)
+            view.setTextColor(Color.BLACK)
+                  }
+
 }

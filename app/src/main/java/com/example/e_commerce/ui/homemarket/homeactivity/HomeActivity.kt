@@ -1,25 +1,21 @@
 package com.example.e_commerce.ui.homemarket.homeactivity
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce.R
-import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.homemarket.account.AccountFragment
 import com.example.e_commerce.ui.homemarket.cart.CartFragment
 import com.example.e_commerce.ui.homemarket.explore.ExploreFragment
 import com.example.e_commerce.ui.homemarket.home.HomeFragment
 import com.example.e_commerce.ui.homemarket.myproducts.MyProductsFragment
 import com.example.e_commerce.ui.homemarket.offer.OfferFragment
-import com.example.e_commerce.ui.homemarket.users.UsersFragment
+import com.example.e_commerce.ui.homemarket.users.users.UsersFragment
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListener {

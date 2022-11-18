@@ -25,16 +25,14 @@ class AccountRepo @Inject constructor(@ApplicationContext private val appContext
 
     suspend fun changeGender(gender : String) = withContext(Dispatchers.IO){
         if (userModel?.gender != gender) {
-            db.collection("Users").document(userModel?.id!!).collection("Info")
-                .document(userModel.id).update("gender", gender).await()
+            db.collection("Users").document(userModel?.id!!).update("gender", gender).await()
             saveNewDataInShared()
         }
         }
 
     suspend fun changeBirthday(birthday : String)= withContext(Dispatchers.IO){
         if (userModel?.birthday != birthday) {
-            db.collection("Users").document(userModel?.id!!).collection("Info")
-                .document(userModel.id).update("birthday", birthday).await()
+            db.collection("Users").document(userModel?.id!!).update("birthday", birthday).await()
             saveNewDataInShared()
         }
     }
@@ -48,8 +46,7 @@ class AccountRepo @Inject constructor(@ApplicationContext private val appContext
                 FirebaseAuth.getInstance().currentUser?.updateEmail(newEmail)?.await()
                 FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
 
-                db.collection("Users").document(userModel.id!!).collection("Info")
-                    .document(userModel.id).update("email", newEmail).await()
+                db.collection("Users").document(userModel.id!!).update("email", newEmail).await()
                 saveNewDataInShared()
                 return@withContext DefaultStates.Success("signInAgain")
             }else{
@@ -63,8 +60,7 @@ class AccountRepo @Inject constructor(@ApplicationContext private val appContext
 
     suspend fun changePhone(phone : String)= withContext(Dispatchers.IO){
         if (userModel?.phone != phone) {
-            db.collection("Users").document(userModel?.id!!).collection("Info")
-                .document(userModel.id).update("phone", phone).await()
+            db.collection("Users").document(userModel?.id!!).update("phone", phone).await()
             saveNewDataInShared()
         }
     }
@@ -85,8 +81,7 @@ class AccountRepo @Inject constructor(@ApplicationContext private val appContext
 
     suspend fun changeLocation(location : String)= withContext(Dispatchers.IO){
         if (userModel?.location != location) {
-            db.collection("Users").document(userModel?.id!!).collection("Info")
-                .document(userModel.id).update("location", location).await()
+            db.collection("Users").document(userModel?.id!!).update("location", location).await()
             saveNewDataInShared()
         }
     }
@@ -101,12 +96,12 @@ class AccountRepo @Inject constructor(@ApplicationContext private val appContext
             .await() // await the url
             .toString()
 
-            db.collection("Users").document(userModel.id).collection("Info").document(userModel.id).update("image",image).await()
+            db.collection("Users").document(userModel.id).update("image",image).await()
             saveNewDataInShared()
     }
 
     private suspend fun saveNewDataInShared() = withContext(Dispatchers.IO){
-        val user = db.collection("Users").document(userModel?.id!!).collection("Info").document(userModel.id).get().await().toObject(UserModel::class.java)
+        val user = db.collection("Users").document(userModel?.id!!).get().await().toObject(UserModel::class.java)
         SharedPrefsUtil.saveUserModel(appContext,user!!)
     }
 

@@ -40,14 +40,14 @@ class SignInRepo @Inject constructor(@ApplicationContext private val appContext:
             val userModel : UserModel
             FirebaseAuth.getInstance().signInWithCredential(credential).await()
             val firebaseUser = FirebaseAuth.getInstance().currentUser
-            val isNotExisted = db.collection("Users").document(firebaseUser!!.uid).collection("Info").whereEqualTo("email",firebaseUser.email).get().await().isEmpty
+            val isNotExisted = db.collection("Users").whereEqualTo("email",firebaseUser?.email).get().await().isEmpty
 
             Log.d("SignInRepo", "signInWithGoogle: $isNotExisted" )
             if (isNotExisted) {
-                userModel = UserModel(firebaseUser.uid,firebaseUser.displayName,firebaseUser.email,"Customer",true)
-                db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).collection("Info").document(FirebaseAuth.getInstance().currentUser!!.uid).set(userModel).await()
+                userModel = UserModel(firebaseUser?.uid,firebaseUser?.displayName,firebaseUser?.email,"Customer",true)
+                db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(userModel).await()
             }else{
-                db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).collection("Info").document(FirebaseAuth.getInstance().currentUser!!.uid).update("signInWithGoogle", true).await()
+                db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).update("signInWithGoogle", true).await()
                 userModel = getUserModelFromFireStore()
             }
             SharedPrefsUtil.saveUserModel(appContext,userModel)
@@ -57,7 +57,7 @@ class SignInRepo @Inject constructor(@ApplicationContext private val appContext:
 
 
     private suspend fun getUserModelFromFireStore(): UserModel = withContext(Dispatchers.IO) {
-             return@withContext db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).collection("Info").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await().toObject(UserModel::class.java)!!
+             return@withContext db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).get().await().toObject(UserModel::class.java)!!
         }
 
 

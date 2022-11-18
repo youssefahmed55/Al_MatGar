@@ -1,14 +1,23 @@
-package com.example.e_commerce.ui.homemarket.users
+package com.example.e_commerce.ui.homemarket.users.users
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.e_commerce.R
+import com.example.e_commerce.adapters.UsersRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentUsersBinding
-import com.example.e_commerce.ui.subcategory.ProductDetailsFragment
+import com.example.e_commerce.pojo.UserModel
+import com.example.e_commerce.ui.homemarket.users.ProfileFragment
+import com.example.e_commerce.ui.homemarket.users.newuser.NewUserFragment
+import com.example.e_commerce.ui.subcategory.SubCategoryFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.consumeAsFlow
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [UsersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class UsersFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -33,11 +43,50 @@ class UsersFragment : Fragment() {
         }
     }
     private lateinit var binding : FragmentUsersBinding
+    private val viewModel: UsersViewModel by lazy { ViewModelProvider(this)[UsersViewModel::class.java] }
+    private val usersRecyclerAdapter : UsersRecyclerAdapter by lazy { UsersRecyclerAdapter() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_users, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        usersRecyclerAdapter.setOnItemClickListener(object : UsersRecyclerAdapter.OnClickOnItem{
+            override fun onClick1(userModel: UserModel) {
+                val args = Bundle()
+                args.putSerializable("userModel", userModel)
+                val profileFragment = ProfileFragment()
+                profileFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, profileFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
+        })
+        binding.usersRecyclerAdapter = usersRecyclerAdapter
+
+
+        observeErrorMessage()
+        setOnClickOnAddButton()
+
+
+
+
+        return binding.root
+    }
+
+    private fun observeErrorMessage() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorMessage.consumeAsFlow().collect{
+                Toast.makeText(requireActivity(),it,Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    private fun setOnClickOnAddButton() {
         binding.addFloatingButtonUsersFragment.setOnClickListener {
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.flFragment, NewUserFragment())
@@ -45,8 +94,6 @@ class UsersFragment : Fragment() {
             transaction.commit()
 
         }
-
-        return binding.root
     }
 
     companion object {

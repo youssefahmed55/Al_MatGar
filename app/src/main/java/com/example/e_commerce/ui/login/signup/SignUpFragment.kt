@@ -55,7 +55,6 @@ class SignUpFragment : Fragment() {
         render()
 
 
-
         return binding.root
     }
 

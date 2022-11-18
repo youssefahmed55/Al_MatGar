@@ -103,5 +103,7 @@
     <string name="Saved_Successfully">Saved Successfully</string>
     <string name="current_password">Current password</string>
     <string name="You_canot_change_the_email_or_password_of_Google_account">You can\'t change the email or password of Google account</string>
+    <string name="customers">Customers</string>
+    <string name="No_Network_Connection">No Network Connection</string>
 
 </resources>

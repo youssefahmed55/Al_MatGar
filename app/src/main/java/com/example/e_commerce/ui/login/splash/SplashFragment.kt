@@ -20,6 +20,7 @@ import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,6 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 private const val TAG = "SplashFragment"
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null

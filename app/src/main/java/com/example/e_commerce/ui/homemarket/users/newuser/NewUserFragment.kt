@@ -1,4 +1,4 @@
-package com.example.e_commerce.ui.homemarket.users
+package com.example.e_commerce.ui.homemarket.users.newuser
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

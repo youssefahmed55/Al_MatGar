@@ -27,4 +27,10 @@ object SharedPrefsUtil{
         context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE).edit().putString("userModel", "").apply()
     }
 
+    fun getImageUrl(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.image
+
+    }
+
 }
