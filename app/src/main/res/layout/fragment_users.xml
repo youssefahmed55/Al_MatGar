@@ -87,7 +87,7 @@
                         android:hint="@string/search"
                         android:maxLines="1"
                         android:textAlignment="viewStart"
-                        android:text="@={viewModel._mutableStateFlowTextSearch}"
+                        android:text="@={viewModel.mutableStateFlowTextSearch}"
                         android:inputType="text"
                         android:background="@null"
                         android:layout_marginStart="@dimen/_5sdp" />
@@ -192,15 +192,28 @@
             android:layout_height="0dp"
             app:layout_constrainedHeight="true"
             app:layout_constraintTop_toBottomOf="@id/linear1_usersFragment"
-            app:layout_constraintBottom_toTopOf="@+id/addFloatingButton_usersFragment"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             bind:usersAdapter="@{usersRecyclerAdapter}"
             bind:usersList="@{viewModel.stateFlowUserModels}"
-            bind:searchText="@{viewModel._mutableStateFlowTextSearch}"
+            bind:searchText="@{viewModel.mutableStateFlowTextSearch}"
+            />
 
+        <ProgressBar
+            android:id="@+id/myProgress_usersFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/recycler_usersFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_usersFragment"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            showOnLoading="@{viewModel.states}"
+            android:visibility="visible"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -216,8 +229,6 @@
             app:backgroundTint="@color/green"
 
             />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

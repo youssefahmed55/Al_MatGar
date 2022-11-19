@@ -105,5 +105,25 @@
     <string name="You_canot_change_the_email_or_password_of_Google_account">You can\'t change the email or password of Google account</string>
     <string name="customers">Customers</string>
     <string name="No_Network_Connection">No Network Connection</string>
+    <string name="Gender_Is_Required">Gender Is Required</string>
+    <string name="Type_Is_Required">Type Is Required</string>
+    <string name="Birthday_Is_Required">Birthday Is Required</string>
+    <string name="Location_Is_Required">Location Is Required</string>
+    <string name="Customer">Customer</string>
+    <string name="Merchant">Merchant</string>
+    <string name="Admin">Admin</string>
+    <string name="Created_Account_Successfully">Created Account Successfully</string>
 
+
+    <string-array name="genders">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="types">
+        <item>Type</item>
+        <item>Customer</item>
+        <item>Merchant</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

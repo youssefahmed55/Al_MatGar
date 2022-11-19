@@ -9,15 +9,15 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.UsersRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentUsersBinding
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.homemarket.users.ProfileFragment
 import com.example.e_commerce.ui.homemarket.users.newuser.NewUserFragment
-import com.example.e_commerce.ui.subcategory.SubCategoryFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,6 +45,7 @@ class UsersFragment : Fragment() {
     private lateinit var binding : FragmentUsersBinding
     private val viewModel: UsersViewModel by lazy { ViewModelProvider(this)[UsersViewModel::class.java] }
     private val usersRecyclerAdapter : UsersRecyclerAdapter by lazy { UsersRecyclerAdapter() }
+    private var job : Job?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,12 +79,18 @@ class UsersFragment : Fragment() {
     }
 
     private fun observeErrorMessage() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.errorMessage.consumeAsFlow().collect{
-                Toast.makeText(requireActivity(),it,Toast.LENGTH_SHORT).show()
+        job = lifecycleScope.launchWhenStarted {
+            viewModel.states.collect{
+                when(it){
+                    is DefaultStates.Error ->Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
+                    else -> {}
+                }
             }
-
         }
+    }
+    override fun onPause() {
+        job?.cancel()
+        super.onPause()
     }
 
     private fun setOnClickOnAddButton() {

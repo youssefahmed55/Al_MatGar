@@ -3,10 +3,11 @@ package com.example.e_commerce.adapters
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.e_commerce.DefaultStates
@@ -14,7 +15,6 @@ import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 @BindingAdapter("price")
@@ -90,3 +90,23 @@ fun selectedType(view: TextView, resource: Int) {
                   }
 
 }
+
+/*@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
+fun bindSpinnerData(pAppCompatSpinner: AppCompatSpinner, newSelectedValue: String?, newTextAttrChanged: InverseBindingListener) {
+    pAppCompatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            newTextAttrChanged.onChange()
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+    if (newSelectedValue != null) {
+        val pos = (pAppCompatSpinner.adapter as ArrayAdapter<String?>).getPosition(newSelectedValue)
+        pAppCompatSpinner.setSelection(pos, true)
+    }
+}
+
+@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
+fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): String {
+    return pAppCompatSpinner.selectedItem as String
+}*/
