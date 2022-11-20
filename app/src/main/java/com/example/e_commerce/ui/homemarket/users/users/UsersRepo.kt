@@ -21,21 +21,6 @@ class UsersRepo @Inject constructor(@ApplicationContext private val appContext: 
         return@withContext db.collection("Users").get().await().toObjects(UserModel::class.java)
     }
 
-    suspend fun getCustomersUserModels(): List<UserModel> = withContext(Dispatchers.IO) {
-        Network.checkConnectionType(appContext)
-        return@withContext db.collection("Users").whereEqualTo("type","Customer").get().await().toObjects(UserModel::class.java)
-    }
-
-    suspend fun getAdminsUserModels(): List<UserModel> = withContext(Dispatchers.IO) {
-        Network.checkConnectionType(appContext)
-        return@withContext db.collection("Users").whereEqualTo("type","Admin").get().await().toObjects(UserModel::class.java)
-    }
-
-    suspend fun getMerchantsUserModels(): List<UserModel> = withContext(Dispatchers.IO) {
-        Network.checkConnectionType(appContext)
-        return@withContext db.collection("Users").whereEqualTo("type","Merchant").get().await().toObjects(UserModel::class.java)
-    }
-
     suspend fun getImageUrl(): String = withContext(Dispatchers.IO) {
         return@withContext SharedPrefsUtil.getImageUrl(appContext) ?: ""
     }

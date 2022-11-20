@@ -68,8 +68,6 @@ class UsersFragment : Fragment() {
         })
         binding.usersRecyclerAdapter = usersRecyclerAdapter
 
-
-        observeErrorMessage()
         setOnClickOnAddButton()
 
 
@@ -78,8 +76,9 @@ class UsersFragment : Fragment() {
         return binding.root
     }
 
-    private fun observeErrorMessage() {
+    private fun render() {
         job = lifecycleScope.launchWhenStarted {
+            viewModel.refreshData()
             viewModel.states.collect{
                 when(it){
                     is DefaultStates.Error ->Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
@@ -91,6 +90,11 @@ class UsersFragment : Fragment() {
     override fun onPause() {
         job?.cancel()
         super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        render()
     }
 
     private fun setOnClickOnAddButton() {

@@ -15,6 +15,7 @@ import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @BindingAdapter("price")
@@ -53,11 +54,18 @@ fun canClickable(view: View, defaultStates: DefaultStates) {
     view.isClickable = defaultStates !is DefaultStates.Loading
 }
 
-@BindingAdapter(*["bind:usersAdapter", "bind:usersList","bind:searchText"])
-fun setListOfUsers(view: RecyclerView, usersRecyclerAdapter: UsersRecyclerAdapter , listOfUsers : List<UserModel>, searchText : String) {
+@BindingAdapter(*["bind:usersAdapter", "bind:usersList","bind:searchText","bind:type"])
+fun setListOfUsers(view: RecyclerView, usersRecyclerAdapter: UsersRecyclerAdapter , listOfUsers : List<UserModel>, searchText : String , type : Int) {
             val list = if (searchText.trim().isNotEmpty()){getSearchUsers(searchText,listOfUsers)} else listOfUsers
+            val arrayList  = ArrayList<UserModel>()
+            when (type){
+                R.id.all_usersFragment -> arrayList.addAll(list)
+                R.id.admins_usersFragment -> list.forEach { if (it.type == "Admin") arrayList.add(it) }
+                R.id.customers_usersFragment -> list.forEach { if (it.type == "Customer") arrayList.add(it) }
+                R.id.merchants_usersFragment -> list.forEach { if (it.type == "Merchant") arrayList.add(it) }
+            }
 
-            usersRecyclerAdapter.setList(list)
+            usersRecyclerAdapter.setList(arrayList.toList())
             view.adapter = usersRecyclerAdapter
 
 }
@@ -90,23 +98,3 @@ fun selectedType(view: TextView, resource: Int) {
                   }
 
 }
-
-/*@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
-fun bindSpinnerData(pAppCompatSpinner: AppCompatSpinner, newSelectedValue: String?, newTextAttrChanged: InverseBindingListener) {
-    pAppCompatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-            newTextAttrChanged.onChange()
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {}
-    }
-    if (newSelectedValue != null) {
-        val pos = (pAppCompatSpinner.adapter as ArrayAdapter<String?>).getPosition(newSelectedValue)
-        pAppCompatSpinner.setSelection(pos, true)
-    }
-}
-
-@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
-fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): String {
-    return pAppCompatSpinner.selectedItem as String
-}*/

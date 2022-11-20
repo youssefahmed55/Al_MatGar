@@ -200,6 +200,7 @@
             bind:usersAdapter="@{usersRecyclerAdapter}"
             bind:usersList="@{viewModel.stateFlowUserModels}"
             bind:searchText="@{viewModel.mutableStateFlowTextSearch}"
+            bind:type="@{viewModel.stateFlowType}"
             />
 
         <ProgressBar

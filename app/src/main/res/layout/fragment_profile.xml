@@ -154,8 +154,8 @@
                         >
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_gender_icon"
                             />
 
@@ -226,8 +226,8 @@
                         >
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_calender_icon"
                             />
 
@@ -299,8 +299,8 @@
                         >
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_email_icon"
                             android:layout_gravity="center"
                             />
@@ -326,6 +326,7 @@
                         android:orientation="horizontal"
                         android:gravity="end"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
                         >
 
 
@@ -372,8 +373,8 @@
                         >
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_phone_icon"
                             />
 
@@ -443,8 +444,8 @@
                         >
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_baseline_location_on_24"
                             />
 
