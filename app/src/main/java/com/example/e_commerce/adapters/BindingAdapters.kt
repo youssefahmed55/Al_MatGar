@@ -4,10 +4,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
 import android.widget.*
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.e_commerce.DefaultStates

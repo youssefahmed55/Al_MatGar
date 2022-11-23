@@ -33,4 +33,16 @@ object SharedPrefsUtil{
 
     }
 
+    fun getName(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.fullName
+
+    }
+
+    fun getId(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.id
+
+    }
+
 }

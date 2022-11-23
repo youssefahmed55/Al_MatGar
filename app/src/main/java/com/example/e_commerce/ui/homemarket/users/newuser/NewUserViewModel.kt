@@ -75,6 +75,7 @@ class NewUSerViewModel @Inject constructor(private val newUserRepo: NewUserRepo)
         val result = NewUserUtil.checkCreateAccountValid(fullName.toString(),email.toString(),gender.toString().toInt(),type.toString().toInt(),dateOfBirthday.toString(),phone.toString(),address.toString(),password.toString())
         if(result == R.string.success){
             viewModelScope.launch(handler) {
+                _mutableStateFlow.value = DefaultStates.Loading
                 _mutableStateFlow.value = newUserRepo.createAccount(fullName.toString(),email.toString(),gender.toString().toInt(),type.toString().toInt(),dateOfBirthday.toString(),phone.toString(),address.toString(),password.toString())
             }
 

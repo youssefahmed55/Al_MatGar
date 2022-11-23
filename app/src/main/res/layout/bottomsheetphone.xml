@@ -51,7 +51,7 @@
                    android:maxLines="1"
                    android:maxLength="15"
                    android:hint="+000 000 000 00"
-                   android:inputType="phone"
+                   android:inputType="number"
                    android:layout_marginStart="@dimen/_5sdp"
                    android:fontFamily="@font/poppins_regular"
                    />

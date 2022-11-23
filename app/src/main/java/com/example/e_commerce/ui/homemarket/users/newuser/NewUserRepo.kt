@@ -38,7 +38,7 @@ class NewUserRepo @Inject constructor(@ApplicationContext private val appContext
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
         FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
-        db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(FirebaseAuth.getInstance().currentUser!!.uid,fullName,email,type2,false,phone,birthday,gender2,location))
+        db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(FirebaseAuth.getInstance().currentUser!!.uid,fullName,email,type2,false,phone,birthday,gender2,location)).await()
 
         return@withContext DefaultStates.Success(appContext.getString(R.string.Created_Account_Successfully))
     }

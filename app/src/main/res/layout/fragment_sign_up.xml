@@ -112,7 +112,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:hint="@string/phone_number"
             android:paddingStart="@dimen/_8sdp"
-            android:inputType="phone"
+            android:inputType="number"
             android:textSize="@dimen/_12ssp"
             android:maxLines="1"
             android:maxLength="13"

@@ -73,4 +73,11 @@ class NewUserUtilTest {
         Assert.assertEquals(context.getString(result), context.getString(R.string.Password_Is_Required))
     }
 
+    @Test
+    fun `All Data Valid returns Success`() {
+        val result = NewUserUtil.checkCreateAccountValid("Youssef Ahmed","youssefahmed505505@gmail.com",1,1,"4-6-1999","01229651459","Helwan","123456")
+        Assert.assertEquals(context.getString(result), context.getString(R.string.success))
+
+    }
+
 }

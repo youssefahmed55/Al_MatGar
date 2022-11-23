@@ -49,7 +49,7 @@ class ProductDetailsFragment : Fragment() {
         bottomNavigationView = activity!!.findViewById(R.id.bottomNavigationView)
         bottomNavigationView.visibility = View.GONE
 
-        if (product!=null) setSliderAdapter(product!!.images)
+        if (product!=null) setSliderAdapter(product?.images!!)
         binding.product = product
         return binding.root
     }

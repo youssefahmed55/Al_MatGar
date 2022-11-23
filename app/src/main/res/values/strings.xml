@@ -49,7 +49,7 @@
     <string name="you_also_can_sign_up_with">You also can sign up with</string>
     <string name="google">Google</string>
     <string name="you_also_can_sign_in_with">You also can sign in with</string>
-    <string name="estimated_delivery_days">Estimated Delivery Days :</string>
+    <string name="estimated_delivery_Days">Estimated Delivery Days :</string>
     <string name="clothes">Clothes</string>
     <string name="your_cart">Your Cart</string>
     <string name="your_orders_process">Your orders Process</string>
@@ -113,6 +113,25 @@
     <string name="Merchant">Merchant</string>
     <string name="Admin">Admin</string>
     <string name="Created_Account_Successfully">Created Account Successfully</string>
+    <string name="add_product">Add Product</string>
+    <string name="name_of_your_product">Name of your product :</string>
+    <string name="description">Description :</string>
+    <string name="categorie">Categorie :</string>
+    <string name="delivery_time">Delivery Time :</string>
+    <string name="pricee">Price :</string>
+    <string name="offer_price">Offer Price :</string>
+    <string name="upload_images">Upload Images</string>
+    <string name="has_offer">Has Offer</string>
+    <string name="Name_Of_Product_Is_Required">Name Of Product Is Required</string>
+    <string name="Description_Is_Required">Description Is Required</string>
+    <string name="Price_Is_Required">Price Is Required</string>
+    <string name="Offer_Price_Is_Required">Offer Price Is Required</string>
+    <string name="You_Should_Upload_More_Than_three_Images">You Should Upload More Than 3 Images</string>
+    <string name="Offer_Price_Must_Be_Less_than_Price">Offer Price Must Be Less than Price</string>
+    <string name="Added_Product_Successfully">Added Product Successfully</string>
+    <string name="Photos_Uploaded">Photos Uploaded.</string>
+    <string name="Price_Must_Not_To_Be_Equal_Zero">Price Must Not To Be Equal 0</string>
+    <string name="Offer_Price_Must_Not_To_Be_Equal_Zero">Offer Price Must Not To Be Equal 0</string>
 
 
     <string-array name="genders">
@@ -126,4 +145,25 @@
         <item>Merchant</item>
         <item>Admin</item>
     </string-array>
+    <string-array name="categories">
+        <item>Beauty</item>
+        <item>Clothes</item>
+        <item>Food</item>
+        <item>HouseWare</item>
+    </string-array>
+
+    <string-array name="Days">
+        <item>1 Day</item>
+        <item>2 Days</item>
+        <item>3 Days</item>
+        <item>4 Days</item>
+        <item>5 Days</item>
+        <item>6 Days</item>
+        <item>7 Days</item>
+        <item>8 Days</item>
+        <item>9 Days</item>
+        <item>10 Days</item>
+    </string-array>
+
+
 </resources>

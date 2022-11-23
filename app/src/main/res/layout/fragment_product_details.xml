@@ -240,7 +240,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_8ssp"
-                        android:text="@string/estimated_delivery_days"
+                        android:text="@string/estimated_delivery_Days"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:textColor="@color/black"
@@ -250,7 +250,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_8ssp"
-                        android:text="@{Integer.toString(product.delivery_time)}"
+                        android:text="@{product.delivery_time}"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_semibold" />

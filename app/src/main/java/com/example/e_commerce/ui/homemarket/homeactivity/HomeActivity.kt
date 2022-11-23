@@ -9,7 +9,7 @@ import com.example.e_commerce.ui.homemarket.account.AccountFragment
 import com.example.e_commerce.ui.homemarket.cart.CartFragment
 import com.example.e_commerce.ui.homemarket.explore.ExploreFragment
 import com.example.e_commerce.ui.homemarket.home.HomeFragment
-import com.example.e_commerce.ui.homemarket.myproducts.MyProductsFragment
+import com.example.e_commerce.ui.homemarket.myproducts.myproducts.MyProductsFragment
 import com.example.e_commerce.ui.homemarket.offer.OfferFragment
 import com.example.e_commerce.ui.homemarket.users.users.UsersFragment
 import com.example.e_commerce.utils.SharedPrefsUtil
