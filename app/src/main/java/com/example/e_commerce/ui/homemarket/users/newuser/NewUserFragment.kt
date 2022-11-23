@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CustomArrayAdapter
 import com.example.e_commerce.databinding.BottomsheetdateBinding
 import com.example.e_commerce.databinding.FragmentNewUserBinding
+import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -87,8 +87,8 @@ class NewUserFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
-                    is DefaultStates.Error -> Toast.makeText(requireContext(),it.error,Toast.LENGTH_SHORT).show()
-                    is DefaultStates.Success -> {Toast.makeText(requireContext(),it.toastMessage,Toast.LENGTH_SHORT).show()
+                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
+                    is DefaultStates.Success -> {ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
                         activity!!.supportFragmentManager.popBackStack()
                     }
                     else -> {}
@@ -102,14 +102,14 @@ class NewUserFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
             when(it){
-                R.string.FullName_Is_Required -> binding.fullNameNewuser.error =  getString(R.string.FullName_Is_Required)
-                R.string.Email_Is_Required -> binding.emailNewuser.error =  getString(R.string.Email_Is_Required)
-                R.string.Phone_Number_Is_Required -> binding.phoneNumberNewuser.error =  getString(R.string.Phone_Number_Is_Required)
-                R.string.Password_Is_Required -> binding.passwordNewuser.error =  getString(R.string.Password_Is_Required)
-                R.string.Gender_Is_Required -> Toast.makeText(requireContext(),getString(R.string.Gender_Is_Required),Toast.LENGTH_SHORT).show()
-                R.string.Type_Is_Required -> Toast.makeText(requireContext(),getString(R.string.Type_Is_Required),Toast.LENGTH_SHORT).show()
-                R.string.Birthday_Is_Required -> binding.dateOfBirthdayNewuser.error =  getString(R.string.Birthday_Is_Required)
-                R.string.Location_Is_Required -> binding.addressNewuser.error =  getString(R.string.Location_Is_Required)
+                R.string.FullName_Is_Required -> binding.fullNameNewuser.error =  getString(it)
+                R.string.Email_Is_Required -> binding.emailNewuser.error =  getString(it)
+                R.string.Phone_Number_Is_Required -> binding.phoneNumberNewuser.error =  getString(it)
+                R.string.Password_Is_Required -> binding.passwordNewuser.error =  getString(it)
+                R.string.Gender_Is_Required -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
+                R.string.Type_Is_Required -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
+                R.string.Birthday_Is_Required -> binding.dateOfBirthdayNewuser.error =  getString(it)
+                R.string.Location_Is_Required -> binding.addressNewuser.error =  getString(it)
 
 
             }
@@ -142,12 +142,12 @@ class NewUserFragment : Fragment() {
     }
 
     private fun setSpinnersAdapter() {
-        val spinnerArrayAdapterGender = object  : CustomArrayAdapter(requireContext(),R.layout.spinner_item,resources.getStringArray(R.array.genders)){
+        val spinnerArrayAdapterGender = object  : CustomArrayAdapter(context!!,R.layout.spinner_item,resources.getStringArray(R.array.genders)){
             override fun isEnabled(position: Int): Boolean {
                 return position != 0
             }
         }
-        val spinnerArrayAdapterType = object  :  CustomArrayAdapter(requireContext(),R.layout.spinner_item,resources.getStringArray(R.array.types)){
+        val spinnerArrayAdapterType = object  :  CustomArrayAdapter(context!!,R.layout.spinner_item,resources.getStringArray(R.array.types)){
             override fun isEnabled(position: Int): Boolean {
                 return position != 0
             }

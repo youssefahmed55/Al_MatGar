@@ -125,6 +125,9 @@ dependencies {
 
     // Add the dependency for the Cloud Storage library
     implementation 'com.google.firebase:firebase-storage'
+
+    //Toasty
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 }
 kapt {
     correctErrorTypes = true

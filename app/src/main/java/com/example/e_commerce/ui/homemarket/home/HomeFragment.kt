@@ -128,7 +128,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showDialog() {
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(context!!)
         builder.setMessage("Are you sure you want to Logout ?")
             .setCancelable(true)
             .setPositiveButton("Yes") { dialog, _ ->
@@ -138,9 +138,9 @@ class HomeFragment : Fragment() {
                     .requestIdToken(BuildConfig.GOOGLE_API_KEY)
                     .requestEmail()
                     .build()
-                val googleClient = GoogleSignIn.getClient(requireContext(), gso)
+                val googleClient = GoogleSignIn.getClient(context!!, gso)
                 googleClient.signOut()
-                SharedPrefsUtil.clearUserModel(requireContext())
+                SharedPrefsUtil.clearUserModel(context!!)
                 activity?.startActivity(Intent(activity, MainActivity::class.java))
                 activity?.finish()
 

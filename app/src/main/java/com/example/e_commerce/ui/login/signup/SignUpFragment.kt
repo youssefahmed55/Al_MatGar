@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSignUpBinding
 import com.example.e_commerce.DefaultStates
+import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -65,12 +66,12 @@ class SignUpFragment : Fragment() {
             viewModel.states.collect{
                 when(it){
                     is DefaultStates.Success -> {
-                        Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
+                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
                         findNavController().popBackStack()
                     }
                     is DefaultStates.Error -> {
                         Log.d(TAG, "render: " + it.error )
-                        Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
+                        ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
                     }
 
                     else -> {}
@@ -84,12 +85,12 @@ class SignUpFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
             when(it){
-                R.string.FullName_Is_Required -> binding.editTextFullNameSignUp.error =  getString(R.string.FullName_Is_Required)
-                R.string.Email_Is_Required -> binding.editTextEmailAddressSignUp.error =  getString(R.string.Email_Is_Required)
-                R.string.Phone_Number_Is_Required -> binding.editTextPhoneNumberSignUp.error =  getString(R.string.Phone_Number_Is_Required)
-                R.string.Password_Is_Required -> binding.editTextPasswordSignUp.error =  getString(R.string.Password_Is_Required)
-                R.string.Confirm_Password_Is_Required -> binding.editTextConfirmPasswordSignUp.error =  getString(R.string.Confirm_Password_Is_Required)
-                R.string.Password_Donot_match -> binding.editTextConfirmPasswordSignUp.error = getString(R.string.Password_Donot_match)
+                R.string.FullName_Is_Required -> binding.editTextFullNameSignUp.error =  getString(it)
+                R.string.Email_Is_Required -> binding.editTextEmailAddressSignUp.error =  getString(it)
+                R.string.Phone_Number_Is_Required -> binding.editTextPhoneNumberSignUp.error =  getString(it)
+                R.string.Password_Is_Required -> binding.editTextPasswordSignUp.error =  getString(it)
+                R.string.Confirm_Password_Is_Required, R.string.Password_Donot_match -> binding.editTextConfirmPasswordSignUp.error =  getString(it)
+
             }
         })
     }

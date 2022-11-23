@@ -1,14 +1,10 @@
 package com.example.e_commerce.ui.homemarket.users.newuser
 
 import android.content.Context
-import android.util.Log
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
-import com.example.e_commerce.utils.Network
-import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext

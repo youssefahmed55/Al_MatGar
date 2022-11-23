@@ -19,6 +19,7 @@ import com.example.e_commerce.databinding.FragmentSplashBinding
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.utils.SharedPrefsUtil
+import com.example.e_commerce.utils.ToastyUtil
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -60,7 +61,7 @@ class SplashFragment : Fragment() {
         binding.viewModel = viewModel
         // Inflate the layout for this fragment
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            val user = SharedPrefsUtil.getUserModel(requireContext())
+            val user = SharedPrefsUtil.getUserModel(context!!)
             if (user != null && FirebaseAuth.getInstance().currentUser != null){
                 activity?.startActivity(Intent(activity, HomeActivity::class.java))
                 activity?.finish()
@@ -78,12 +79,12 @@ class SplashFragment : Fragment() {
          viewModel.states.collect{
              when(it){
                  is DefaultStates.Success -> {
-                     Toast.makeText(requireActivity(),it.toastMessage,Toast.LENGTH_SHORT).show()
+                     ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
                      activity?.startActivity(Intent(activity, HomeActivity::class.java))
                      activity?.finish()
                  }
                  is DefaultStates.Error -> {
-                     Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
+                     ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
                  }
 
                  else -> {}

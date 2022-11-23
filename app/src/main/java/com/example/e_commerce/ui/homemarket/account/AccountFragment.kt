@@ -1,32 +1,25 @@
 package com.example.e_commerce.ui.homemarket.account
 
 import android.app.Activity.RESULT_OK
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.BuildConfig
 import com.example.e_commerce.Constants.PICK_IMAGE
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.*
-import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.MainActivity
-import com.example.e_commerce.ui.login.signin.SignInViewModel
 import com.example.e_commerce.utils.SharedPrefsUtil
+import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -112,7 +105,7 @@ class AccountFragment : Fragment() {
                 when(it){
                     is DefaultStates.Success -> {
 
-                        Toast.makeText(requireActivity(),getString(R.string.Saved_Successfully), Toast.LENGTH_SHORT).show()
+                        ToastyUtil.successToasty(context!!,getString(R.string.Saved_Successfully), Toast.LENGTH_SHORT)
 
                         imageUri = null
                         passwordOfNewEmail = null
@@ -130,16 +123,16 @@ class AccountFragment : Fragment() {
                                 .requestIdToken(BuildConfig.GOOGLE_API_KEY)
                                 .requestEmail()
                                 .build()
-                            val googleClient = GoogleSignIn.getClient(requireContext(), gso)
+                            val googleClient = GoogleSignIn.getClient(context!!, gso)
                             googleClient.signOut()
-                            SharedPrefsUtil.clearUserModel(requireContext())
-                            Toast.makeText(requireActivity(),getString(R.string.please_Check_your_email_address), Toast.LENGTH_SHORT).show()
+                            SharedPrefsUtil.clearUserModel(context!!)
+                            ToastyUtil.infoToasty(context!!,getString(R.string.please_Check_your_email_address), Toast.LENGTH_SHORT)
                             activity?.startActivity(Intent(activity, MainActivity::class.java))
                             activity?.finish()
                         }
                     }
                     is DefaultStates.Error -> {
-                        Toast.makeText(requireActivity(),it.error, Toast.LENGTH_SHORT).show()
+                        ToastyUtil.errorToasty(context!!,it.error, Toast.LENGTH_SHORT)
                     }
 
                     else -> {}
@@ -246,7 +239,7 @@ class AccountFragment : Fragment() {
                         newPassword = newPass
                         passwordOfNewPassword = bindingBottomsheetpassword.currentPasswordBottomSheetPassword.text.toString().trim()
                     }else{
-                        Snackbar.make(requireActivity().findViewById(R.id.flFragment),getString(R.string.Password_Donot_match),Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(activity!!.findViewById(R.id.flFragment),getString(R.string.Password_Donot_match),Snackbar.LENGTH_SHORT).show()
                     }
                 }
 

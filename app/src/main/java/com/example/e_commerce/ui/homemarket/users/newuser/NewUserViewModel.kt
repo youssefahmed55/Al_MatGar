@@ -2,20 +2,19 @@ package com.example.e_commerce.ui.homemarket.users.newuser
 
 
 
-import android.util.Log
+
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.e_commerce.R
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.utils.NewUserUtil
-import com.example.e_commerce.utils.RegisterUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-private const val TAG = "NewUserViewModel"
+
 @HiltViewModel
 class NewUSerViewModel @Inject constructor(private val newUserRepo: NewUserRepo) : ViewModel() {
 

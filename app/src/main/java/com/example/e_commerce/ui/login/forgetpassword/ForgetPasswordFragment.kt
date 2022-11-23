@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentForgetPasswordBinding
-import com.example.e_commerce.ui.login.signin.SignInViewModel
+import com.example.e_commerce.utils.ToastyUtil
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,14 +55,14 @@ class ForgetPasswordFragment : Fragment() {
 
     private fun observeSentPassword() {
         viewModel.liveDataSentPassword.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireActivity(),getString(R.string.please_Check_your_email_address),Toast.LENGTH_SHORT).show()
+            ToastyUtil.infoToasty(context!!,getString(R.string.please_Check_your_email_address),Toast.LENGTH_SHORT)
             findNavController().popBackStack()
         })
     }
 
     private fun observeErrorToast() {
         viewModel.liveDataErrorToast.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireActivity(),it,Toast.LENGTH_SHORT).show()
+            ToastyUtil.errorToasty(context!!,it,Toast.LENGTH_SHORT)
         })
     }
 

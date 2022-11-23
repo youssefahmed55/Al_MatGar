@@ -17,6 +17,7 @@ import com.example.e_commerce.Constants.PICK_IMAGE_MULTIPLE
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentAddProductBinding
+import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -109,9 +110,9 @@ class AddProductFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when (it) {
-                    is DefaultStates.Error -> Toast.makeText(context,it.error,Toast.LENGTH_SHORT).show()
+                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
                     is DefaultStates.Success -> {
-                        Toast.makeText(context,it.toastMessage,Toast.LENGTH_SHORT).show()
+                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
                         activity!!.supportFragmentManager.popBackStack()
                     }
                     else -> {}
@@ -128,7 +129,7 @@ class AddProductFragment : Fragment() {
                 R.string.Description_Is_Required -> binding.descriptionAddProduct.error = getString(it)
                 R.string.Price_Is_Required , R.string.Price_Must_Not_To_Be_Equal_Zero ->   binding.priceOfProductAddProduct.error = getString(it)
                 R.string.Offer_Price_Must_Be_Less_than_Price , R.string.Offer_Price_Is_Required , R.string.Offer_Price_Must_Not_To_Be_Equal_Zero -> binding.offerPriceOfProductAddProduct.error = getString(it)
-                R.string.You_Should_Upload_More_Than_three_Images -> Toast.makeText(context,getString(it),Toast.LENGTH_SHORT).show()
+                R.string.You_Should_Upload_More_Than_three_Images -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
                 else -> {}
 
             }

@@ -16,6 +16,7 @@ import com.example.e_commerce.databinding.FragmentUsersBinding
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.ui.homemarket.users.ProfileFragment
 import com.example.e_commerce.ui.homemarket.users.newuser.NewUserFragment
+import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
@@ -81,7 +82,7 @@ class UsersFragment : Fragment() {
             viewModel.refreshData()
             viewModel.states.collect{
                 when(it){
-                    is DefaultStates.Error ->Toast.makeText(requireActivity(),it.error,Toast.LENGTH_SHORT).show()
+                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
                     else -> {}
                 }
             }
