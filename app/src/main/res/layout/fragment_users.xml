@@ -129,7 +129,7 @@
                     android:onClick="@{()-> viewModel.getAllUsers()}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
-                    selectedType="@{viewModel.stateFlowType}"
+                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
                     android:background="@drawable/shape2"
                     android:textColor="@color/white"
                     android:layout_marginEnd="@dimen/_10sdp" />
@@ -143,7 +143,7 @@
                     android:textSize="@dimen/_9ssp"
                     android:text="@string/customers"
                     android:onClick="@{()-> viewModel.getCustomerUsers()}"
-                    selectedType="@{viewModel.stateFlowType}"
+                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
@@ -161,7 +161,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:onClick="@{()-> viewModel.getMerchantUsers()}"
-                    selectedType="@{viewModel.stateFlowType}"
+                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
                     android:background="@drawable/shape3"
                     android:textColor="@color/black"
                     android:layout_marginEnd="@dimen/_10sdp" />
@@ -175,7 +175,7 @@
                     android:textSize="@dimen/_9ssp"
                     android:text="@string/admins"
                     android:onClick="@{()-> viewModel.getAdminUsers()}"
-                    selectedType="@{viewModel.stateFlowType}"
+                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
@@ -197,10 +197,10 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            bind:usersAdapter="@{usersRecyclerAdapter}"
-            bind:usersList="@{viewModel.stateFlowUserModels}"
-            bind:searchText="@{viewModel.mutableStateFlowTextSearch}"
-            bind:type="@{viewModel.stateFlowType}"
+            bind:userAdapter="@{usersRecyclerAdapter}"
+            bind:userList="@{viewModel.stateFlowUserModels}"
+            bind:searchUserText="@{viewModel.mutableStateFlowTextSearch}"
+            bind:UserType="@{viewModel.stateFlowType}"
             />
 
         <ProgressBar

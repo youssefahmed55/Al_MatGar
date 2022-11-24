@@ -69,9 +69,14 @@ class NewProductUtilTest{
     }
 
     @Test
-    fun `List Of Images Is Less than 3 Images returns You Should Upload More Than three Images`() {
+    fun `List Of Images Is Less than 3 Images or Greater Than 7 returns You Must Upload Between Three And Seven Images`() {
         val result = NewProductUtil.checkCreateProductValid("Name","Description","40",true,"30", listOf(Uri.parse("https")))
-        assertEquals(context.getString(result), context.getString(R.string.You_Should_Upload_More_Than_three_Images))
+        val mutableList = mutableListOf<Uri>()
+        for (i in 0..7){ mutableList.add(Uri.parse("https"))}
+        val result2 = NewProductUtil.checkCreateProductValid("Name","Description","40",true,"30", mutableList.toList())
+
+        assertEquals(context.getString(result), context.getString(R.string.You_Must_Upload_Between_Three_And_Seven_Images))
+        assertEquals(context.getString(result2), context.getString(R.string.You_Must_Upload_Between_Three_And_Seven_Images))
     }
 
     @Test

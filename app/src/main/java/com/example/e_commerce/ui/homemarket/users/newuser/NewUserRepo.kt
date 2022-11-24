@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
+import com.example.e_commerce.utils.Network
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -19,6 +20,7 @@ class NewUserRepo @Inject constructor(@ApplicationContext private val appContext
     private val db  = Firebase.firestore
 
     suspend fun createAccount(fullName : String, email: String, gender : Int, type : Int , birthday :String, phone: String, location :String, password: String): DefaultStates = withContext(Dispatchers.IO) {
+        Network.checkConnectionType(appContext)
         val type2 :String = when(type){
         1 -> appContext.getString(R.string.Customer)
         2 -> appContext.getString(R.string.Merchant)

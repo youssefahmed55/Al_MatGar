@@ -34,8 +34,8 @@ object NewProductUtil {
             }
 
         }
-        if (listOfImages.size < 3){
-            return R.string.You_Should_Upload_More_Than_three_Images
+        if (listOfImages.size < 3 || listOfImages.size > 7){
+            return R.string.You_Must_Upload_Between_Three_And_Seven_Images
         }
 
         return R.string.success

@@ -129,9 +129,9 @@ class HomeFragment : Fragment() {
 
     private fun showDialog() {
         val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Are you sure you want to Logout ?")
+        builder.setMessage(getString(R.string.Are_you_sure_you_want_to_Logout))
             .setCancelable(true)
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setPositiveButton(getString(R.string.Yes)) { dialog, _ ->
 
                 FirebaseAuth.getInstance().signOut()
                 val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
 
                 dialog.dismiss()
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton(getString(R.string.No)) { dialog, _ ->
                 // Dismiss the dialog
                 dialog.dismiss()
             }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -55,14 +56,22 @@ class AddProductFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
         observeErrorMessage()
         render()
         setOnClickOnBackIcon()
+        setOnClickOnBack()
         setOnClickOnUploadImages()
         setOnClickOnSaveButton()
 
         return binding.root
+    }
+
+    private fun setOnClickOnBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {}
+            }
+        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun setOnClickOnUploadImages() {
@@ -129,7 +138,7 @@ class AddProductFragment : Fragment() {
                 R.string.Description_Is_Required -> binding.descriptionAddProduct.error = getString(it)
                 R.string.Price_Is_Required , R.string.Price_Must_Not_To_Be_Equal_Zero ->   binding.priceOfProductAddProduct.error = getString(it)
                 R.string.Offer_Price_Must_Be_Less_than_Price , R.string.Offer_Price_Is_Required , R.string.Offer_Price_Must_Not_To_Be_Equal_Zero -> binding.offerPriceOfProductAddProduct.error = getString(it)
-                R.string.You_Should_Upload_More_Than_three_Images -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
+                R.string.You_Must_Upload_Between_Three_And_Seven_Images -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
                 else -> {}
 
             }

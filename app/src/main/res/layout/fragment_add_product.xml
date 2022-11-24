@@ -12,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        canClickable="@{viewModel.states}"
         >
 
         <ImageView
@@ -41,7 +40,7 @@
             app:cardElevation="@dimen/_3sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
+            canClickable="@{viewModel.states}"
             >
 
             <ImageView
@@ -348,7 +347,9 @@
                     android:textColor="@color/black"
                     android:background="@drawable/shape1"
                     android:padding="@dimen/_10sdp"
-                    app:drawableEndCompat="@drawable/ic_plus" />
+                    app:drawableEndCompat="@drawable/ic_plus"
+                    canClickable="@{viewModel.states}"
+                    />
 
                 <TextView
                     android:id="@+id/uploadedImagesCount_addProduct"
@@ -374,7 +375,7 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_bold"
                 android:textAllCaps="false"
-
+                canClickable="@{viewModel.states}"
                 />
             <ProgressBar
                 android:id="@+id/myProgress_addProduct"

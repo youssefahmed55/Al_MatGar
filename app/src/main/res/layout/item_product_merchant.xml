@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
+       <variable
+           name="product"
+           type="com.example.e_commerce.pojo.Product" />
 
     </data>
 
@@ -20,6 +24,7 @@
             android:padding="@dimen/_10sdp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/imageCard_itemInCart"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 app:cardCornerRadius="@dimen/_40sdp">
@@ -28,7 +33,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_launcher_background" />
+                    imageUrl="@{product.images != null ? product.images.get(0) : null }"
+                    />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -52,7 +58,7 @@
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="ffd;fldplfdodofdmfdkmfkdmfomdsaomsamewerfssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaswqesadsad" />
+                        android:text="@{product.name}" />
 
                     <ImageView
                         android:id="@+id/delete_itemInCart"
@@ -82,12 +88,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_8ssp"
-                        android:text="1"
+                        android:text="@{String.valueOf(product.delivery_time)}"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_regular" />
 
                 </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -96,7 +103,18 @@
                     android:textColor="@color/green"
                     android:maxLines="1"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="500$" />
+                    price="@{product.hasOffer ? product.offerPrice : product.price}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/hintColor"
+                    strikeThrough="@{product.price}"
+                    android:visibility="@{product.hasOffer ? View.VISIBLE : View.INVISIBLE}"
+                    android:maxLines="1"
+                    android:fontFamily="@font/poppins_regular"
+                    />
 
 
             </LinearLayout>

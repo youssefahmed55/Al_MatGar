@@ -126,12 +126,15 @@
     <string name="Description_Is_Required">Description Is Required</string>
     <string name="Price_Is_Required">Price Is Required</string>
     <string name="Offer_Price_Is_Required">Offer Price Is Required</string>
-    <string name="You_Should_Upload_More_Than_three_Images">You Should Upload More Than 3 Images</string>
+    <string name="You_Must_Upload_Between_Three_And_Seven_Images">You Must Upload Between Three And Seven Images</string>
     <string name="Offer_Price_Must_Be_Less_than_Price">Offer Price Must Be Less than Price</string>
     <string name="Added_Product_Successfully">Added Product Successfully</string>
     <string name="Photos_Uploaded">Photos Uploaded.</string>
     <string name="Price_Must_Not_To_Be_Equal_Zero">Price Must Not To Be Equal 0</string>
     <string name="Offer_Price_Must_Not_To_Be_Equal_Zero">Offer Price Must Not To Be Equal 0</string>
+    <string name="Are_you_sure_you_want_to_Logout">Are you sure you want to Logout ?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 
 
     <string-array name="genders">

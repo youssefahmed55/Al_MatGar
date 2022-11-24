@@ -1,6 +1,7 @@
 package com.example.e_commerce.ui.subcategory
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,7 @@ class ProductDetailsFragment : Fragment() {
     }
     private lateinit var binding : FragmentProductDetailsBinding
     private lateinit var bottomNavigationView: BottomNavigationView
+    private val TAG = "ProductDetailsFragment"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,8 +51,12 @@ class ProductDetailsFragment : Fragment() {
         bottomNavigationView = activity!!.findViewById(R.id.bottomNavigationView)
         bottomNavigationView.visibility = View.GONE
 
-        if (product!=null) setSliderAdapter(product?.images!!)
-        binding.product = product
+        if (product!=null) {
+            if (product?.images != null)
+            setSliderAdapter(product?.images!!)
+
+            binding.product = product
+        }
         return binding.root
     }
 

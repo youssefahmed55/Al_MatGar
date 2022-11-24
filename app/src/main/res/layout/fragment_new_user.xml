@@ -13,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        canClickable="@{viewModel.states}"
         >
 
 
@@ -43,7 +42,7 @@
             app:cardElevation="@dimen/_3sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
+            canClickable="@{viewModel.states}"
             >
 
             <ImageView
@@ -429,7 +428,6 @@
             />
 
         <androidx.appcompat.widget.AppCompatButton
-
             android:id="@+id/createUserButton_newuser"
             android:layout_width="@dimen/_250sdp"
             android:layout_height="@dimen/_32sdp"
@@ -441,7 +439,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linear8_newuser"
-            app:layout_constraintBottom_toTopOf="@id/vectordown_newuser" />
+            app:layout_constraintBottom_toTopOf="@id/vectordown_newuser"
+            canClickable="@{viewModel.states}"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

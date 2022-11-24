@@ -94,14 +94,14 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp"
-                    price="@{product.price}"
+                    price="@{product.hasOffer ? product.offerPrice : product.price}"
                     android:maxLines="1"
                     android:fontFamily="@font/poppins_medium" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
-                    strikeThrough="@{product.offerPrice}"
+                    strikeThrough="@{product.price}"
                     android:visibility="@{product.hasOffer ? View.VISIBLE : View.INVISIBLE}"
                     android:textColor="@color/hintColor"
                     android:fontFamily="@font/poppins_semibold" />

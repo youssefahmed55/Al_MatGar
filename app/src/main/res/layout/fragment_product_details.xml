@@ -178,9 +178,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_8ssp"
-                            android:text="@{product.personOrCompanyName}"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:textSize="@dimen/_12ssp"
+                            android:text="@{product.personName}"
+                            android:layout_marginTop="@dimen/_2sdp"
                             android:textColor="@color/color1"
                             android:fontFamily="@font/poppins_semibold" />
 
@@ -208,8 +208,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/_12ssp"
-                                price="@{product.price}"
-                                android:layout_marginTop="@dimen/_5sdp"
+                                price="@{product.hasOffer ? product.offerPrice : product.price}"
+                                android:layout_marginTop="@dimen/_2sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:textColor="@color/green"
                                 android:fontFamily="@font/poppins_semibold" />
@@ -218,9 +218,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/_12ssp"
-                                strikeThrough="@{product.offerPrice}"
+                                strikeThrough="@{product.price}"
                                 android:visibility="@{product.hasOffer ? View.VISIBLE : View.INVISIBLE}"
-                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_2sdp"
                                 android:textColor="@color/hintColor"
                                 android:fontFamily="@font/poppins_semibold" />
 
@@ -235,6 +235,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_5sdp"
                     >
                     <TextView
                         android:layout_width="wrap_content"
@@ -250,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_8ssp"
-                        android:text="@{product.delivery_time}"
+                        android:text="@{String.valueOf(product.delivery_time)}"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_semibold" />

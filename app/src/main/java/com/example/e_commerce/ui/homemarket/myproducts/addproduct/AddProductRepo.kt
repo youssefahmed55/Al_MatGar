@@ -5,6 +5,7 @@ import android.net.Uri
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -20,6 +21,7 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
    private val db  = Firebase.firestore
 
    suspend fun createNewProduct(nameOfProduct: String, description: String, price: String, hasOffer: Boolean, offerPrice: String , category : Int , deliveryTime :Int , listOfImages: List<Uri>) :DefaultStates = withContext(Dispatchers.IO){
+       Network.checkConnectionType(appContext)
        val offerPrice2 = if (!hasOffer) "0.0" else offerPrice
        val deliveryTime2 = deliveryTime + 1
 
@@ -33,22 +35,30 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
 
        val doc = db.collection("MyProduct").document(getIdOfUser()).collection("Product").document()
        val docId = doc.id
-       val arrayListOfImages = ArrayList<String>()
+
+       val product = Product(docId,nameOfProduct.trim(),category2,getNameOfUser(),description.trim(),price.trim().toDouble(), null,hasOffer,offerPrice2.trim().toDouble(),deliveryTime2)
+
+       db.collection("MyProduct").document(getIdOfUser()).collection("Products").document(docId).set(product).await()
+       db.collection("AllProducts").document(docId).set(product).await()
+
+
+       val mutableListOfImages = mutableListOf<String>()
        listOfImages.forEachIndexed  {index, imageUri ->
-           val storageRef= FirebaseStorage.getInstance().getReference("Users").child(getIdOfUser()).child("Product").child(docId + index)
-           val image = storageRef.putFile(imageUri)
+
+           val image = FirebaseStorage.getInstance().getReference("Users").child(getIdOfUser()).child("Products").child(docId).child(docId + index).putFile(imageUri)
                .await() // await() instead of snapshot
                .storage
                .downloadUrl
                .await() // await the url
                .toString()
-           arrayListOfImages.add(image)
+
+           mutableListOfImages.add(image)
+
+           db.collection("MyProduct").document(getIdOfUser()).collection("Products").document(docId).update("images",mutableListOfImages).await()
+           db.collection("AllProducts").document(docId).update("images",mutableListOfImages).await()
        }
 
-       val product = Product(docId,nameOfProduct.trim(),category2,getNameOfUser(),description.trim(),price.trim().toDouble(),arrayListOfImages.toList(),hasOffer,offerPrice2.trim().toDouble(),deliveryTime2)
 
-       db.collection("MyProduct").document(getIdOfUser()).collection("Product").document(docId).set(product).await()
-       db.collection("AllProducts").document(docId).set(product).await()
 
        return@withContext DefaultStates.Success(appContext.getString(R.string.Added_Product_Successfully))
    }

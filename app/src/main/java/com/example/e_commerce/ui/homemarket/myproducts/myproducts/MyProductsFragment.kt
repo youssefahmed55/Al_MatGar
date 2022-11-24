@@ -1,15 +1,25 @@
 package com.example.e_commerce.ui.homemarket.myproducts.myproducts
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
+import com.example.e_commerce.adapters.ProductsMerchantRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentMyProductsBinding
+import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.myproducts.addproduct.AddProductFragment
-import com.example.e_commerce.ui.homemarket.users.newuser.NewUserFragment
+import com.example.e_commerce.ui.subcategory.ProductDetailsFragment
+import com.example.e_commerce.utils.ToastyUtil
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MyProductsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class MyProductsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -34,15 +45,84 @@ class MyProductsFragment : Fragment() {
         }
     }
     private lateinit var binding : FragmentMyProductsBinding
+    private val viewModel: MyProductsViewModel by lazy { ViewModelProvider(this)[MyProductsViewModel::class.java] }
+    private val productsMerchantRecyclerAdapter : ProductsMerchantRecyclerAdapter by lazy { ProductsMerchantRecyclerAdapter() }
+    private var job : Job?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_my_products, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        setOnClickOnItemOfRecycler()
+        setOnClickOnDeleteIconItemOfRecycler()
+
+        binding.productsMerchantRecyclerAdapter = productsMerchantRecyclerAdapter
+
 
         setOnClickOnAddButton()
 
         return binding.root
+    }
+
+    private fun render() {
+        job = lifecycleScope.launchWhenStarted {
+            viewModel.refreshData()
+            viewModel.states.collect{
+                when(it){
+                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error, Toast.LENGTH_SHORT)
+                    else -> {}
+                }
+            }
+        }
+    }
+    override fun onPause() {
+        job?.cancel()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        render()
+    }
+
+    private fun setOnClickOnDeleteIconItemOfRecycler() {
+        productsMerchantRecyclerAdapter.setOnDeleteClickListener(object : ProductsMerchantRecyclerAdapter.OnClickOnItemDelete{
+            override fun onClickDelete(id: String, list: List<String>?) {
+                val builder = AlertDialog.Builder(context!!)
+                builder.setMessage("Are you sure that you want to delete it ?")
+                    .setCancelable(true)
+                    .setPositiveButton(getString(R.string.Yes)) { dialog, _ ->
+                        viewModel.deleteProduct(id,list)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(getString(R.string.No)) { dialog, _ ->
+                        // Dismiss the dialog
+                        dialog.dismiss()
+                    }
+                val alert = builder.create()
+                alert.show()
+            }
+
+        })
+    }
+
+    private fun setOnClickOnItemOfRecycler() {
+        productsMerchantRecyclerAdapter.setOnItemClickListener(object : ProductsMerchantRecyclerAdapter.OnClickOnItem{
+            override fun onClick1(product: Product) {
+                val args = Bundle()
+                args.putSerializable("product", product)
+                val productDetailsFragment = ProductDetailsFragment()
+                productDetailsFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, productDetailsFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
+        })
     }
 
     private fun setOnClickOnAddButton() {
