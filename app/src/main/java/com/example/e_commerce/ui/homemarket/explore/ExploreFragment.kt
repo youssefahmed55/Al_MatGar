@@ -45,11 +45,11 @@ class ExploreFragment : Fragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_explore, container, false)
 
         val listOfProductSearch = listOf<Product>(
-            Product("55","BeautyCounterBeautyCounter","","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-            , Product("56","Beauty", "","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-            , Product("57","BeautyCounter","","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-            , Product("58","BeautyCounter","","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-            , Product("59","BeautyCounter","","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+            Product("55","BeautyCounterBeautyCounter","","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+            , Product("56","Beauty", "","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+            , Product("57","BeautyCounter","","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+            , Product("58","BeautyCounter","","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
+            , Product("59","BeautyCounter","","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
         )
 
         searchRecyclerAdapter.setOnItemClickListener(object : ProductsExploreRecyclerAdapter.OnClickOnItem{

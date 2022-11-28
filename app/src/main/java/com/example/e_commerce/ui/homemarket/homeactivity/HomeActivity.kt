@@ -45,6 +45,9 @@ class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListe
         bottomNavigationView.selectedItemId = R.id.home
         supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()
 
+
+
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

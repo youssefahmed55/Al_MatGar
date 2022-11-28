@@ -15,10 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.random.Random
 
 class AddProductRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
 
    private val db  = Firebase.firestore
+
 
    suspend fun createNewProduct(nameOfProduct: String, description: String, price: String, hasOffer: Boolean, offerPrice: String , category : Int , deliveryTime :Int , listOfImages: List<Uri>) :DefaultStates = withContext(Dispatchers.IO){
        Network.checkConnectionType(appContext)
@@ -35,10 +37,10 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
 
        val doc = db.collection("MyProduct").document(getIdOfUser()).collection("Product").document()
        val docId = doc.id
+       val myRandomValue = Random.nextInt(0, 2)
+       val product = Product(docId,nameOfProduct.trim(),category2,SharedPrefsUtil.getName(appContext),getIdOfUser(),description.trim(),price.trim().toDouble(), null,hasOffer,offerPrice2.trim().toDouble(),deliveryTime2,myRandomValue)
 
-       val product = Product(docId,nameOfProduct.trim(),category2,getNameOfUser(),description.trim(),price.trim().toDouble(), null,hasOffer,offerPrice2.trim().toDouble(),deliveryTime2)
-
-       db.collection("MyProduct").document(getIdOfUser()).collection("Products").document(docId).set(product).await()
+       db.collection("MyProduct").document(getIdOfUser()).collection("Products").document(docId).set({null}).await()
        db.collection("AllProducts").document(docId).set(product).await()
 
 
@@ -54,7 +56,6 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
 
            mutableListOfImages.add(image)
 
-           db.collection("MyProduct").document(getIdOfUser()).collection("Products").document(docId).update("images",mutableListOfImages).await()
            db.collection("AllProducts").document(docId).update("images",mutableListOfImages).await()
        }
 
@@ -63,7 +64,7 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
        return@withContext DefaultStates.Success(appContext.getString(R.string.Added_Product_Successfully))
    }
 
-    private fun getNameOfUser() : String = SharedPrefsUtil.getName(appContext)!!
+
 
     private fun getIdOfUser() : String = SharedPrefsUtil.getId(appContext)!!
 

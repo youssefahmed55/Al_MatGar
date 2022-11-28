@@ -179,7 +179,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_12ssp"
-                            android:text="@{product.personName}"
+                            android:text="@{product.brand}"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:textColor="@color/color1"
                             android:fontFamily="@font/poppins_semibold" />

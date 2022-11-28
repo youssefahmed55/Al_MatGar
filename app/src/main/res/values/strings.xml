@@ -135,6 +135,9 @@
     <string name="Are_you_sure_you_want_to_Logout">Are you sure you want to Logout ?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="wish_you_have_a_good_day">Wish you have a good day</string>
+    <string name="welcome_back">Welcome Back,</string>
+    <string name="welcome">Welcome,</string>
 
 
     <string-array name="genders">

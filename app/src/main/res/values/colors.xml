@@ -17,4 +17,5 @@
     <color name="itemBackgroundColor">#FAFAFA</color>
     <color name="orange">#FF3D00</color>
     <color name="red">#D50000</color>
+    <color name="shimmerColor">#dddddd</color>
 </resources>

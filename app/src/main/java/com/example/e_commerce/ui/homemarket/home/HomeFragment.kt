@@ -3,12 +3,17 @@ package com.example.e_commerce.ui.homemarket.home
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.e_commerce.BuildConfig
+import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
@@ -18,13 +23,19 @@ import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.MainActivity
+import com.example.e_commerce.ui.subcategory.ProductDetailsFragment
 import com.example.e_commerce.ui.subcategory.SubCategoryFragment
 import com.example.e_commerce.utils.SharedPrefsUtil
+import com.example.e_commerce.utils.SignedInUtil
+import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.smarteist.autoimageslider.SliderView
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.consumeAsFlow
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,11 +47,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+private const val TAG = "HomeFragment"
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -52,22 +64,92 @@ class HomeFragment : Fragment() {
     private val categoriesRecyclerAdapter : CategoriesRecyclerAdapter by lazy { CategoriesRecyclerAdapter() }
     private val beautyRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val foodRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
+    private val clothesRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
+    private val houseWareRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
+    private val viewModel: HomeFragmentViewModel by lazy { ViewModelProvider(this)[HomeFragmentViewModel::class.java] }
+    private var job : Job?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
+        binding.lifecycleOwner = this
+        setOnClickOnCategoriesItem()
+        setOnClickOnBeautyItem()
+        setOnClickOnFoodItem()
+        setOnClickOnClothesItem()
+        setOnClickOnHouseWareItem()
+        binding.viewModel = viewModel
+        binding.categoriesRecyclerAdapter = categoriesRecyclerAdapter
+        binding.beautyRecyclerAdapter = beautyRecyclerAdapter
+        binding.foodRecyclerAdapter = foodRecyclerAdapter
+        binding.clothesRecyclerAdapter = clothesRecyclerAdapter
+        binding.houseWareRecyclerAdapter = houseWareRecyclerAdapter
 
-        onClickOnLogoutIcon() //TODO example
+        onClickOnLogoutIcon()
 
-        val list = listOf<String>("https://media.centrepointstores.com/i/centrepoint/SP_Offers_Block06MAR18.jpg","https://media.centrepointstores.com/i/centrepoint/SP_Offers_Block02MAR18.jpg","https://media.centrepointstores.com/i/centrepoint/SP_Offers_Block01MAR18.jpg")
-        setSliderAdapter(list)
 
-        val listOfCat = listOf<Category>(Category(1,"Beauty","https://www.npd.com/wp-content/uploads/2021/06/Beauty-Industry-holiday.jpg")
-                                        ,Category(2,"Clothes","https://www.popsci.com/uploads/2022/03/02/aviv-rachmadian-7F7kEHj72MQ-unsplash-scaled.jpg")
-                                        ,Category(3,"Food","https://images.squarespace-cdn.com/content/v1/53b839afe4b07ea978436183/1608506169128-S6KYNEV61LEP5MS1UIH4/traditional-food-around-the-world-Travlinmad.jpg")
-                                        ,Category(4,"HouseWare","https://t4.ftcdn.net/jpg/02/57/96/75/360_F_257967574_bnpqOyc6wEe38VU5rclWub3BphOB2y6T.jpg"))
 
+        return binding.root
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        renderErrorMessage()
+    }
+
+    override fun onPause() {
+        job?.cancel()
+        super.onPause()
+    }
+
+    private fun renderErrorMessage() {
+        job = lifecycleScope.launchWhenStarted {
+              viewModel.errorState.collect{
+                  if (it.isNotEmpty()) {
+                      Log.d(TAG, "renderErrorMessage: $it")
+                      ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
+                  }
+              }
+            }
+        }
+
+
+    private fun setOnClickOnFoodItem() {
+        foodRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
+            override fun onClick1(product: Product) {
+                val args = Bundle()
+                args.putSerializable("product", product)
+                val productDetailsFragment = ProductDetailsFragment()
+                productDetailsFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, productDetailsFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
+
+        })
+    }
+
+    private fun setOnClickOnBeautyItem() {
+        beautyRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
+            override fun onClick1(product: Product) {
+                val args = Bundle()
+                args.putSerializable("product", product)
+                val productDetailsFragment = ProductDetailsFragment()
+                productDetailsFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, productDetailsFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        })
+    }
+
+    private fun setOnClickOnCategoriesItem() {
         categoriesRecyclerAdapter.setOnItemClickListener(object : CategoriesRecyclerAdapter.OnClickOnItem{
             override fun onClick1(cat: Category) {
                 val args = Bundle()
@@ -81,49 +163,41 @@ class HomeFragment : Fragment() {
                 transaction.commit()
             }
         })
-        setCategoriesRecyclerAdapter(listOfCat)
+    }
 
-
-
-        val listOfProductBeauty = listOf<Product>(Product("55","BeautyCounterBeautyCounter","","BeautyCounter","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-                                            ,Product("56","Beauty","BeautyCounter","","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-                                            ,Product("57","BeautyCounter","BeautyCounter","","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-                                            ,Product("58","BeautyCounter","BeautyCounter","","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
-                                            ,Product("59","BeautyCounter","BeautyCounter","","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1))
-
-        beautyRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
+    private fun setOnClickOnHouseWareItem() {
+        houseWareRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                //TODO("Not yet implemented")
+                val args = Bundle()
+                args.putSerializable("product", product)
+                val productDetailsFragment = ProductDetailsFragment()
+                productDetailsFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, productDetailsFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
-
-
         })
-        setBeautyRecyclerAdapter(listOfProductBeauty)
+    }
 
-
-        val listOfProductFood = listOf<Product>(Product("55","FoodFoodFoodFoodFoodFood","","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
-            ,Product("70","Food","","Food","dddd",60.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
-            ,Product("80","Food","","Food","dddd",70.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
-            ,Product("90","Food","","Food","dddd",80.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1)
-            ,Product("100","Food","","Food","dddd",55.00, listOf("https://imageproxy.wolt.com/venue/5e9ed940634ff8fe31e88912/82bf3a34-83d5-11ea-b0a6-0a586469ca09_food_coma8_menu.jpg"),true,44.0,1))
-
-        foodRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
+    private fun setOnClickOnClothesItem() {
+        clothesRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                //TODO("Not yet implemented")
+                val args = Bundle()
+                args.putSerializable("product", product)
+                val productDetailsFragment = ProductDetailsFragment()
+                productDetailsFragment.arguments = args
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.flFragment, productDetailsFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
-
-
         })
-        setFoodRecyclerAdapter(listOfProductFood)
-
-
-        return binding.root
     }
 
     private fun onClickOnLogoutIcon() {
         binding.logoutHomeFragment.setOnClickListener {
             showDialog()
-
         }
     }
 
@@ -141,6 +215,7 @@ class HomeFragment : Fragment() {
                 val googleClient = GoogleSignIn.getClient(context!!, gso)
                 googleClient.signOut()
                 SharedPrefsUtil.clearUserModel(context!!)
+                SignedInUtil.setIsSignIn(context!!,false)
                 activity?.startActivity(Intent(activity, MainActivity::class.java))
                 activity?.finish()
 
@@ -152,43 +227,6 @@ class HomeFragment : Fragment() {
             }
         val alert = builder.create()
         alert.show()
-    }
-
-    private fun setFoodRecyclerAdapter(listOfProductFood: List<Product>) {
-        foodRecyclerAdapter.setList(listOfProductFood)
-        binding.recyclerFoodHomeFragment.adapter = foodRecyclerAdapter
-    }
-
-    private fun setBeautyRecyclerAdapter(listOfProductBeauty: List<Product>) {
-        beautyRecyclerAdapter.setList(listOfProductBeauty)
-        binding.recyclerBeautyHomeFragment.adapter = beautyRecyclerAdapter
-    }
-
-    private fun setCategoriesRecyclerAdapter(listOfCat: List<Category>) {
-       categoriesRecyclerAdapter.setList(listOfCat)
-       binding.recyclerCategoriesHomeFragment.adapter = categoriesRecyclerAdapter
-    }
-
-    private fun setSliderAdapter(list: List<String>) {
-       val sliderAdapter = SliderAdapter(list)
-        // on below line we are setting auto cycle direction
-        // for our slider view from left to right.
-        binding.imageSliderHomeFragment.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
-
-        // on below line we are setting adapter for our slider.
-        binding.imageSliderHomeFragment.setSliderAdapter(sliderAdapter)
-
-        // on below line we are setting scroll time
-        // in seconds for our slider view.
-        binding.imageSliderHomeFragment.scrollTimeInSec = 3
-
-        // on below line we are setting auto cycle
-        // to true to auto slide our items.
-        binding.imageSliderHomeFragment.isAutoCycle = true
-
-        // on below line we are calling start
-        // auto cycle to start our cycle.
-        binding.imageSliderHomeFragment.startAutoCycle()
     }
 
     companion object {

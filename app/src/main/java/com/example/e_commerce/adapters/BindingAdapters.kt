@@ -1,18 +1,15 @@
 package com.example.e_commerce.adapters
 
-import android.graphics.Color
+
 import android.graphics.Paint
 import android.view.View
 import android.widget.*
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.e_commerce.DefaultStates
-import com.example.e_commerce.R
-import com.example.e_commerce.pojo.UserModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 @BindingAdapter("price")
@@ -44,6 +41,17 @@ fun ProgressBar.showOnLoading(defaultStates: DefaultStates) {
         View.VISIBLE
     else
         View.GONE
+}
+
+@BindingAdapter("showShimmerOnLoading")
+fun ShimmerFrameLayout.showShimmerOnLoading(hide: Boolean) {
+    visibility = if (hide) {
+        stopShimmer()
+        View.GONE
+    }else {
+        startShimmer()
+        View.VISIBLE
+    }
 }
 
 @BindingAdapter("canClickable")
