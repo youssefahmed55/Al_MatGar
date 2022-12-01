@@ -134,6 +134,16 @@ dependencies {
 
     //swiperefreshlayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //Room
+    implementation("androidx.room:room-runtime:2.5.0-alpha02")
+    annotationProcessor("androidx.room:room-compiler:2.5.0-alpha02")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:2.5.0-alpha02")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:2.5.0-alpha02")
 }
 kapt {
     correctErrorTypes = true

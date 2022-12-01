@@ -4,13 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="categoryName"
             type="String" />
         <variable
-            name="imageUrl"
-            type="String" />
+            name="viewModel"
+            type="com.example.e_commerce.ui.homemarket.subcategory.subcategory.SubCategoryViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,8 +84,8 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:contentDescription="@string/profile_image"
-                        android:src="@drawable/ic_launcher_background"
-                        imageUrl="@{imageUrl}"
+                        android:src="@drawable/person_image"
+                        imageUrl="@{viewModel.stateFlowProfileImage}"
                         />
 
                 </androidx.cardview.widget.CardView>
@@ -108,6 +112,7 @@
                         android:layout_height="@dimen/_25sdp"
                         android:hint="@string/search"
                         android:maxLines="1"
+                        android:text="@={viewModel.mutableStateFlowTextSearch}"
                         android:inputType="text"
                         android:background="@null"
                         android:layout_marginStart="@dimen/_5sdp" />
@@ -123,44 +128,7 @@
 
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linear2_subCategoryFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/linear_subCategoryFragment"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="@dimen/_10sdp"
-            >
-            <TextView
-                android:id="@+id/All_subCategoryFragment"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_10ssp"
-                android:text="@string/all"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="@dimen/_5sdp"
-                android:background="@drawable/shape2"
-                android:textColor="@color/black"
-                android:layout_marginEnd="@dimen/_10sdp" />
 
-            <TextView
-                android:id="@+id/favorite_subCategoryFragment"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_10ssp"
-                android:text="@string/favorite"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="@dimen/_5sdp"
-                android:background="@drawable/shape3"
-                android:textColor="@color/black"
-                android:layout_marginEnd="@dimen/_10sdp" />
-
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_subCategoryFragment"
@@ -168,18 +136,58 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear2_subCategoryFragment"
+            app:layout_constraintTop_toBottomOf="@id/linear_subCategoryFragment"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_2sdp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             android:layout_marginBottom="@dimen/_10sdp"
-
+            productsSubExploreAdapter  = "@{adapter}"
+            productsSubExploreList = "@{viewModel.stateFlowProductModels}"
+            favoriteSubExploreList = "@{viewModel.stateFlowFavorites}"
+            searchProductText = "@{viewModel.mutableStateFlowTextSearch}"
 
             />
 
+        <ProgressBar
+            android:id="@+id/myProgress_subCategoryFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_subCategoryFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_subCategoryFragment"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
+        <ImageView
+            android:id="@+id/emptyImage_subCategoryFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_subCategoryFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_subCategoryFragment"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_subCategoryFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

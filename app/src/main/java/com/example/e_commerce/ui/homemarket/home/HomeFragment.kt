@@ -10,32 +10,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.e_commerce.BuildConfig
-import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
-import com.example.e_commerce.adapters.SliderAdapter
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.ui.login.MainActivity
-import com.example.e_commerce.ui.subcategory.ProductDetailsFragment
-import com.example.e_commerce.ui.subcategory.SubCategoryFragment
+import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
+import com.example.e_commerce.ui.homemarket.subcategory.subcategory.SubCategoryFragment
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.SignedInUtil
 import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.smarteist.autoimageslider.SliderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.consumeAsFlow
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,7 +62,6 @@ class HomeFragment : Fragment() {
     private val clothesRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val houseWareRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val viewModel: HomeFragmentViewModel by lazy { ViewModelProvider(this)[HomeFragmentViewModel::class.java] }
-    private var job : Job?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,36 +80,21 @@ class HomeFragment : Fragment() {
         binding.clothesRecyclerAdapter = clothesRecyclerAdapter
         binding.houseWareRecyclerAdapter = houseWareRecyclerAdapter
 
+        observeErrorMessage()
         onClickOnLogoutIcon()
-
-
 
         return binding.root
     }
 
-
-
-    override fun onResume() {
-        super.onResume()
-        renderErrorMessage()
-    }
-
-    override fun onPause() {
-        job?.cancel()
-        super.onPause()
-    }
-
-    private fun renderErrorMessage() {
-        job = lifecycleScope.launchWhenStarted {
-              viewModel.errorState.collect{
-                  if (it.isNotEmpty()) {
-                      Log.d(TAG, "renderErrorMessage: $it")
-                      ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                  }
-              }
+    private fun observeErrorMessage() {
+        viewModel.error.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                ToastyUtil.errorToasty(context!!,it,Toast.LENGTH_SHORT)
+                viewModel.getRoomDataBase()
+                viewModel._error.value = null
             }
-        }
-
+        })
+    }
 
     private fun setOnClickOnFoodItem() {
         foodRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
@@ -153,8 +132,7 @@ class HomeFragment : Fragment() {
         categoriesRecyclerAdapter.setOnItemClickListener(object : CategoriesRecyclerAdapter.OnClickOnItem{
             override fun onClick1(cat: Category) {
                 val args = Bundle()
-                args.putSerializable("catName", cat)
-                args.putString("imageUrl" , "https://thumbs.dreamstime.com/b/nice-to-talk-smart-person-indoor-shot-attractive-interesting-caucasian-guy-smiling-broadly-nice-to-112345489.jpg")
+                args.putSerializable("cat", cat)
                 val subCategoryFragment = SubCategoryFragment()
                 subCategoryFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()

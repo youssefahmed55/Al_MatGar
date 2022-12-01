@@ -35,8 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_launcher_background"
-                    imageUrl="@{product.images.get(0)}"
+                    android:src="@color/iconColor"
+                    imageUrl="@{product.images != null ? product.images.get(0) : null }"
                     />
 
                 <androidx.cardview.widget.CardView
@@ -53,60 +53,69 @@
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_favorite2"
-
+                        android:src="@{product.isFavorite() ? @drawable/ic_favorite : @drawable/ic_favorite2}"
                         />
 
                 </androidx.cardview.widget.CardView>
 
             </FrameLayout>
 
-
-            <TextView
-                android:id="@+id/name_product2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp"
-                android:text="@{product.name}"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:fontFamily="@font/poppins_medium" />
-
             <LinearLayout
+                android:id="@+id/linear_product2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/_10sdp"
-                android:gravity="center"
+                android:orientation="vertical"
                 >
-
                 <TextView
-                    android:id="@+id/price_product2"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/name_product2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp"
-                    price="@{product.hasOffer ? product.offerPrice : product.price}"
-                    android:maxLines="1"
+                    android:text="@{product.name}"
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:fontFamily="@font/poppins_medium" />
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    strikeThrough="@{product.price}"
-                    android:visibility="@{product.hasOffer ? View.VISIBLE : View.INVISIBLE}"
-                    android:textColor="@color/hintColor"
-                    android:fontFamily="@font/poppins_semibold" />
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/price_product2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        price="@{product.hasOffer ? product.offerPrice : product.price}"
+                        android:maxLines="1"
+                        android:fontFamily="@font/poppins_medium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_10ssp"
+                        strikeThrough="@{product.price}"
+                        android:visibility="@{product.hasOffer ? View.VISIBLE : View.GONE}"
+                        android:textColor="@color/hintColor"
+                        android:fontFamily="@font/poppins_semibold" />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
+
 
 
         </LinearLayout>

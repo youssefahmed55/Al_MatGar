@@ -4,7 +4,7 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.e_commerce.ui.homemarket.myproducts.myproducts.MyProductsViewModel" />
@@ -128,7 +128,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:text="@string/all"
                     android:onClick="@{()-> viewModel.getAllProducts()}"
-                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
+                    selectedType="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape2"
@@ -141,7 +141,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:text="@string/beauty"
                     android:onClick="@{()-> viewModel.getBeauty()}"
-                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
+                    selectedType="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
@@ -155,7 +155,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:text="@string/clothes"
                     android:onClick="@{()-> viewModel.getClothes()}"
-                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
+                    selectedType="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
@@ -169,7 +169,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:text="@string/food"
                     android:onClick="@{()-> viewModel.getFood()}"
-                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
+                    selectedType="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
@@ -183,7 +183,7 @@
                     android:textSize="@dimen/_10ssp"
                     android:text="@string/houseware"
                     android:onClick="@{()-> viewModel.getHouseWare()}"
-                    selectedTypeOfUsers="@{viewModel.stateFlowType}"
+                    selectedType="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
@@ -223,8 +223,34 @@
             app:layout_constraintBottom_toBottomOf="@id/recycler_myProductsFragment"
             android:indeterminate="true"
             android:layout_marginBottom="@dimen/_5sdp"
-            showOnLoading="@{viewModel.states}"
-            android:visibility="gone"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
+
+        <ImageView
+            android:id="@+id/emptyImage_myProductsFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_myProductsFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_myProductsFragment"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_myProductsFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

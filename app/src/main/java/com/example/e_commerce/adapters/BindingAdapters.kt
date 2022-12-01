@@ -1,12 +1,15 @@
 package com.example.e_commerce.adapters
 
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
 import android.widget.*
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.e_commerce.DefaultStates
+import com.example.e_commerce.R
+import com.example.e_commerce.pojo.Product
 import com.facebook.shimmer.ShimmerFrameLayout
 import java.text.NumberFormat
 import java.util.*
@@ -57,6 +60,19 @@ fun ShimmerFrameLayout.showShimmerOnLoading(hide: Boolean) {
 @BindingAdapter("canClickable")
 fun canClickable(view: View, defaultStates: DefaultStates) {
     view.isClickable = defaultStates !is DefaultStates.Loading
+}
+
+
+@BindingAdapter("selectedType")
+fun selectedType(view: TextView, resource: Int) {
+    if (view.id == resource) {
+        view.setBackgroundResource(R.drawable.shape2)
+        view.setTextColor(Color.WHITE)
+    } else {
+        view.setBackgroundResource(R.drawable.shape3)
+        view.setTextColor(Color.BLACK)
+    }
+
 }
 
 

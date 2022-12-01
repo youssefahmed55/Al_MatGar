@@ -1,6 +1,9 @@
 package com.example.e_commerce.pojo
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
+import javax.annotation.Nonnull
 
-
-data class Category(val id : Int ?= 0 , val name : String ?= "", val image : String ?= "") : Serializable
+@Entity(tableName = "categoryTable")
+data class Category(@PrimaryKey val id : Int = 0, val name : String ?= "", val image : String ?= "") : Serializable

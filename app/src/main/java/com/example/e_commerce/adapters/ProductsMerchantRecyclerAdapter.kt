@@ -6,9 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.ItemProductMerchantBinding
-import com.example.e_commerce.databinding.ItemUserBinding
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.pojo.UserModel
 
 
 class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRecyclerAdapter.Holder>() {

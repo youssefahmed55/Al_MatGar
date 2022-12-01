@@ -138,6 +138,7 @@
     <string name="wish_you_have_a_good_day">Wish you have a good day</string>
     <string name="welcome_back">Welcome Back,</string>
     <string name="welcome">Welcome,</string>
+    <string name="no_data">No Data</string>
 
 
     <string-array name="genders">

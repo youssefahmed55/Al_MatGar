@@ -41,6 +41,7 @@
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_cursor.xml" value="0.124" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_delete_icon.xml" value="0.124" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_email_icon.xml" value="0.124" />
+        <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_empty_list.xml" value="0.131" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_favorite.xml" value="0.124" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_favorite2.xml" value="0.123" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/drawable/ic_favorite_80.xml" value="0.124" />
@@ -108,7 +109,7 @@
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_sign_up.xml" value="0.25625" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_splash.xml" value="0.2" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_start_up.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_sub_category.xml" value="0.264" />
+        <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_sub_category.xml" value="0.176" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_success_order.xml" value="0.2" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/fragment_users.xml" value="0.2" />
         <entry key="..\:/Users/youssef/AndroidStudioProjects/ECommerce/app/src/main/res/layout/genderbottomsheet.xml" value="0.3058252427184466" />

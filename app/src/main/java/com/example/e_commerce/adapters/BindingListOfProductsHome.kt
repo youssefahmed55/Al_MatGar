@@ -3,7 +3,6 @@ package com.example.e_commerce.adapters
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
 
 

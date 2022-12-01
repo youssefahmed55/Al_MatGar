@@ -1,27 +1,29 @@
-package com.example.e_commerce.ui.homemarket.myproducts.myproducts
+package com.example.e_commerce.ui.homemarket.subcategory.subcategory
 
-import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
-import com.example.e_commerce.adapters.ProductsMerchantRecyclerAdapter
-import com.example.e_commerce.databinding.FragmentMyProductsBinding
+import com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter
+import com.example.e_commerce.databinding.FragmentSubCategoryBinding
+import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.ui.homemarket.myproducts.addproduct.AddProductFragment
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
-
+import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,40 +32,47 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MyProductsFragment.newInstance] factory method to
+ * Use the [SubCategoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class MyProductsFragment : Fragment() {
+class SubCategoryFragment : Fragment()  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var category : Category ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            category = it.getSerializable("cat") as Category?
+
         }
     }
-    private lateinit var binding : FragmentMyProductsBinding
-    private val viewModel: MyProductsViewModel by lazy { ViewModelProvider(this)[MyProductsViewModel::class.java] }
-    private val productsMerchantRecyclerAdapter : ProductsMerchantRecyclerAdapter by lazy { ProductsMerchantRecyclerAdapter() }
+
+
+
+    private lateinit var binding : FragmentSubCategoryBinding
+    private val productsRecyclerAdapter : ProductsSubExploreRecyclerAdapter by lazy { ProductsSubExploreRecyclerAdapter() }
+    private val viewModel: SubCategoryViewModel by lazy { ViewModelProvider(this)[SubCategoryViewModel::class.java] }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_my_products, container, false)
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_sub_category, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
-        setOnClickOnItemOfRecycler()
-        setOnClickOnDeleteIconItemOfRecycler()
-
-        binding.productsMerchantRecyclerAdapter = productsMerchantRecyclerAdapter
+        category?.let { it2 ->
+            binding.categoryName = it2.name
+            viewModel.getAllAndFavorite(it2.id!!)
+        }
+        setOnClickOnRecyclerItem()
+        setOnClickOnFavoriteOfRecyclerItem()
+        binding.adapter = productsRecyclerAdapter
 
         observeErrorMessage()
-        setOnClickOnAddButton()
+        setOnClickOnBackIcon()
 
         return binding.root
     }
@@ -77,29 +86,8 @@ class MyProductsFragment : Fragment() {
         })
     }
 
-    private fun setOnClickOnDeleteIconItemOfRecycler() {
-        productsMerchantRecyclerAdapter.setOnDeleteClickListener(object : ProductsMerchantRecyclerAdapter.OnClickOnItemDelete{
-            override fun onClickDelete(id: String, list: List<String>?) {
-                val builder = AlertDialog.Builder(context!!)
-                builder.setMessage("Are you sure that you want to delete it ?")
-                    .setCancelable(true)
-                    .setPositiveButton(getString(R.string.Yes)) { dialog, _ ->
-                        viewModel.deleteProduct(id,list)
-                        dialog.dismiss()
-                    }
-                    .setNegativeButton(getString(R.string.No)) { dialog, _ ->
-                        // Dismiss the dialog
-                        dialog.dismiss()
-                    }
-                val alert = builder.create()
-                alert.show()
-            }
-
-        })
-    }
-
-    private fun setOnClickOnItemOfRecycler() {
-        productsMerchantRecyclerAdapter.setOnItemClickListener(object : ProductsMerchantRecyclerAdapter.OnClickOnItem{
+    private fun setOnClickOnRecyclerItem() {
+        productsRecyclerAdapter.setOnItemClickListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
                 val args = Bundle()
                 args.putSerializable("product", product)
@@ -111,16 +99,32 @@ class MyProductsFragment : Fragment() {
                 transaction.commit()
             }
 
+
         })
     }
 
-    private fun setOnClickOnAddButton() {
-        binding.addFloatingButtonMyProductsFragment.setOnClickListener {
-            val transaction = activity!!.supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.flFragment, AddProductFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
+    private fun setOnClickOnFavoriteOfRecyclerItem() {
+        productsRecyclerAdapter.setOnItemClickFavoriteListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItemFavorite{
+            override fun onClick1(id: String, isFavorite: Boolean) {
+                    if (isFavorite){
+                        viewModel.deleteFromFavorite(id)
+                        productsRecyclerAdapter.removeFavoriteItem(id)
+                    }else{
+                        viewModel.addToFavorite(id)
+                        productsRecyclerAdapter.setFavoriteItem(id)
+                    }
+                    productsRecyclerAdapter.notifyDataSetChanged()
+            }
+
+
+        })
+    }
+
+
+    private fun setOnClickOnBackIcon() {
+      binding.backCardSubCategoryFragment.setOnClickListener {
+          activity!!.supportFragmentManager.popBackStack()
+      }
     }
 
     companion object {
@@ -130,12 +134,12 @@ class MyProductsFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MyProductsFragment.
+         * @return A new instance of fragment SubCategoryFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MyProductsFragment().apply {
+            SubCategoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

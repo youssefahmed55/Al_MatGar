@@ -1,5 +1,7 @@
 package com.example.e_commerce.ui.homemarket.myproducts.myproducts
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.DefaultStates
@@ -28,22 +30,26 @@ class MyProductsViewModel @Inject constructor(private val myProductsRepo: MyProd
     private val _mutableStateFlowType = MutableStateFlow(R.id.all_myProductsFragment)
     val stateFlowType : StateFlow<Int> get() = _mutableStateFlowType
 
-    private val _mutableStateFlowState = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
-    val states : StateFlow<DefaultStates> get() = _mutableStateFlowState
+    val _error = MutableLiveData<String>()
+    val error : LiveData<String> get() = _error
 
-    private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlowState.value  = DefaultStates.Error(throwable.message!!) ; _mutableStateFlowState.value  = DefaultStates.Idle}
+    private val _mutableStateFlowIsLoading = MutableStateFlow(true)
+    val isLoading : StateFlow<Boolean> get() = _mutableStateFlowIsLoading
+
+    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) ; _mutableStateFlowIsLoading.value = false}
 
     init {
         viewModelScope.launch(handler) {
             _mutableStateFlowProfileImage.value = myProductsRepo.getImageUrl()
         }
+        refreshData()
     }
 
      fun refreshData(){
         viewModelScope.launch(handler) {
-            _mutableStateFlowState.value = DefaultStates.Loading
+            _mutableStateFlowIsLoading.value = true
             _mutableStateFlowProductModels.value = myProductsRepo.getAllProductModels()
-            _mutableStateFlowState.value = DefaultStates.Idle
+            _mutableStateFlowIsLoading.value = false
         }
     }
 

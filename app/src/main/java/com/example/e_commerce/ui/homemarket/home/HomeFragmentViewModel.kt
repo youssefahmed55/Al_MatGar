@@ -1,5 +1,8 @@
 package com.example.e_commerce.ui.homemarket.home
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.DefaultStates
@@ -8,11 +11,10 @@ import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.pojo.SliderModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 import javax.inject.Inject
 
@@ -20,8 +22,8 @@ import javax.inject.Inject
 class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: HomeFragmentRepo) : ViewModel() {
 
 
-    private val mutableStateFlowError = MutableStateFlow("")
-    val errorState : StateFlow<String> get() = mutableStateFlowError
+    val _error = MutableLiveData<String>()
+    val error : LiveData<String> get() = _error
 
 
     private val _mutableStateFlowBeautyModels = MutableStateFlow(emptyList<Product>())
@@ -55,9 +57,10 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     val mutableStateFlowHideHouseWare = MutableStateFlow(false)
     val mutableStateFlowIsRefreshing = MutableStateFlow(false)
 
-    private val handler = CoroutineExceptionHandler { _, throwable -> mutableStateFlowError.value = throwable.message!! }
-
+    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) }
+    private val job = SupervisorJob() + handler
     init {
+
         refreshData()
     }
 
@@ -68,36 +71,84 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     }
 
     fun refreshData(){
-        viewModelScope.launch(handler) {
-            _mutableStateFlowProfileImage.value = homeFragmentRepo.getImageUrl()
-            _mutableStateFlowWelcomeMessage.value = homeFragmentRepo.getWelcomeMessage()
-        }
-        viewModelScope.launch(handler) {
-            _mutableStateFlowSliderAdapter.value = SliderAdapter(homeFragmentRepo.getSliderProductsImages())
+        viewModelScope.launch{
+
+        launch(job) {
+                _mutableStateFlowProfileImage.value = homeFragmentRepo.getImageUrl()
+                _mutableStateFlowWelcomeMessage.value = homeFragmentRepo.getWelcomeMessage()
         }
 
-        viewModelScope.launch(handler) {
-            _mutableStateFlowCategoryModels.value = homeFragmentRepo.getCategories()
+        launch(job) {
+            homeFragmentRepo.getSliderProductsImages()
+            val sliders = homeFragmentRepo.getSlidersDataBase()
+            val mutableListOfImages = mutableListOf<String>()
+            sliders.forEach { mutableListOfImages.add(it.image!!) }
+            _mutableStateFlowSliderAdapter.value = SliderAdapter(mutableListOfImages)
+        }
+
+        launch(job) {
+            homeFragmentRepo.getCategories()
+            _mutableStateFlowCategoryModels.value = homeFragmentRepo.getCategoriesDataBase()
             mutableStateFlowHideCategories.value = true
         }
-        viewModelScope.launch(handler) {
-            _mutableStateFlowBeautyModels.value = homeFragmentRepo.getBeautyProducts()
+
+        launch(job) {
+            homeFragmentRepo.getBeautyProducts()
+            _mutableStateFlowBeautyModels.value = homeFragmentRepo.getBeautyProductsDataBase()
             mutableStateFlowHideBeauty.value = true
         }
-
-        viewModelScope.launch(handler) {
-            _mutableStateFlowFoodModels.value = homeFragmentRepo.getFoodProducts()
-            mutableStateFlowHideFood.value = true
-        }
-
-        viewModelScope.launch(handler) {
-            _mutableStateFlowClothesModels.value = homeFragmentRepo.getClothesProducts()
+        launch(job) {
+            homeFragmentRepo.getClothesProducts()
+            _mutableStateFlowClothesModels.value = homeFragmentRepo.getClothesProductsDataBase()
             mutableStateFlowHideClothes.value = true
         }
+        launch(job) {
+            homeFragmentRepo.getFoodProducts()
+            _mutableStateFlowFoodModels.value = homeFragmentRepo.getFoodProductsDataBase()
+            mutableStateFlowHideFood.value = true
 
-        viewModelScope.launch(handler) {
-            _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getHouseWareProducts()
+        }
+        launch(job) {
+            homeFragmentRepo.getHouseWareProducts()
+            _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getHouseWareProductsDataBase()
             mutableStateFlowHideHouseWare.value = true
         }
+        }
+
+    }
+    fun getRoomDataBase(){
+       viewModelScope.launch {
+
+           launch(job) {
+               val sliders = homeFragmentRepo.getSlidersDataBase()
+               val mutableListOfImages = mutableListOf<String>()
+               sliders.forEach { mutableListOfImages.add(it.image!!) }
+               _mutableStateFlowSliderAdapter.value = SliderAdapter(mutableListOfImages)
+           }
+
+           launch(job) {
+               _mutableStateFlowCategoryModels.value = homeFragmentRepo.getCategoriesDataBase()
+               mutableStateFlowHideCategories.value = true
+           }
+
+           launch(job) {
+               _mutableStateFlowBeautyModels.value = homeFragmentRepo.getBeautyProductsDataBase()
+               mutableStateFlowHideBeauty.value = true
+           }
+           launch(job) {
+               _mutableStateFlowClothesModels.value = homeFragmentRepo.getClothesProductsDataBase()
+               mutableStateFlowHideClothes.value = true
+           }
+           launch(job) {
+               _mutableStateFlowFoodModels.value = homeFragmentRepo.getFoodProductsDataBase()
+               mutableStateFlowHideFood.value = true
+
+           }
+           launch(job) {
+               _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getHouseWareProductsDataBase()
+               mutableStateFlowHideHouseWare.value = true
+           }
+       }
+
     }
 }

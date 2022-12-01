@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@color/iconColor"
                 imageUrl="@{product.images != null ? product.images.get(0) : null}"
                 />
 
