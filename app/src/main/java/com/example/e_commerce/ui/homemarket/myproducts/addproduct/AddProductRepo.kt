@@ -2,6 +2,10 @@ package com.example.e_commerce.ui.homemarket.myproducts.addproduct
 
 import android.content.Context
 import android.net.Uri
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
@@ -28,10 +32,10 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
        val deliveryTime2 = deliveryTime + 1
 
        val category2 : String = when (category){
-           0 -> appContext.getString(R.string.beauty)
-           1 -> appContext.getString(R.string.clothes)
-           2 -> appContext.getString(R.string.food)
-           3 -> appContext.getString(R.string.houseware)
+           0 -> BEAUTY
+           1 -> CLOTHES
+           2 -> FOOD
+           3 -> HOUSE_WARE
            else -> ""
        }
 

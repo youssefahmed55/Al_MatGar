@@ -1,10 +1,12 @@
 package com.example.e_commerce.ui.homemarket.users
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentProfileBinding
@@ -46,6 +48,16 @@ class ProfileFragment : Fragment() {
         setOnClickOnBackIcon()
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
+    }
+
+    override fun onDetach() {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        super.onDetach()
     }
 
     private fun setOnClickOnBackIcon() {

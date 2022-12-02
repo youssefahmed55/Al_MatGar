@@ -2,6 +2,7 @@ package com.example.e_commerce.ui.login.signin
 
 import android.content.Context
 import android.util.Log
+import com.example.e_commerce.Constants.CUSTOMER
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.DefaultStates
@@ -44,7 +45,7 @@ class SignInRepo @Inject constructor(@ApplicationContext private val appContext:
 
             Log.d("SignInRepo", "signInWithGoogle: $isNotExisted" )
             if (isNotExisted) {
-                userModel = UserModel(firebaseUser?.uid,firebaseUser?.displayName,firebaseUser?.email,"Customer",true)
+                userModel = UserModel(firebaseUser?.uid,firebaseUser?.displayName,firebaseUser?.email,CUSTOMER,true)
                 db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(userModel).await()
             }else{
                 db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).update("signInWithGoogle", true).await()

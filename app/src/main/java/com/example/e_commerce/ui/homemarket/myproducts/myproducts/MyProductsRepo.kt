@@ -52,10 +52,6 @@ class MyProductsRepo @Inject constructor(@ApplicationContext private val appCont
 
     }
 
-    suspend fun getImageUrl(): String = withContext(Dispatchers.IO) {
-        return@withContext SharedPrefsUtil.getImageUrl(appContext) ?: ""
-    }
-
     private fun getUserId():String = SharedPrefsUtil.getId(appContext)!!
 
 }

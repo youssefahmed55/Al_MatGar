@@ -66,15 +66,4 @@ class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo) : 
     }
 
 
-
-   /* private suspend fun getDocuments(): List<DocumentSnapshot> {
-        val querySnapshot = Firebase.firestore.collection("Users")
-            .get()
-            .await()
-        return querySnapshot.documents
-    }*/
-
-
-
-
 }

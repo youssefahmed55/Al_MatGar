@@ -1,7 +1,10 @@
 package com.example.e_commerce.ui.homemarket.home
 
 import android.content.Context
-import com.example.e_commerce.R
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.pojo.SliderModel
@@ -9,8 +12,6 @@ import com.example.e_commerce.ui.room.CategoryModelDao
 import com.example.e_commerce.ui.room.ProductModelDao
 import com.example.e_commerce.ui.room.SliderModelDao
 import com.example.e_commerce.utils.Network
-import com.example.e_commerce.utils.SharedPrefsUtil
-import com.example.e_commerce.utils.SignedInUtil
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,54 +40,39 @@ class HomeFragmentRepo @Inject constructor(@ApplicationContext private val appCo
 
     suspend fun getBeautyProducts() = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
-        var listOfProducts = db.collection("AllProducts").whereEqualTo("category","Beauty").whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
+        var listOfProducts = db.collection("AllProducts").whereEqualTo("category",BEAUTY).whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
         if (listOfProducts.size < 4)
-            listOfProducts = db.collection("AllProducts").whereEqualTo("category","Beauty").limit(5).get().await().toObjects(Product::class.java)
-        productModelDao.deleteAllProductsByType("Beauty")
+            listOfProducts = db.collection("AllProducts").whereEqualTo("category",BEAUTY).limit(5).get().await().toObjects(Product::class.java)
+        productModelDao.deleteAllProductsByType(BEAUTY)
         productModelDao.insertAllProducts(listOfProducts)
     }
 
     suspend fun getFoodProducts() = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
-        var listOfProducts = db.collection("AllProducts").whereEqualTo("category","Food").whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
+        var listOfProducts = db.collection("AllProducts").whereEqualTo("category",FOOD).whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
         if (listOfProducts.size < 4)
-            listOfProducts = db.collection("AllProducts").whereEqualTo("category","Food").limit(5).get().await().toObjects(Product::class.java)
-        productModelDao.deleteAllProductsByType("Food")
+            listOfProducts = db.collection("AllProducts").whereEqualTo("category",FOOD).limit(5).get().await().toObjects(Product::class.java)
+        productModelDao.deleteAllProductsByType(FOOD)
         productModelDao.insertAllProducts(listOfProducts)
     }
 
     suspend fun getClothesProducts() = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
-        var listOfProducts = db.collection("AllProducts").whereEqualTo("category","Clothes").whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
+        var listOfProducts = db.collection("AllProducts").whereEqualTo("category",CLOTHES).whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
         if (listOfProducts.size < 4)
-            listOfProducts = db.collection("AllProducts").whereEqualTo("category","Clothes").limit(5).get().await().toObjects(Product::class.java)
-        productModelDao.deleteAllProductsByType("Clothes")
+            listOfProducts = db.collection("AllProducts").whereEqualTo("category",CLOTHES).limit(5).get().await().toObjects(Product::class.java)
+        productModelDao.deleteAllProductsByType(CLOTHES)
         productModelDao.insertAllProducts(listOfProducts)
     }
 
     suspend fun getHouseWareProducts() = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
-        var listOfProducts = db.collection("AllProducts").whereEqualTo("category","HouseWare").whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
+        var listOfProducts = db.collection("AllProducts").whereEqualTo("category",HOUSE_WARE).whereIn("randomValue",myRandomValues).limit(5).get().await().toObjects(Product::class.java)
         if (listOfProducts.size < 4)
-            listOfProducts = db.collection("AllProducts").whereEqualTo("category","HouseWare").limit(5).get().await().toObjects(Product::class.java)
-        productModelDao.deleteAllProductsByType("HouseWare")
+            listOfProducts = db.collection("AllProducts").whereEqualTo("category",HOUSE_WARE).limit(5).get().await().toObjects(Product::class.java)
+        productModelDao.deleteAllProductsByType(HOUSE_WARE)
         productModelDao.insertAllProducts(listOfProducts)
     }
-
-    suspend fun getImageUrl(): String = withContext(Dispatchers.IO) {
-        return@withContext SharedPrefsUtil.getImageUrl(appContext)!!
-    }
-
-    suspend fun getWelcomeMessage(): String = withContext(Dispatchers.IO) {
-        if (SignedInUtil.getIsSignIn(appContext)){
-            return@withContext appContext.getString(R.string.welcome_back) + ' ' + SharedPrefsUtil.getName(appContext)
-        }else{
-            SignedInUtil.setIsSignIn(appContext,true)
-            return@withContext appContext.getString(R.string.welcome) + ' ' + SharedPrefsUtil.getName(appContext)
-        }
-
-    }
-
 
     //ROOM
 
@@ -96,19 +82,19 @@ class HomeFragmentRepo @Inject constructor(@ApplicationContext private val appCo
 
     //
     suspend fun getBeautyProductsDataBase() : List<Product> = withContext(Dispatchers.IO){
-        return@withContext productModelDao.getProductModelsByType("Beauty")
+        return@withContext productModelDao.getProductModelsByType(BEAUTY)
     }
 
     suspend fun getFoodProductsDataBase() : List<Product> = withContext(Dispatchers.IO){
-        return@withContext productModelDao.getProductModelsByType("Food")
+        return@withContext productModelDao.getProductModelsByType(FOOD)
     }
 
     suspend fun getClothesProductsDataBase() : List<Product> = withContext(Dispatchers.IO){
-        return@withContext productModelDao.getProductModelsByType("Clothes")
+        return@withContext productModelDao.getProductModelsByType(CLOTHES)
     }
 
     suspend fun getHouseWareProductsDataBase() : List<Product> = withContext(Dispatchers.IO){
-        return@withContext productModelDao.getProductModelsByType("HouseWare")
+        return@withContext productModelDao.getProductModelsByType(HOUSE_WARE)
     }
 
     suspend fun getSlidersDataBase() : List<SliderModel> = withContext(Dispatchers.IO){

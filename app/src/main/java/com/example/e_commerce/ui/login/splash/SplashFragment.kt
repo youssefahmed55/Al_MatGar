@@ -18,7 +18,6 @@ import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentSplashBinding
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.DefaultStates
-import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.SignedInUtil
 import com.example.e_commerce.utils.ToastyUtil
 import com.google.firebase.auth.FirebaseAuth

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter
@@ -42,7 +43,7 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_explore, container, false)
-
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
         val listOfProductSearch = listOf<Product>(
             Product("55","BeautyCounterBeautyCounter","","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
             , Product("56","Beauty", "","BeautyCounter","dddd","dddd",55.00, listOf("https://images.beautycounter.com/product-images%2F100000182%2Fimgs%2FAT_THE_RED_Y_LIP_DUO_PDP_01.jpg"),true,44.0,1)
@@ -58,6 +59,15 @@ class ExploreFragment : Fragment() {
 
 
         })
+
+        searchRecyclerAdapter.setOnItemClickFavoriteListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItemFavorite{
+            override fun onClick1(id: String, isFavorite: Boolean) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
+
         setSearchRecyclerAdapter(listOfProductSearch)
 
         return binding.root

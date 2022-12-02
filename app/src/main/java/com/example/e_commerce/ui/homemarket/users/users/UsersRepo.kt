@@ -20,9 +20,4 @@ class UsersRepo @Inject constructor(@ApplicationContext private val appContext: 
         Network.checkConnectionType(appContext)
         return@withContext db.collection("Users").get().await().toObjects(UserModel::class.java)
     }
-
-    suspend fun getImageUrl(): String = withContext(Dispatchers.IO) {
-        return@withContext SharedPrefsUtil.getImageUrl(appContext) ?: ""
-    }
-
 }

@@ -9,8 +9,8 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
-import com.example.e_commerce.pojo.Product
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.NumberFormat
 import java.util.*
 
@@ -73,6 +73,12 @@ fun selectedType(view: TextView, resource: Int) {
         view.setTextColor(Color.BLACK)
     }
 
+}
+@BindingAdapter("setMenu")
+fun BottomNavigationView.setMenuOfBottomNavigation(res : Int){
+    menu.clear()
+    inflateMenu(res)
+    selectedItemId = R.id.home
 }
 
 

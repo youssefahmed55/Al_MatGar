@@ -19,54 +19,18 @@
         android:layout_height="match_parent"
         >
 
-        <LinearLayout
-            android:id="@+id/linear_myProductsFragment"
+        <FrameLayout
+            android:id="@+id/frame_myProductsFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_110sdp"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/shape_top"
             android:padding="@dimen/_10sdp"
             >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/my_products"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    app:cardCornerRadius="@dimen/_40sdp">
-
-                    <ImageView
-                        android:id="@+id/profileImage_myProductsFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        imageUrl="@{viewModel.stateFlowProfileImage}"
-                        android:contentDescription="@string/profile_image"
-                        android:src="@drawable/person_image" />
-
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content"
                 android:background="@color/searchBackgroundColor"
                 app:cardCornerRadius="@dimen/_2sdp"
                 >
@@ -99,7 +63,7 @@
             </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
+        </FrameLayout>
 
 
         <HorizontalScrollView
@@ -109,7 +73,7 @@
             android:fillViewport="true"
             android:measureAllChildren="false"
             android:scrollbars="none"
-            app:layout_constraintTop_toBottomOf="@id/linear_myProductsFragment"
+            app:layout_constraintTop_toBottomOf="@id/frame_myProductsFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             >

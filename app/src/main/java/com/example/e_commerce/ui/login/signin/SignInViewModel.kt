@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-private const val TAG = "SignInViewModel"
+
 @HiltViewModel
 class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo) : ViewModel() {
 

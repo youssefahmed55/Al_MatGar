@@ -3,6 +3,10 @@ package com.example.e_commerce.adapters
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.SearchUtil
@@ -14,10 +18,10 @@ fun setListOfProducts(view: RecyclerView, productsMerchantRecyclerAdapter: Produ
     val arrayList  = ArrayList<Product>()
     when (type){
         R.id.all_myProductsFragment -> arrayList.addAll(list)
-        R.id.beauty_myProductsFragment -> list.forEach { if (it.category == "Beauty") arrayList.add(it) }
-        R.id.clothes_myProductsFragment -> list.forEach { if (it.category == "Clothes") arrayList.add(it) }
-        R.id.food_myProductsFragment -> list.forEach { if (it.category == "Food") arrayList.add(it) }
-        R.id.houseWare_myProductsFragment -> list.forEach { if (it.category == "HouseWare") arrayList.add(it) }
+        R.id.beauty_myProductsFragment -> list.forEach { if (it.category == BEAUTY) arrayList.add(it) }
+        R.id.clothes_myProductsFragment -> list.forEach { if (it.category == CLOTHES) arrayList.add(it) }
+        R.id.food_myProductsFragment -> list.forEach { if (it.category == FOOD) arrayList.add(it) }
+        R.id.houseWare_myProductsFragment -> list.forEach { if (it.category == HOUSE_WARE) arrayList.add(it) }
     }
 
     productsMerchantRecyclerAdapter.setList(arrayList.toList())

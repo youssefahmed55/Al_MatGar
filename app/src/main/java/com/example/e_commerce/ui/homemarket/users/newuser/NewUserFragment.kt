@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -55,6 +56,7 @@ class NewUserFragment : Fragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_new_user, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         inti(inflater,container)
         setOnclickOnBirthday()
         setSpinnersAdapter()
@@ -64,6 +66,11 @@ class NewUserFragment : Fragment() {
         render()
 
         return binding.root
+    }
+
+    override fun onDetach() {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        super.onDetach()
     }
 
     private fun showHidePass(){

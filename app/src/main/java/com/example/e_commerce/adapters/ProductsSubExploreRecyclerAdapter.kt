@@ -9,7 +9,6 @@ import com.example.e_commerce.R
 import com.example.e_commerce.databinding.ItemProduct2Binding
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.Network
-import es.dmoral.toasty.Toasty
 
 
 class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExploreRecyclerAdapter.Holder>() {

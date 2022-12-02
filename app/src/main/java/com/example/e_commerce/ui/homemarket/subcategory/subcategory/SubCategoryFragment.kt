@@ -1,30 +1,21 @@
 package com.example.e_commerce.ui.homemarket.subcategory.subcategory
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentSubCategoryBinding
-import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
-import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
-import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,23 +52,34 @@ class SubCategoryFragment : Fragment()  {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_sub_category, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         setOnClickOnRecyclerItem()
         setOnClickOnFavoriteOfRecyclerItem()
         binding.adapter = productsRecyclerAdapter
-
-        observeErrorMessage()
         setOnClickOnBackIcon()
+        observeErrorMessage()
 
         return binding.root
     }
 
+    private fun setOnClickOnBackIcon() {
+        binding.backCardSubCategoryFragment.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStack()
+        }
+    }
+
+    override fun onDetach() {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        super.onDetach()
+    }
+
     private fun observeErrorMessage() {
-        viewModel.error.observe(viewLifecycleOwner, Observer {
+        viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!,it,Toast.LENGTH_SHORT)
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
                 viewModel._error.value = null
             }
-        })
+        }
     }
 
     private fun setOnClickOnRecyclerItem() {
@@ -112,13 +114,6 @@ class SubCategoryFragment : Fragment()  {
 
 
         })
-    }
-
-
-    private fun setOnClickOnBackIcon() {
-      binding.backCardSubCategoryFragment.setOnClickListener {
-          activity!!.supportFragmentManager.popBackStack()
-      }
     }
 
     companion object {

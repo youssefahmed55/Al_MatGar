@@ -1,5 +1,7 @@
 package com.example.e_commerce.ui.homemarket.users.users
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.DefaultStates
@@ -19,30 +21,25 @@ class UsersViewModel @Inject constructor(private val usersRepo: UsersRepo) : Vie
     private val _mutableStateFlowUserModels = MutableStateFlow(emptyList<UserModel>())
     val stateFlowUserModels : StateFlow<List<UserModel>> get() = _mutableStateFlowUserModels
 
-    private val _mutableStateFlowProfileImage = MutableStateFlow("")
-    val stateFlowProfileImage : StateFlow<String> get() = _mutableStateFlowProfileImage
-
     val mutableStateFlowTextSearch = MutableStateFlow("")
 
     private val _mutableStateFlowType = MutableStateFlow(R.id.all_usersFragment)
     val stateFlowType : StateFlow<Int> get() = _mutableStateFlowType
 
-    private val _mutableStateFlowState = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
-    val states : StateFlow<DefaultStates> get() = _mutableStateFlowState
+    val _error = MutableLiveData<String>()
+    val error : LiveData<String> get() = _error
 
-    private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlowState.value  = DefaultStates.Error(throwable.message!!) ; _mutableStateFlowState.value  = DefaultStates.Idle}
+    private val _mutableStateFlowIsLoading = MutableStateFlow(true)
+    val isLoading : StateFlow<Boolean> get() = _mutableStateFlowIsLoading
 
-    init {
-        viewModelScope.launch(handler) {
-            _mutableStateFlowProfileImage.value = usersRepo.getImageUrl()
-        }
-    }
+    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) ; _mutableStateFlowIsLoading.value = false}
+
 
      fun refreshData(){
         viewModelScope.launch(handler) {
-            _mutableStateFlowState.value = DefaultStates.Loading
+            _mutableStateFlowIsLoading.value = true
             _mutableStateFlowUserModels.value = usersRepo.getAllUserModels()
-            _mutableStateFlowState.value = DefaultStates.Idle
+            _mutableStateFlowIsLoading.value = false
         }
     }
 

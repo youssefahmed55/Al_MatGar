@@ -1,36 +1,25 @@
 package com.example.e_commerce.ui.homemarket.home
 
-import android.app.AlertDialog
-import android.content.Intent
+
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.e_commerce.BuildConfig
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.ui.login.MainActivity
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.ui.homemarket.subcategory.subcategory.SubCategoryFragment
-import com.example.e_commerce.utils.SharedPrefsUtil
-import com.example.e_commerce.utils.SignedInUtil
 import com.example.e_commerce.utils.ToastyUtil
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,6 +57,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
         binding.lifecycleOwner = this
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
         setOnClickOnCategoriesItem()
         setOnClickOnBeautyItem()
         setOnClickOnFoodItem()
@@ -81,7 +71,6 @@ class HomeFragment : Fragment() {
         binding.houseWareRecyclerAdapter = houseWareRecyclerAdapter
 
         observeErrorMessage()
-        onClickOnLogoutIcon()
 
         return binding.root
     }
@@ -98,13 +87,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeErrorMessage() {
-        viewModel.error.observe(viewLifecycleOwner, Observer {
+        viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!,it,Toast.LENGTH_SHORT)
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
                 viewModel.getRoomDataBase()
                 viewModel._error.value = null
             }
-        })
+        }
     }
 
     private fun setOnClickOnFoodItem() {
@@ -155,39 +144,6 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun onClickOnLogoutIcon() {
-        binding.logoutHomeFragment.setOnClickListener {
-            showDialog()
-        }
-    }
-
-    private fun showDialog() {
-        val builder = AlertDialog.Builder(context!!)
-        builder.setMessage(getString(R.string.Are_you_sure_you_want_to_Logout))
-            .setCancelable(true)
-            .setPositiveButton(getString(R.string.Yes)) { dialog, _ ->
-
-                FirebaseAuth.getInstance().signOut()
-                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(BuildConfig.GOOGLE_API_KEY)
-                    .requestEmail()
-                    .build()
-                val googleClient = GoogleSignIn.getClient(context!!, gso)
-                googleClient.signOut()
-                SharedPrefsUtil.clearUserModel(context!!)
-                SignedInUtil.setIsSignIn(context!!,false)
-                activity?.startActivity(Intent(activity, MainActivity::class.java))
-                activity?.finish()
-
-                dialog.dismiss()
-            }
-            .setNegativeButton(getString(R.string.No)) { dialog, _ ->
-                // Dismiss the dialog
-                dialog.dismiss()
-            }
-        val alert = builder.create()
-        alert.show()
-    }
 
     companion object {
         /**

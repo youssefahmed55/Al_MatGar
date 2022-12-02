@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -71,7 +72,7 @@ class AccountFragment : Fragment() {
         inti(inflater,container)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
         setOnclickOnGender()
         setOnclickOnBirthday()
         setOnclickOnEmail()

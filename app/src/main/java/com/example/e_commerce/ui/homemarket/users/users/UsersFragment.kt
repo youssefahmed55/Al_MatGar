@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.UsersRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentUsersBinding
@@ -18,7 +17,6 @@ import com.example.e_commerce.ui.homemarket.users.ProfileFragment
 import com.example.e_commerce.ui.homemarket.users.newuser.NewUserFragment
 import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +44,6 @@ class UsersFragment : Fragment() {
     private lateinit var binding : FragmentUsersBinding
     private val viewModel: UsersViewModel by lazy { ViewModelProvider(this)[UsersViewModel::class.java] }
     private val usersRecyclerAdapter : UsersRecyclerAdapter by lazy { UsersRecyclerAdapter() }
-    private var job : Job?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +51,27 @@ class UsersFragment : Fragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_users, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        setOnClickOnItemOfRecycler()
+        binding.usersRecyclerAdapter = usersRecyclerAdapter
+        setOnClickOnAddButton()
+        observeErrorMessage()
+
+
+
+        return binding.root
+    }
+
+    private fun observeErrorMessage() {
+        viewModel.error.observe(viewLifecycleOwner) {
+            it?.let {
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
+                viewModel._error.value = null
+            }
+        }
+    }
+
+    private fun setOnClickOnItemOfRecycler() {
         usersRecyclerAdapter.setOnItemClickListener(object : UsersRecyclerAdapter.OnClickOnItem{
             override fun onClick1(userModel: UserModel) {
                 val args = Bundle()
@@ -67,35 +85,11 @@ class UsersFragment : Fragment() {
             }
 
         })
-        binding.usersRecyclerAdapter = usersRecyclerAdapter
-
-        setOnClickOnAddButton()
-
-
-
-
-        return binding.root
-    }
-
-    private fun render() {
-        job = lifecycleScope.launchWhenStarted {
-            viewModel.refreshData()
-            viewModel.states.collect{
-                when(it){
-                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
-                    else -> {}
-                }
-            }
-        }
-    }
-    override fun onPause() {
-        job?.cancel()
-        super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        render()
+        viewModel.refreshData()
     }
 
     private fun setOnClickOnAddButton() {

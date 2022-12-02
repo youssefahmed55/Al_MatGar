@@ -1,6 +1,7 @@
 package com.example.e_commerce.ui.login.splash
 
 import android.content.Context
+import com.example.e_commerce.Constants.ANONYMOUS
 import com.example.e_commerce.R
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.pojo.UserModel
@@ -17,7 +18,7 @@ class SplashRepo @Inject constructor(@ApplicationContext private val appContext:
 
     suspend fun signInAnonymously () : DefaultStates = withContext(Dispatchers.IO) {
             FirebaseAuth.getInstance().signInAnonymously().await()
-            SharedPrefsUtil.saveUserModel(appContext, UserModel(FirebaseAuth.getInstance().currentUser?.uid, type = "Anonymous"))
+            SharedPrefsUtil.saveUserModel(appContext, UserModel(FirebaseAuth.getInstance().currentUser?.uid, type = ANONYMOUS))
             return@withContext DefaultStates.Success(appContext.getString(R.string.Sign_In_Anonymous_Successfully))
         }
 

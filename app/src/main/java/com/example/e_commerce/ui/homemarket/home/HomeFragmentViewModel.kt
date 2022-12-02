@@ -1,18 +1,14 @@
 package com.example.e_commerce.ui.homemarket.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.adapters.SliderAdapter
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.pojo.SliderModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -20,11 +16,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: HomeFragmentRepo) : ViewModel() {
-
-
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
-
 
     private val _mutableStateFlowBeautyModels = MutableStateFlow(emptyList<Product>())
     val stateFlowBeautyModels : StateFlow<List<Product>> get() = _mutableStateFlowBeautyModels
@@ -44,11 +35,6 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     private val _mutableStateFlowCategoryModels = MutableStateFlow(emptyList<Category>())
     val stateFlowCategoryModels : StateFlow<List<Category>> get() = _mutableStateFlowCategoryModels
 
-    private val _mutableStateFlowProfileImage = MutableStateFlow("")
-    val stateFlowProfileImage : StateFlow<String> get() = _mutableStateFlowProfileImage
-
-    private val _mutableStateFlowWelcomeMessage = MutableStateFlow("")
-    val stateFlowWelcomeMessage : StateFlow<String> get() = _mutableStateFlowWelcomeMessage
 
     val mutableStateFlowHideCategories = MutableStateFlow(false)
     val mutableStateFlowHideBeauty = MutableStateFlow(false)
@@ -56,6 +42,9 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     val mutableStateFlowHideClothes = MutableStateFlow(false)
     val mutableStateFlowHideHouseWare = MutableStateFlow(false)
     val mutableStateFlowIsRefreshing = MutableStateFlow(false)
+
+    val _error = MutableLiveData<String>()
+    val error : LiveData<String> get() = _error
 
     private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) }
     private val job = SupervisorJob() + handler
@@ -72,11 +61,6 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
 
     fun refreshData(){
         viewModelScope.launch{
-
-        launch(job) {
-                _mutableStateFlowProfileImage.value = homeFragmentRepo.getImageUrl()
-                _mutableStateFlowWelcomeMessage.value = homeFragmentRepo.getWelcomeMessage()
-        }
 
         launch(job) {
             homeFragmentRepo.getSliderProductsImages()

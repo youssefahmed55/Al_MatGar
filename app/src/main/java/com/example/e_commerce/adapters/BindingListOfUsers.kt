@@ -1,9 +1,10 @@
 package com.example.e_commerce.adapters
 
-import android.graphics.Color
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.e_commerce.Constants.ADMIN
+import com.example.e_commerce.Constants.CUSTOMER
+import com.example.e_commerce.Constants.MERCHANT
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.utils.SearchUtil
@@ -14,9 +15,9 @@ fun setListOfUsers(view: RecyclerView, usersRecyclerAdapter: UsersRecyclerAdapte
     val arrayList  = ArrayList<UserModel>()
     when (type){
         R.id.all_usersFragment -> arrayList.addAll(list)
-        R.id.admins_usersFragment -> list.forEach { if (it.type == "Admin") arrayList.add(it) }
-        R.id.customers_usersFragment -> list.forEach { if (it.type == "Customer") arrayList.add(it) }
-        R.id.merchants_usersFragment -> list.forEach { if (it.type == "Merchant") arrayList.add(it) }
+        R.id.admins_usersFragment -> list.forEach { if (it.type == ADMIN) arrayList.add(it) }
+        R.id.customers_usersFragment -> list.forEach { if (it.type == CUSTOMER) arrayList.add(it) }
+        R.id.merchants_usersFragment -> list.forEach { if (it.type == MERCHANT) arrayList.add(it) }
     }
 
     usersRecyclerAdapter.setList(arrayList.toList())

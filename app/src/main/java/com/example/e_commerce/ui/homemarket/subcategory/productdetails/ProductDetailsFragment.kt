@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.SliderAdapter
@@ -46,10 +47,8 @@ class ProductDetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_product_details, container, false)
         binding.lifecycleOwner = this
         setOnClickOnBackIcon()
-
-        bottomNavigationView = activity!!.findViewById(R.id.bottomNavigationView)
-        bottomNavigationView.visibility = View.GONE
-
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
+        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
         if (product!=null) {
             if (product?.images != null)
             setSliderAdapter(product?.images!!)
@@ -59,10 +58,13 @@ class ProductDetailsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        bottomNavigationView.visibility = View.VISIBLE
-        super.onDestroy()
+
+
+    override fun onDetach() {
+        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+        super.onDetach()
     }
+
 
     private fun setOnClickOnBackIcon() {
         binding.backCardProductDetailsFragment.setOnClickListener {

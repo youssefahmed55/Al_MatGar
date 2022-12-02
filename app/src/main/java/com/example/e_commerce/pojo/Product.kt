@@ -3,7 +3,6 @@ package com.example.e_commerce.pojo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import javax.annotation.Nonnull
 
 @Entity(tableName = "productsTable")
 data class Product(

@@ -85,30 +85,4 @@ class NewUSerViewModel @Inject constructor(private val newUserRepo: NewUserRepo)
 
     }
 
-    /*fun createNewUser() {
-
-        val result =  RegisterUtil.checkSignUpValid(fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
-        if (result == R.string.success) {
-            viewModelScope.launch(handler) {
-                    _mutableStateFlow.value = DefaultStates.Loading
-                    delay(2000)
-                    _mutableStateFlow.value = signUpRepo.createUserFireBase(email.toString().trim(),password.toString().trim(),phone.toString().trim(),fullName.toString().trim())
-            }
-        }else{
-            _errorMessage.value = result
-        }
-    }*/
-
-
-
-   /* private suspend fun getDocuments(): List<DocumentSnapshot> {
-        val querySnapshot = Firebase.firestore.collection("Users")
-            .get()
-            .await()
-        return querySnapshot.documents
-    }*/
-
-
-
-
 }

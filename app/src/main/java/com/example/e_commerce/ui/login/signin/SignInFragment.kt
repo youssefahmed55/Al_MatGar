@@ -19,7 +19,6 @@ import com.example.e_commerce.databinding.FragmentSignInBinding
 import com.example.e_commerce.Constants.GOOGLE_SIGN_IN
 import com.example.e_commerce.ui.homemarket.homeactivity.HomeActivity
 import com.example.e_commerce.DefaultStates
-import com.example.e_commerce.utils.SignedInUtil
 import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -117,7 +116,6 @@ class SignInFragment : Fragment() {
                 when(it){
                     is DefaultStates.Success -> {
                         ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
-                        SignedInUtil.setIsSignIn(context!!,false)
                         activity?.startActivity(Intent(activity, HomeActivity::class.java))
                         activity?.finish()
                     }

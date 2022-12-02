@@ -7,4 +7,5 @@ import com.smarteist.autoimageslider.SliderView
 @BindingAdapter("setListOfSlider")
 fun SliderView.setListOfSlider(adapter: SliderAdapter) {
     setSliderAdapter(adapter)
+    startAutoCycle()
 }

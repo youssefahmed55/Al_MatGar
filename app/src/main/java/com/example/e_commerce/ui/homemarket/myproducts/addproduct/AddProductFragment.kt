@@ -1,12 +1,14 @@
 package com.example.e_commerce.ui.homemarket.myproducts.addproduct
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
@@ -55,7 +57,7 @@ class AddProductFragment : Fragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_add_product, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         observeErrorMessage()
         render()
         setOnClickOnBackIcon()
@@ -64,6 +66,10 @@ class AddProductFragment : Fragment() {
         setOnClickOnSaveButton()
 
         return binding.root
+    }
+    override fun onDetach() {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        super.onDetach()
     }
 
     private fun setOnClickOnBack() {

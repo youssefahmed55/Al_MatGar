@@ -22,9 +22,6 @@ class MyProductsViewModel @Inject constructor(private val myProductsRepo: MyProd
     private val _mutableStateFlowProductModels = MutableStateFlow(emptyList<Product>())
     val stateFlowProductModels : StateFlow<List<Product>> get() = _mutableStateFlowProductModels
 
-    private val _mutableStateFlowProfileImage = MutableStateFlow("")
-    val stateFlowProfileImage : StateFlow<String> get() = _mutableStateFlowProfileImage
-
     val mutableStateFlowTextSearch = MutableStateFlow("")
 
     private val _mutableStateFlowType = MutableStateFlow(R.id.all_myProductsFragment)
@@ -38,11 +35,7 @@ class MyProductsViewModel @Inject constructor(private val myProductsRepo: MyProd
 
     private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) ; _mutableStateFlowIsLoading.value = false}
 
-    init {
-        viewModelScope.launch(handler) {
-            _mutableStateFlowProfileImage.value = myProductsRepo.getImageUrl()
-        }
-    }
+
 
      fun refreshData(){
         viewModelScope.launch(handler) {

@@ -1,6 +1,7 @@
 package com.example.e_commerce.ui.login.signup
 
 import android.content.Context
+import com.example.e_commerce.Constants.CUSTOMER
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.DefaultStates
@@ -20,7 +21,7 @@ class SignUpRepo @Inject constructor(@ApplicationContext private val appContext:
         withContext(Dispatchers.IO) {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
             FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
-            db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(FirebaseAuth.getInstance().currentUser!!.uid,fullName,email,"Customer",false,phone,"","","","")).await()
+            db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(FirebaseAuth.getInstance().currentUser!!.uid,fullName,email,CUSTOMER,false,phone)).await()
             return@withContext DefaultStates.Success(appContext.getString(R.string.Please_Check_Your_Email_to_Verification_Make_Sure_To_Check_Spam_Messages))
         }
 

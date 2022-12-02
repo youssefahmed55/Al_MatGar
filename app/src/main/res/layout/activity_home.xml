@@ -1,31 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/flFragment"
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="title"
+            type="String" />
+          <variable
+              name="viewModel"
+              type="com.example.e_commerce.ui.homemarket.homeactivity.HomeActivityViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/green"
-        app:itemIconTint="@color/bottom_nav_color"
-        app:itemTextColor="@color/bottom_nav_color"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        <RelativeLayout
+            android:id="@+id/relative1_homeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@{title.equals(``) ? @drawable/shape_top : @drawable/shape6}"
+            android:padding="@dimen/_10sdp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/backCard_homeActivity"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                app:cardBackgroundColor="@color/itemBackgroundColor"
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_margin="@dimen/_5sdp"
+                app:cardElevation="@dimen/_3sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="@string/back_icon"
+
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/welcomeText_homeActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/white"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{viewModel.stateFlowWelcomeMessage}"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="@{!title.equals(``) ? View.GONE : View.VISIBLE}"
+                />
+
+            <TextView
+                android:id="@+id/wishText_homeActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcomeText_homeActivity"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/wish_you_have_a_good_day"
+                android:textColor="@color/color2"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="@{!title.equals(``) ? View.GONE : View.VISIBLE}"
+                />
+
+            <TextView
+                android:id="@+id/title_homeActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@{title}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <ImageView
+                android:id="@+id/logout_homeActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_logout_24"
+                android:layout_toStartOf="@id/profileCard_homeActivity"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:visibility="@{!title.equals(``) ? View.GONE : View.VISIBLE}"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profileCard_homeActivity"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                app:cardCornerRadius="@dimen/_40sdp"
+                android:visibility="@{@string/account == title  ? View.GONE : View.VISIBLE}"
+                >
+
+                <ImageView
+                    android:id="@+id/profileImage_homeActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/profile_image"
+                    android:src="@drawable/person_image"
+                    imageUrl="@{viewModel.stateFlowProfileImage}" />
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/flFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relative1_homeActivity" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/_5sdp"
+            setMenu="@{viewModel.stateFlowMenu}"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

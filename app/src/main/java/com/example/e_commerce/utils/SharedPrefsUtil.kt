@@ -45,4 +45,10 @@ object SharedPrefsUtil{
 
     }
 
+    fun getType(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.type
+
+    }
+
 }

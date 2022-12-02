@@ -4,7 +4,7 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.e_commerce.ui.homemarket.users.users.UsersViewModel" />
@@ -20,56 +20,18 @@
         android:layout_height="match_parent"
         >
 
-        <LinearLayout
-            android:id="@+id/linear_usersFragment"
+        <FrameLayout
+            android:id="@+id/frame_usersFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_110sdp"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/shape_top"
             android:padding="@dimen/_10sdp"
             >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                >
 
-                <TextView
-                    android:id="@+id/welcomeText_usersFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/users"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    app:cardCornerRadius="@dimen/_40sdp">
-
-                    <ImageView
-                        android:id="@+id/profileImage_usersFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:contentDescription="@string/profile_image"
-                        android:src="@drawable/person_image"
-                        imageUrl="@{viewModel.stateFlowProfileImage}"
-                        />
-
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content"
                 android:background="@color/searchBackgroundColor"
                 app:cardCornerRadius="@dimen/_2sdp"
                 >
@@ -102,7 +64,7 @@
             </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
+        </FrameLayout>
 
 
             <LinearLayout
@@ -113,7 +75,7 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_15sdp"
-                app:layout_constraintTop_toBottomOf="@id/linear_usersFragment"
+                app:layout_constraintTop_toBottomOf="@id/frame_usersFragment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 >
@@ -213,8 +175,36 @@
             app:layout_constraintBottom_toBottomOf="@id/recycler_usersFragment"
             android:layout_gravity="center"
             android:indeterminate="true"
-            showOnLoading="@{viewModel.states}"
-            android:visibility="visible"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+
+            />
+
+
+        <ImageView
+            android:id="@+id/emptyImage_usersFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_usersFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_usersFragment"
+            android:visibility="@{viewModel.stateFlowUserModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_usersFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowUserModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

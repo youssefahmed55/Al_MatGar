@@ -22,7 +22,7 @@
         <LinearLayout
             android:id="@+id/linear_subCategoryFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_110sdp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/shape_top"
@@ -30,8 +30,8 @@
             >
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+
                 >
                 <androidx.cardview.widget.CardView
                     android:id="@+id/backCard_subCategoryFragment"
@@ -43,7 +43,6 @@
                     app:cardElevation="@dimen/_3sdp"
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
-
                     >
 
                     <ImageView
@@ -67,31 +66,13 @@
                     android:layout_centerInParent="true"
                     android:text="@{viewModel.nameOfCategory}"
                     />
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    app:cardCornerRadius="@dimen/_40sdp">
-
-                    <ImageView
-                        android:id="@+id/profileImage_subCategoryFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:contentDescription="@string/profile_image"
-                        android:src="@drawable/person_image"
-                        imageUrl="@{viewModel.stateFlowProfileImage}"
-                        />
-
-                </androidx.cardview.widget.CardView>
-
             </RelativeLayout>
+
+
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/searchBackgroundColor"
                 app:cardCornerRadius="@dimen/_2sdp"

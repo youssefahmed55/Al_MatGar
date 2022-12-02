@@ -23,9 +23,6 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
     private val _mutableStateFlowFavorites = MutableStateFlow(emptyList<String>())
     val stateFlowFavorites : StateFlow<List<String>> get() = _mutableStateFlowFavorites
 
-    private val _mutableStateFlowProfileImage = MutableStateFlow("")
-    val stateFlowProfileImage : StateFlow<String> get() = _mutableStateFlowProfileImage
-
     val mutableStateFlowTextSearch = MutableStateFlow("")
 
     private val _mutableStateFlowIsLoading = MutableStateFlow(true)
@@ -40,9 +37,6 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
     private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
     init {
-        viewModelScope.launch(handler) {
-            _mutableStateFlowProfileImage.value = subCategoryRepo.getImageUrl()
-        }
         val catId = savedStateHandle.get<Int>("catId")
         val catName = savedStateHandle.get<String>("catName")
         getAllAndFavorite(catId!!)
