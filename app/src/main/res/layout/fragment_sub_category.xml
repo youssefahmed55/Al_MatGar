@@ -6,9 +6,6 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="categoryName"
-            type="String" />
-        <variable
             name="viewModel"
             type="com.example.e_commerce.ui.homemarket.subcategory.subcategory.SubCategoryViewModel" />
 
@@ -68,7 +65,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/white"
                     android:layout_centerInParent="true"
-                    android:text="@{categoryName}"
+                    android:text="@{viewModel.nameOfCategory}"
                     />
 
 

@@ -6,4 +6,4 @@ import java.io.Serializable
 import javax.annotation.Nonnull
 
 @Entity(tableName = "categoryTable")
-data class Category(@PrimaryKey val id : Int = 0, val name : String ?= "", val image : String ?= "") : Serializable
+data class Category(@PrimaryKey val id : Int = 0, val name : String ?= "", val image : String ?= "")

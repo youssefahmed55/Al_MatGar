@@ -1,10 +1,7 @@
 package com.example.e_commerce.ui.homemarket.subcategory.subcategory
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.SharedSubExploreRepo
@@ -18,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubCategoryRepo) : ViewModel() {
+class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubCategoryRepo, private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _mutableStateFlowProductModels = MutableStateFlow(emptyList<Product>())
     val stateFlowProductModels : StateFlow<List<Product>> get() = _mutableStateFlowProductModels
@@ -37,12 +34,19 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
     val _error = MutableLiveData<String>()
     val error : LiveData<String> get() = _error
 
+    private val _mutableLiveDataNameOfCategory = MutableLiveData<String>()
+    val nameOfCategory : LiveData<String> = _mutableLiveDataNameOfCategory
+
     private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
     init {
         viewModelScope.launch(handler) {
             _mutableStateFlowProfileImage.value = subCategoryRepo.getImageUrl()
         }
+        val catId = savedStateHandle.get<Int>("catId")
+        val catName = savedStateHandle.get<String>("catName")
+        getAllAndFavorite(catId!!)
+        _mutableLiveDataNameOfCategory.value = catName!!
     }
 
 

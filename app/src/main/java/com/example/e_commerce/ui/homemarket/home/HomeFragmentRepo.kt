@@ -80,7 +80,6 @@ class HomeFragmentRepo @Inject constructor(@ApplicationContext private val appCo
     suspend fun getWelcomeMessage(): String = withContext(Dispatchers.IO) {
         if (SignedInUtil.getIsSignIn(appContext)){
             return@withContext appContext.getString(R.string.welcome_back) + ' ' + SharedPrefsUtil.getName(appContext)
-
         }else{
             SignedInUtil.setIsSignIn(appContext,true)
             return@withContext appContext.getString(R.string.welcome) + ' ' + SharedPrefsUtil.getName(appContext)

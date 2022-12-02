@@ -42,7 +42,6 @@ class MyProductsViewModel @Inject constructor(private val myProductsRepo: MyProd
         viewModelScope.launch(handler) {
             _mutableStateFlowProfileImage.value = myProductsRepo.getImageUrl()
         }
-        refreshData()
     }
 
      fun refreshData(){

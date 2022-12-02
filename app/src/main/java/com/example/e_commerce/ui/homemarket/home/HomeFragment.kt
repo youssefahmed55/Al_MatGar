@@ -86,6 +86,17 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun replaceProductDetailsFragment(product : Product){
+        val args = Bundle()
+        args.putSerializable("product", product)
+        val productDetailsFragment = ProductDetailsFragment()
+        productDetailsFragment.arguments = args
+        val transaction = activity!!.supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.flFragment, productDetailsFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -99,31 +110,15 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnFoodItem() {
         foodRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                val args = Bundle()
-                args.putSerializable("product", product)
-                val productDetailsFragment = ProductDetailsFragment()
-                productDetailsFragment.arguments = args
-                val transaction = activity!!.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.flFragment, productDetailsFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                replaceProductDetailsFragment(product)
             }
-
-
         })
     }
 
     private fun setOnClickOnBeautyItem() {
         beautyRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                val args = Bundle()
-                args.putSerializable("product", product)
-                val productDetailsFragment = ProductDetailsFragment()
-                productDetailsFragment.arguments = args
-                val transaction = activity!!.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.flFragment, productDetailsFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                replaceProductDetailsFragment(product)
             }
         })
     }
@@ -132,7 +127,8 @@ class HomeFragment : Fragment() {
         categoriesRecyclerAdapter.setOnItemClickListener(object : CategoriesRecyclerAdapter.OnClickOnItem{
             override fun onClick1(cat: Category) {
                 val args = Bundle()
-                args.putSerializable("cat", cat)
+                args.putInt("catId", cat.id)
+                args.putString("catName", cat.name)
                 val subCategoryFragment = SubCategoryFragment()
                 subCategoryFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
@@ -146,14 +142,7 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnHouseWareItem() {
         houseWareRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                val args = Bundle()
-                args.putSerializable("product", product)
-                val productDetailsFragment = ProductDetailsFragment()
-                productDetailsFragment.arguments = args
-                val transaction = activity!!.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.flFragment, productDetailsFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                replaceProductDetailsFragment(product)
             }
         })
     }
@@ -161,14 +150,7 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnClothesItem() {
         clothesRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                val args = Bundle()
-                args.putSerializable("product", product)
-                val productDetailsFragment = ProductDetailsFragment()
-                productDetailsFragment.arguments = args
-                val transaction = activity!!.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.flFragment, productDetailsFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                replaceProductDetailsFragment(product)
             }
         })
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,14 +41,11 @@ class SubCategoryFragment : Fragment()  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var category : Category ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            category = it.getSerializable("cat") as Category?
-
         }
     }
 
@@ -55,7 +53,7 @@ class SubCategoryFragment : Fragment()  {
 
     private lateinit var binding : FragmentSubCategoryBinding
     private val productsRecyclerAdapter : ProductsSubExploreRecyclerAdapter by lazy { ProductsSubExploreRecyclerAdapter() }
-    private val viewModel: SubCategoryViewModel by lazy { ViewModelProvider(this)[SubCategoryViewModel::class.java] }
+    private val viewModel: SubCategoryViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,10 +61,6 @@ class SubCategoryFragment : Fragment()  {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_sub_category, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        category?.let { it2 ->
-            binding.categoryName = it2.name
-            viewModel.getAllAndFavorite(it2.id!!)
-        }
         setOnClickOnRecyclerItem()
         setOnClickOnFavoriteOfRecyclerItem()
         binding.adapter = productsRecyclerAdapter

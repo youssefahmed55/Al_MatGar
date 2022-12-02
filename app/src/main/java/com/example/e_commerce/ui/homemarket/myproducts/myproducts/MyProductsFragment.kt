@@ -68,6 +68,11 @@ class MyProductsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshData()
+    }
+
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner, Observer {
             it?.let {
