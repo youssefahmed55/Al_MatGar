@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    >
 
     <data>
         <import type="android.view.View"/>
@@ -171,10 +171,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            bind:productAdapter="@{productsMerchantRecyclerAdapter}"
-            bind:productList="@{viewModel.stateFlowProductModels}"
-            bind:searchProductText="@{viewModel.mutableStateFlowTextSearch}"
-            bind:productType="@{viewModel.stateFlowType}"
+            productAdapterMerchant="@{productsMerchantRecyclerAdapter}"
+            productListMerchant="@{viewModel.stateFlowProductModels}"
+            searchProductTextMerchant="@{viewModel.mutableStateFlowTextSearch}"
+            productTypeMerchant="@{viewModel.stateFlowType}"
             />
 
         <ProgressBar

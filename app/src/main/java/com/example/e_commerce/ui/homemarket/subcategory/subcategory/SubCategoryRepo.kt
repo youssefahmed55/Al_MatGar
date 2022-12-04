@@ -43,21 +43,7 @@ class SubCategoryRepo @Inject constructor(@ApplicationContext private val appCon
     }
 
 
-    suspend fun getListOfFavoritesId(): List<String> = withContext(Dispatchers.IO) {
-        val favoriteQuery = db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").get().await()
-        val mutableFavoriteList = mutableListOf<String>()
-        favoriteQuery.forEach { mutableFavoriteList.add(it.id)}
-        return@withContext mutableFavoriteList.toList()
-    }
 
-
-    suspend fun addToFavorite(id : String) = withContext(Dispatchers.IO) {
-        db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(id).set({null}).await()
-    }
-
-    suspend fun deleteFromFavorite(id : String) = withContext(Dispatchers.IO) {
-        db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(id).delete().await()
-    }
 
 
 }

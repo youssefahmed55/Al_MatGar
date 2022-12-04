@@ -12,8 +12,8 @@ import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.SearchUtil
 
 
-@BindingAdapter(*["bind:productAdapter", "bind:productList","bind:searchProductText","bind:productType"])
-fun setListOfProducts(view: RecyclerView, productsMerchantRecyclerAdapter: ProductsMerchantRecyclerAdapter, listOfProducts : List<Product>, searchText : String, type : Int) {
+@BindingAdapter(*["productAdapterMerchant", "productListMerchant","searchProductTextMerchant","productTypeMerchant"])
+fun setListOfProductsMerchant(view: RecyclerView, productsMerchantRecyclerAdapter: ProductsMerchantRecyclerAdapter, listOfProducts : List<Product>, searchText : String, type : Int) {
     val list = if (searchText.trim().isNotEmpty()){SearchUtil.getSearchProducts(searchText,listOfProducts)} else listOfProducts
     val arrayList  = ArrayList<Product>()
     when (type){
@@ -28,4 +28,3 @@ fun setListOfProducts(view: RecyclerView, productsMerchantRecyclerAdapter: Produ
     view.adapter = productsMerchantRecyclerAdapter
 
 }
-

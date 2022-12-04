@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.e_commerce.ui.homemarket.explore.ExploreViewModel" />
+        <variable
+            name="adapter"
+            type="com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,6 +47,7 @@
                         android:maxLines="1"
                         android:inputType="text"
                         android:background="@null"
+                        android:text="@={viewModel.mutableStateFlowTextSearch}"
                         android:layout_marginStart="@dimen/_5sdp" />
                     <ImageView
                         android:layout_width="0dp"
@@ -56,90 +62,84 @@
 
         </FrameLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/scroll_exploreFragment"
+
+        <LinearLayout
+            android:id="@+id/linear2_exploreFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:measureAllChildren="false"
-            android:scrollbars="none"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:gravity="center_vertical"
             app:layout_constraintTop_toBottomOf="@id/frame_exploreFragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             >
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/beauty_exploreFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:gravity="center_vertical"
-                >
+                android:textSize="@dimen/_10ssp"
+                android:text="@string/beauty"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/shape2"
+                android:textColor="@color/white"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:onClick="@{() -> viewModel.getBeautyProduct()}"
+                selectedType="@{viewModel.stateFlowType}"
+                />
 
-                <TextView
-                    android:id="@+id/beauty_exploreFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/beauty"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/shape2"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="@dimen/_10sdp" />
+            <TextView
+                android:id="@+id/clothes_exploreFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_10ssp"
+                android:text="@string/clothes"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/shape3"
+                android:textColor="@color/black"
+                android:onClick="@{() -> viewModel.getClothesProduct()}"
+                selectedType="@{viewModel.stateFlowType}"
+                />
 
-                <TextView
-                    android:id="@+id/clothes_exploreFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/clothes"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@drawable/shape3"
-                    android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/food_exploreFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_10ssp"
+                android:text="@string/food"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/shape3"
+                android:textColor="@color/black"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:onClick="@{() -> viewModel.getFoodProduct()}"
+                selectedType="@{viewModel.stateFlowType}"
+                />
 
-                <TextView
-                    android:id="@+id/food_exploreFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/food"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/shape3"
-                    android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_10sdp" />
+            <TextView
+                android:id="@+id/houseWare_exploreFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_10ssp"
+                android:text="@string/houseware"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/shape3"
+                android:textColor="@color/black"
+                android:onClick="@{() -> viewModel.getHouseWareProduct()}"
+                selectedType="@{viewModel.stateFlowType}"
+                />
 
-                <TextView
-                    android:id="@+id/houseWare_exploreFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/houseware"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/shape3"
-                    android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_10sdp" />
 
-                <TextView
-                    android:id="@+id/favorite_exploreFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/favorite"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@drawable/shape3"
-                    android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_10sdp" />
+        </LinearLayout>
 
-            </LinearLayout>
 
-        </HorizontalScrollView>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -148,15 +148,58 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scroll_exploreFragment"
+            app:layout_constraintTop_toBottomOf="@id/linear2_exploreFragment"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_2sdp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             android:layout_marginBottom="@dimen/_10sdp"
+            productsSubExploreAdapter  = "@{adapter}"
+            productsSubExploreList = "@{viewModel.stateFlowProductModels}"
+            favoriteSubExploreList = "@{viewModel.stateFlowFavorites}"
+            searchProductText = "@{viewModel.mutableStateFlowTextSearch}"
+
+            />
 
 
+        <ProgressBar
+            android:id="@+id/myProgress_exploreFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_exploreFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_exploreFragment"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
+
+        <ImageView
+            android:id="@+id/emptyImage_exploreFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_exploreFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_exploreFragment"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_exploreFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
 
 

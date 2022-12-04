@@ -1,13 +1,11 @@
 package com.example.e_commerce.ui.homemarket.subcategory.subcategory
 
-import android.util.Log
+
 import androidx.lifecycle.*
-import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.ui.homemarket.SharedSubExploreRepo
+import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubCategoryRepo, private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubCategoryRepo, private val favoritesRepo: FavoritesRepo, private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _mutableStateFlowProductModels = MutableStateFlow(emptyList<Product>())
     val stateFlowProductModels : StateFlow<List<Product>> get() = _mutableStateFlowProductModels
@@ -47,7 +45,7 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
     fun getAllAndFavorite(id : Int){
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
-            _mutableStateFlowFavorites.value = subCategoryRepo.getListOfFavoritesId()
+            _mutableStateFlowFavorites.value = favoritesRepo.getListOfFavoritesId()
             _mutableStateFlowProductModels.value = subCategoryRepo.getAllProducts(id)
             _mutableStateFlowIsLoading.value = false
         }
@@ -55,13 +53,13 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
 
     fun addToFavorite(id : String){
         viewModelScope.launch(handler) {
-            subCategoryRepo.addToFavorite(id)
+            favoritesRepo.addToFavorite(id)
         }
     }
 
     fun deleteFromFavorite(id : String){
         viewModelScope.launch(handler) {
-            subCategoryRepo.deleteFromFavorite(id)
+            favoritesRepo.deleteFromFavorite(id)
         }
     }
 

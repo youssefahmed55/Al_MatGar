@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
+    <variable
+        name="viewModel"
+        type="com.example.e_commerce.ui.homemarket.offer.OfferViewModel" />
+        <variable
+            name="adapter"
+            type="com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,6 +44,7 @@
                         android:hint="@string/search"
                         android:maxLines="1"
                         android:inputType="text"
+                        android:text="@={viewModel.mutableStateFlowTextSearch}"
                         android:background="@null"
                         android:layout_marginStart="@dimen/_5sdp" />
                     <ImageView
@@ -78,7 +85,10 @@
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape2"
                     android:textColor="@color/white"
-                    android:layout_marginEnd="@dimen/_20sdp" />
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:onClick="@{() -> viewModel.getBeautyProductOffers()}"
+                    selectedType="@{viewModel.stateFlowType}"
+                    />
 
                 <TextView
                     android:id="@+id/clothes_offerFragment"
@@ -90,7 +100,10 @@
                     android:padding="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:background="@drawable/shape3"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:onClick="@{() -> viewModel.getClothesProductOffers()}"
+                    selectedType="@{viewModel.stateFlowType}"
+                    />
 
                 <TextView
                     android:id="@+id/food_offerFragment"
@@ -102,7 +115,10 @@
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
                     android:textColor="@color/black"
-                    android:layout_marginEnd="@dimen/_20sdp" />
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:onClick="@{() -> viewModel.getFoodProductOffers()}"
+                    selectedType="@{viewModel.stateFlowType}"
+                    />
 
                 <TextView
                     android:id="@+id/houseWare_offerFragment"
@@ -114,6 +130,8 @@
                     android:padding="@dimen/_5sdp"
                     android:background="@drawable/shape3"
                     android:textColor="@color/black"
+                    android:onClick="@{() -> viewModel.getHouseWareProductOffers()}"
+                    selectedType="@{viewModel.stateFlowType}"
                      />
 
 
@@ -135,12 +153,52 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             android:layout_marginBottom="@dimen/_10sdp"
-
+            productsSubExploreAdapter  = "@{adapter}"
+            productsSubExploreList = "@{viewModel.stateFlowProductModels}"
+            favoriteSubExploreList = "@{viewModel.stateFlowFavorites}"
+            searchProductText = "@{viewModel.mutableStateFlowTextSearch}"
 
             />
 
 
+        <ProgressBar
+            android:id="@+id/myProgress_offerFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_offerFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_offerFragment"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
+        <ImageView
+            android:id="@+id/emptyImage_offerFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_offerFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_offerFragment"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_offerFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
