@@ -1,6 +1,7 @@
 package com.example.e_commerce.ui.homemarket.sharedrepo
 
 import android.content.Context
+import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -23,10 +24,12 @@ class FavoritesRepo @Inject constructor(@ApplicationContext private val appConte
 
 
     suspend fun addToFavorite(id : String) = withContext(Dispatchers.IO) {
+        Network.checkConnectionType(appContext)
         db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(id).set({null}).await()
     }
 
     suspend fun deleteFromFavorite(id : String) = withContext(Dispatchers.IO) {
+        Network.checkConnectionType(appContext)
         db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(id).delete().await()
     }
 }

@@ -7,13 +7,14 @@ import com.example.e_commerce.utils.SearchUtil
 
 
 @BindingAdapter(*["productsSubExploreAdapter", "productsSubExploreList","favoriteSubExploreList","searchProductText"])
-fun RecyclerView.setListOfProductsSubExplore(productsSubExploreRecyclerAdapter: ProductsSubExploreRecyclerAdapter, listOfProducts : List<Product> , listOfFavorites : List<String> , searchText : String) {
+fun RecyclerView.setListOfProductsSubExplore(productsSubExploreRecyclerAdapter: ProductsSubExploreRecyclerAdapter, listOfProducts : List<Product> , listOfFavorites : List<String>? , searchText : String) {
 
-    listOfFavorites.forEach { favorite ->
+    listOfFavorites?.forEach { favorite ->
         listOfProducts.forEach { product ->
             if (favorite == product.id){product.isFavorite = true}
         }
     }
+
 
     var myList = listOfProducts
     if (searchText.trim().isNotEmpty()){

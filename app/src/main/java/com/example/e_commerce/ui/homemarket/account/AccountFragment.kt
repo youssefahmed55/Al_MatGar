@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,7 @@ import com.example.e_commerce.Constants.PICK_IMAGE
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.*
+import com.example.e_commerce.ui.homemarket.favorite.FavoritesFragment
 import com.example.e_commerce.ui.login.MainActivity
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.ToastyUtil
@@ -27,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,6 +67,7 @@ class AccountFragment : Fragment() {
     private var passwordOfNewEmail : String ?= null
     private var passwordOfNewPassword : String ?= null
     private var newPassword : String ?= null
+    private var job : Job ?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,8 +85,23 @@ class AccountFragment : Fragment() {
         setOnclickOnPassword()
         setOnClickOnProfileImage()
         setOnClickOnSaveButton()
-        render()
+        setOnClickOnFavorites()
+        setOnClickOnBack()
         return  binding.root
+    }
+
+    private fun setOnClickOnBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {activity!!.finish()}
+            }
+        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun setOnClickOnFavorites() {
+        binding.favoritesAccountFragment.setOnClickListener {
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, FavoritesFragment()).addToBackStack(null).commit()
+        }
     }
 
     private fun setOnClickOnSaveButton() {
@@ -100,8 +119,18 @@ class AccountFragment : Fragment() {
        }
     }
 
+    override fun onPause() {
+        job?.cancel()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        render()
+    }
+
     private fun render() {
-        lifecycleScope.launchWhenStarted {
+        job = lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
                     is DefaultStates.Success -> {

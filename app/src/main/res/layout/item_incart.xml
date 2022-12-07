@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
+      <variable
+          name="product"
+          type="com.example.e_commerce.pojo.Product" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,7 +31,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_launcher_background" />
+                    android:src="@color/hintColor"
+                    imageUrl="@{product.images != null ? product.images.get(0) : null }"
+                    />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -52,7 +57,7 @@
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="ffd;fldplfdodofdmfdkmfkdmfomdsaomsamewerfssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssaswqesadsad" />
+                        android:text="@{product.name}" />
 
                     <ImageView
                         android:id="@+id/delete_itemInCart"
@@ -82,14 +87,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_8ssp"
-                        android:text="1"
+                        android:text="@{String.valueOf(product.delivery_time)}"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_regular" />
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -98,44 +103,59 @@
                     >
 
                     <TextView
+                        android:id="@+id/price_itemInCart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_10ssp"
                         android:textColor="@color/green"
                         android:maxLines="1"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="500$" />
+                        price="@{product.hasOffer ? product.offerPrice : product.price}" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="end">
+
+
 
                         <ImageView
+                            android:id="@+id/minus_itemInCart"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
-                            app:srcCompat="@drawable/ic_minus" />
+                            app:srcCompat="@drawable/ic_minus"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            />
 
                         <TextView
+                            android:id="@+id/count_itemInCart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1"
                             android:textColor="@color/hintColor"
                             android:textSize="@dimen/_10ssp"
+                            android:layout_toStartOf="@+id/minus_itemInCart"
+                            android:layout_centerInParent="true"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp" />
 
                         <ImageView
+                            android:id="@+id/plus_itemInCart"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
-                            app:srcCompat="@drawable/ic_plus" />
+                            app:srcCompat="@drawable/ic_plus"
+                            android:layout_toStartOf="@+id/count_itemInCart"
+                            android:layout_centerInParent="true"
+                            />
 
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_10ssp"
+                    strikeThrough="@{product.price}"
+                    android:visibility="@{product.hasOffer ? View.VISIBLE : View.GONE}"
+                    android:textColor="@color/hintColor"
+                    android:fontFamily="@font/poppins_semibold" />
 
             </LinearLayout>
 

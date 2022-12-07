@@ -239,7 +239,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/addFloatingButton_myProductsFragment"
             android:layout_margin="@dimen/_10sdp"
-            android:src="@drawable/ic_baseline_list_alt_24"
+            android:src="@drawable/ic_order2"
             app:tint="@android:color/white"
             app:backgroundTint="@color/green"
 

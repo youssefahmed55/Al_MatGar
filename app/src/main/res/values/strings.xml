@@ -139,6 +139,9 @@
     <string name="welcome_back">Welcome Back,</string>
     <string name="welcome">Welcome,</string>
     <string name="no_data">No Data</string>
+    <string name="quantity">Quantity</string>
+    <string name="favorites_and_order_details">Favorites and order Details</string>
+    <string name="favorites">Favorites</string>
 
 
     <string-array name="genders">

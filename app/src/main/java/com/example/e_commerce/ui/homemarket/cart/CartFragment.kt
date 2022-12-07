@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentCartBinding
@@ -38,10 +39,18 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_cart, container, false)
-
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        setOnClickOnBack()
 
         return binding.root
+    }
+
+    private fun setOnClickOnBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {activity!!.finish()}
+            }
+        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     companion object {

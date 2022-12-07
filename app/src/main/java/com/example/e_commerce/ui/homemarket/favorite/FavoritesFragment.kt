@@ -1,19 +1,17 @@
-package com.example.e_commerce.ui.homemarket.offer
+package com.example.e_commerce.ui.homemarket.favorite
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter
-import com.example.e_commerce.databinding.FragmentOfferBinding
+import com.example.e_commerce.databinding.FragmentFavoritesBinding
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.utils.ToastyUtil
@@ -26,11 +24,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [OfferFragment.newInstance] factory method to
+ * Use the [FavoritesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class OfferFragment : Fragment() {
+class FavoritesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,34 +40,35 @@ class OfferFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-    private lateinit var binding : FragmentOfferBinding
+
+
+    private lateinit var binding : FragmentFavoritesBinding
+    private val viewModel : FavoritesFragmentViewModel by viewModels()
     private val productsRecyclerAdapter : ProductsSubExploreRecyclerAdapter by lazy { ProductsSubExploreRecyclerAdapter() }
-    private val viewModel: OfferViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_offer, container, false)
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_favorites, container, false)
         binding.lifecycleOwner = this
-        Log.d("gggggggggggg", "onCreateView: ")
-        viewModel.getFavorites()
         binding.viewModel = viewModel
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         setOnClickOnRecyclerItem()
         setOnClickOnFavoriteOfRecyclerItem()
         productsRecyclerAdapter.setContext(context!!)
         binding.adapter = productsRecyclerAdapter
-        setOnClickOnBack()
+        setOnClickOnBackIcon()
         observeErrorMessage()
         return binding.root
     }
-    private fun setOnClickOnBack() {
-        val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true /* enabled by default */) {
-                override fun handleOnBackPressed() {activity!!.finish()}
-            }
-        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    private fun setOnClickOnBackIcon() {
+        binding.backCardFavoritesFragment.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStack()
+        }
     }
+
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
@@ -112,6 +111,4 @@ class OfferFragment : Fragment() {
 
         })
     }
-
-
 }

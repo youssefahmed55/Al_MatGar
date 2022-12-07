@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
@@ -56,12 +57,21 @@ class ExploreFragment : Fragment() {
         binding.viewModel = viewModel
         setOnClickOnRecyclerItem()
         setOnClickOnFavoriteOfRecyclerItem()
+        productsRecyclerAdapter.setContext(context!!)
         binding.adapter = productsRecyclerAdapter
-
+        setOnClickOnBack()
         observeErrorMessage()
 
         return binding.root
     }
+    private fun setOnClickOnBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {activity!!.finish()}
+            }
+        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {

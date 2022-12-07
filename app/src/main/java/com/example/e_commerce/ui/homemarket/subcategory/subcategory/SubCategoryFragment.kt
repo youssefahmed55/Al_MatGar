@@ -55,6 +55,7 @@ class SubCategoryFragment : Fragment()  {
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         setOnClickOnRecyclerItem()
         setOnClickOnFavoriteOfRecyclerItem()
+        productsRecyclerAdapter.setContext(context!!)
         binding.adapter = productsRecyclerAdapter
         setOnClickOnBackIcon()
         observeErrorMessage()

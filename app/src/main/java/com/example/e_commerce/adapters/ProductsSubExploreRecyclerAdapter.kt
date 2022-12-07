@@ -1,5 +1,6 @@
 package com.example.e_commerce.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -9,12 +10,14 @@ import com.example.e_commerce.R
 import com.example.e_commerce.databinding.ItemProduct2Binding
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.Network
+import com.example.e_commerce.utils.SharedPrefsUtil
 
 
 class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExploreRecyclerAdapter.Holder>() {
     private lateinit var list : List<Product>
     private lateinit var onClickOnItem : OnClickOnItem
     private lateinit var onClickOnItemFavorite : OnClickOnItemFavorite
+    private lateinit var context : Context
 
     interface OnClickOnItem {
         fun onClick1(product: Product)
@@ -26,6 +29,10 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
 
     fun setList (list : List<Product>){
         this.list = list
+    }
+
+    fun setContext(context : Context){
+        this.context = context
     }
 
     fun setFavoriteItem(id : String){
@@ -48,7 +55,7 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
         val binding : ItemProduct2Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product2,parent,false)
         binding.root.isClickable = true
         binding.root.isFocusableInTouchMode = true
-        return Holder(binding,onClickOnItem,onClickOnItemFavorite,list)
+        return Holder(binding,onClickOnItem,onClickOnItemFavorite,list,context)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -60,10 +67,11 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
 
     }
 
-    class Holder(binding: ItemProduct2Binding,listener: OnClickOnItem , listener2 : OnClickOnItemFavorite, list: List<Product>) : RecyclerView.ViewHolder(binding.root) {
+    class Holder(binding: ItemProduct2Binding,listener: OnClickOnItem , listener2 : OnClickOnItemFavorite, list: List<Product>,context:Context) : RecyclerView.ViewHolder(binding.root) {
          val holderBinding : ItemProduct2Binding = binding
 
         init {
+            binding.type = SharedPrefsUtil.getType(context)
             binding.linearProduct2.setOnClickListener {
                 val position: Int = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {

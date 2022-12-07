@@ -6,8 +6,8 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="product"
-            type="com.example.e_commerce.pojo.Product" />
+            name="viewModel"
+            type="com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsViewModel" />
 
     </data>
 
@@ -17,7 +17,7 @@
         >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="@dimen/_15sdp"
         >
 
@@ -51,16 +51,17 @@
             app:cardBackgroundColor="@color/itemBackgroundColor"
             app:cardCornerRadius="@dimen/_5sdp"
             android:layout_margin="@dimen/_10sdp"
-            app:cardElevation="@dimen/_3sdp"
+            app:cardElevation="@dimen/_5sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{()-> viewModel.addOrDeleteToFavorite()}"
+            android:visibility="@{viewModel.stateType.equals(`Customer`) ? View.VISIBLE : View.GONE}"
             >
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_favorite2"
-
+                android:src="@{viewModel.liveDataProduct.isFavorite() ?  @drawable/ic_favorite : @drawable/ic_favorite2 }"
                 />
 
         </androidx.cardview.widget.CardView>
@@ -75,6 +76,7 @@
             app:cardElevation="@dimen/_3sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/favoriteCard_productDetailsFragment"
+            android:visibility="@{viewModel.stateType.equals(`Customer`) ? View.VISIBLE : View.GONE}"
             >
             <ImageView
                 android:layout_width="@dimen/_15sdp"
@@ -109,8 +111,10 @@
                 app:sliderIndicatorRadius="2dp"
                 app:sliderIndicatorSelectedColor="#5A5A5A"
                 app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="1"
-                app:sliderStartAutoCycle="true" />
+                app:sliderScrollTimeInSec="3"
+                app:sliderStartAutoCycle="true"
+                setListOfSlider="@{viewModel.stateFlowSliderAdapter}"
+                />
 
         </androidx.cardview.widget.CardView>
 
@@ -129,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_16ssp"
-                    android:text="@{product.name}"
+                    android:text="@{viewModel.liveDataProduct.name}"
                     android:textColor="@color/black"
                     android:paddingEnd="@dimen/_15sdp"
                     android:fontFamily="@font/poppins_semibold" />
@@ -148,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_7ssp"
-                    android:text="@{product.description}"
+                    android:text="@{viewModel.liveDataProduct.description}"
                     android:textColor="@color/color1"
                     android:fontFamily="@font/poppins_regular" />
 
@@ -179,7 +183,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_12ssp"
-                            android:text="@{product.brand}"
+                            android:text="@{viewModel.liveDataProduct.brand}"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:textColor="@color/color1"
                             android:fontFamily="@font/poppins_semibold" />
@@ -208,7 +212,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/_12ssp"
-                                price="@{product.hasOffer ? product.offerPrice : product.price}"
+                                price="@{viewModel.liveDataProduct.hasOffer ? viewModel.liveDataProduct.offerPrice : viewModel.liveDataProduct.price}"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:textColor="@color/green"
                                 android:fontFamily="@font/poppins_semibold" />
@@ -217,8 +221,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/_12ssp"
-                                strikeThrough="@{product.price}"
-                                android:visibility="@{product.hasOffer ? View.VISIBLE : View.INVISIBLE}"
+                                strikeThrough="@{viewModel.liveDataProduct.price}"
+                                android:visibility="@{viewModel.liveDataProduct.hasOffer ? View.VISIBLE : View.INVISIBLE}"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:textColor="@color/hintColor"
                                 android:fontFamily="@font/poppins_semibold" />
@@ -250,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_8ssp"
-                        android:text="@{String.valueOf(product.delivery_time)}"
+                        android:text="@{String.valueOf(viewModel.liveDataProduct.delivery_time)}"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_semibold" />
@@ -262,6 +266,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="@{viewModel.stateType.equals(`Customer`) ? View.VISIBLE : View.GONE}"
                     >
                     <androidx.cardview.widget.CardView
                         android:id="@+id/QTY_productDetailsFragment"
@@ -290,9 +295,10 @@
 
                                 />
                             <TextView
+                                android:id="@+id/QTYNumber_productDetailsFragment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="@={viewModel._count}"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/poppins_semibold"
@@ -313,7 +319,7 @@
                         android:textColor="@color/white"
                         android:fontFamily="@font/poppins_bold"
                         android:textAllCaps="false"
-
+                        android:onClick="@{() -> viewModel.addToCart(viewModel.count)}"
                         />
 
                 </LinearLayout>

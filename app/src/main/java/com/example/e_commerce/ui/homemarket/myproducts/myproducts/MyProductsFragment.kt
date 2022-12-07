@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.e_commerce.R
@@ -58,11 +59,19 @@ class MyProductsFragment : Fragment() {
         setOnClickOnDeleteIconItemOfRecycler()
 
         binding.productsMerchantRecyclerAdapter = productsMerchantRecyclerAdapter
-
+        setOnClickOnBack()
         observeErrorMessage()
         setOnClickOnAddButton()
 
         return binding.root
+    }
+
+    private fun setOnClickOnBack() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {activity!!.finish()}
+            }
+        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 

@@ -1,18 +1,25 @@
 package com.example.e_commerce.ui.homemarket.subcategory.productdetails
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
-import com.example.e_commerce.adapters.SliderAdapter
+import com.example.e_commerce.databinding.BottomsheetquantityBinding
 import com.example.e_commerce.databinding.FragmentProductDetailsBinding
-import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.ui.homemarket.cart.CartFragment
+import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.smarteist.autoimageslider.SliderView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,94 +31,102 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProductDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var product : Product? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            product = it.getSerializable("product") as Product?
         }
     }
     private lateinit var binding : FragmentProductDetailsBinding
-    private lateinit var bottomNavigationView: BottomNavigationView
-    private val TAG = "ProductDetailsFragment"
+    private val viewModel : ProductDetailsViewModel by viewModels()
+    private lateinit var bindingBottomsheetquantityBinding: BottomsheetquantityBinding
+    private lateinit var bottomSheetDialog: BottomSheetDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_product_details, container, false)
+        bindingBottomsheetquantityBinding = DataBindingUtil.inflate(inflater,R.layout.bottomsheetquantity, container, false)
         binding.lifecycleOwner = this
-        setOnClickOnBackIcon()
+        binding.viewModel = viewModel
+        inti()
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
-        if (product!=null) {
-            if (product?.images != null)
-            setSliderAdapter(product?.images!!)
+        observeErrorMessage()
+        setOnClickOnBackIcon()
+        setOnClickOnQTY()
+        setOnClickShopCard()
 
-            binding.product = product
-        }
         return binding.root
     }
 
+    private fun setOnClickShopCard() {
+        binding.shopCardProductDetailsFragment.setOnClickListener {
+            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.cart
+            activity!!.findViewById<TextView>(R.id.title_homeActivity).text = getString(R.string.cart)
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, CartFragment()).commit()
+        }
+    }
 
+    private fun setOnClickOnQTY() {
+        val textViewNumbers = mutableListOf<TextView>()
+        bindingBottomsheetquantityBinding.apply {textViewNumbers.addAll(mutableListOf(oneBottomSheetQuantity,twoBottomSheetQuantity,threeBottomSheetQuantity,fourBottomSheetQuantity,fiveBottomSheetQuantity))  }
+
+        binding.QTYProductDetailsFragment.setOnClickListener {
+            bindingBottomsheetquantityBinding.apply {
+                oneBottomSheetQuantity.setOnClickListener { binding.QTYNumberProductDetailsFragment.text = "1" ; changeBackGroundColorr(oneBottomSheetQuantity,textViewNumbers)}
+                twoBottomSheetQuantity.setOnClickListener { binding.QTYNumberProductDetailsFragment.text = "2" ; changeBackGroundColorr(twoBottomSheetQuantity,textViewNumbers)}
+                threeBottomSheetQuantity.setOnClickListener { binding.QTYNumberProductDetailsFragment.text = "3" ; changeBackGroundColorr(threeBottomSheetQuantity,textViewNumbers)}
+                fourBottomSheetQuantity.setOnClickListener { binding.QTYNumberProductDetailsFragment.text = "4" ; changeBackGroundColorr(fourBottomSheetQuantity,textViewNumbers)}
+                fiveBottomSheetQuantity.setOnClickListener { binding.QTYNumberProductDetailsFragment.text = "5" ; changeBackGroundColorr(fiveBottomSheetQuantity,textViewNumbers)}
+                closeBottomSheetQuantity.setOnClickListener { bottomSheetDialog.dismiss() }
+            }
+            bottomSheetDialog.setContentView(bindingBottomsheetquantityBinding.root)
+            bottomSheetDialog.show()
+        }
+    }
+
+    private fun changeBackGroundColorr(numberBottomSheetQuantity: TextView, textViewNumbers: MutableList<TextView>) {
+        textViewNumbers.forEach {
+              if(numberBottomSheetQuantity.text.toString() != it.text.toString()) {
+                  it.setBackgroundResource(R.drawable.shape1)
+                  it.setTextColor(Color.BLACK)
+              }else{
+                  it.setBackgroundResource(R.drawable.shape2)
+                  it.setTextColor(Color.WHITE)
+              }
+              }
+    }
+
+    private fun inti() {
+        //Initialize bottomSheetDialog
+        bottomSheetDialog = BottomSheetDialog(context!!, R.style.AppBottomSheetDialogTheme)
+    }
+
+    private fun observeErrorMessage() {
+        viewModel.error.observe(viewLifecycleOwner) {
+            it?.let {
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
+                viewModel._error.value = null
+            }
+        }
+    }
 
     override fun onDetach() {
         activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
         super.onDetach()
     }
 
-
     private fun setOnClickOnBackIcon() {
         binding.backCardProductDetailsFragment.setOnClickListener {
             activity!!.supportFragmentManager.popBackStack()
         }
-    }
-
-
-    private fun setSliderAdapter(list: List<String>) {
-        val sliderAdapter = SliderAdapter(list)
-        // on below line we are setting auto cycle direction
-        // for our slider view from left to right.
-        binding.imageSliderProductDetailsFragment.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
-
-        // on below line we are setting adapter for our slider.
-        binding.imageSliderProductDetailsFragment.setSliderAdapter(sliderAdapter)
-
-        // on below line we are setting scroll time
-        // in seconds for our slider view.
-        binding.imageSliderProductDetailsFragment.scrollTimeInSec = 3
-
-        // on below line we are setting auto cycle
-        // to true to auto slide our items.
-        binding.imageSliderProductDetailsFragment.isAutoCycle = true
-
-        // on below line we are calling start
-        // auto cycle to start our cycle.
-        binding.imageSliderProductDetailsFragment.startAutoCycle()
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

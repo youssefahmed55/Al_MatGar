@@ -38,17 +38,10 @@ class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListe
         binding.viewModel = viewModel
 
         setOnClickOnLogoutIcon()
-        setOnClickOnBackIcon()
 
         binding.bottomNavigationView.setOnItemSelectedListener(this)
         supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()
 
-    }
-
-    private fun setOnClickOnBackIcon() {
-        binding.backCardHomeActivity.setOnClickListener {
-            supportFragmentManager.popBackStack()
-        }
     }
 
     private fun setOnClickOnLogoutIcon() {
