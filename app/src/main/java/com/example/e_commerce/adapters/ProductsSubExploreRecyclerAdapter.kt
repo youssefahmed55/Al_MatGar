@@ -53,8 +53,6 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding : ItemProduct2Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product2,parent,false)
-        binding.root.isClickable = true
-        binding.root.isFocusableInTouchMode = true
         return Holder(binding,onClickOnItem,onClickOnItemFavorite,list,context)
     }
 
@@ -72,7 +70,7 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
 
         init {
             binding.type = SharedPrefsUtil.getType(context)
-            binding.linearProduct2.setOnClickListener {
+            binding.root.setOnClickListener {
                 val position: Int = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position

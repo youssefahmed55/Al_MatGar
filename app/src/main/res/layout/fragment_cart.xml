@@ -4,93 +4,111 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
+     <variable
+         name="viewModel"
+         type="com.example.e_commerce.ui.homemarket.cart.cart.CartViewModel" />
+     <variable
+         name="adapter"
+         type="com.example.e_commerce.adapters.ProductsInCartRecyclerAdapter" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.homemarket.cart.CartFragment">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ordersPurchased_cartFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/orders_purchased"
-                android:textColor="@color/black"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:textSize="@dimen/_12ssp"
-                android:background="@color/itemBackgroundColor"
-                android:fontFamily="@font/poppins_semibold" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/your_orders_process"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:fontFamily="@font/poppins_semibold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerProcessOrders_cartFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical" />
-
-            <TextView
+                android:id="@+id/textView_cartFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/your_orders_in_cart"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:textSize="@dimen/_12ssp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/poppins_semibold" />
+                android:textSize="@dimen/_12ssp"
+                android:layout_margin="@dimen/_5sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/poppins_semibold"
+                android:visibility="@{viewModel.stateFlowProductModels.size() == 0 ? View.GONE : View.VISIBLE }"
+                />
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerInCartOrders_cartFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/_5sdp"
+                app:layout_constraintBottom_toTopOf="@id/nextButton_cartFragment"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/textView_cartFragment"
+                productsInCartAdapter = "@{adapter}"
+                productsInCartList  = "@{viewModel.stateFlowProductModels}"
+                CountsInCartList = "@{viewModel.stateFlowProductCounts}"
+                android:visibility="@{viewModel.stateFlowProductModels.size() == 0 ? View.GONE : View.VISIBLE }"
+                />
+
+        <ProgressBar
+            android:id="@+id/myProgress_cartFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
+
+        <ImageView
+            android:id="@+id/emptyImage_cartFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_cartFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/nextButton_cartFragment"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_37sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/btnshape"
                 android:text="@string/next"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_bold"
                 android:textAllCaps="false"
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{viewModel.stateFlowProductModels.size() == 0 ? View.GONE : View.VISIBLE }"
                 />
 
 
-        </LinearLayout>
 
 
-    </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,7 +11,7 @@ import com.example.e_commerce.BuildConfig
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.ActivityHomeBinding
 import com.example.e_commerce.ui.homemarket.account.AccountFragment
-import com.example.e_commerce.ui.homemarket.cart.CartFragment
+import com.example.e_commerce.ui.homemarket.cart.cart.CartFragment
 import com.example.e_commerce.ui.homemarket.explore.ExploreFragment
 import com.example.e_commerce.ui.homemarket.home.HomeFragment
 import com.example.e_commerce.ui.homemarket.myproducts.myproducts.MyProductsFragment

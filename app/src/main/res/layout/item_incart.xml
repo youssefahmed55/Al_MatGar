@@ -7,6 +7,9 @@
       <variable
           name="product"
           type="com.example.e_commerce.pojo.Product" />
+        <variable
+            name="count"
+            type="Integer" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -31,7 +34,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
-                    android:src="@color/hintColor"
                     imageUrl="@{product.images != null ? product.images.get(0) : null }"
                     />
             </androidx.cardview.widget.CardView>
@@ -126,17 +128,17 @@
                             android:layout_centerInParent="true"
                             />
 
-                        <TextView
-                            android:id="@+id/count_itemInCart"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textColor="@color/hintColor"
-                            android:textSize="@dimen/_10ssp"
-                            android:layout_toStartOf="@+id/minus_itemInCart"
-                            android:layout_centerInParent="true"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp" />
+                    <TextView
+                        android:id="@+id/count_itemInCart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toStartOf="@+id/minus_itemInCart"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@{String.valueOf(count)}"
+                        android:textColor="@color/hintColor"
+                        android:textSize="@dimen/_10ssp" />
 
                         <ImageView
                             android:id="@+id/plus_itemInCart"

@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.BottomsheetquantityBinding
 import com.example.e_commerce.databinding.FragmentProductDetailsBinding
-import com.example.e_commerce.ui.homemarket.cart.CartFragment
+import com.example.e_commerce.ui.homemarket.cart.cart.CartFragment
 import com.example.e_commerce.utils.ToastyUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog

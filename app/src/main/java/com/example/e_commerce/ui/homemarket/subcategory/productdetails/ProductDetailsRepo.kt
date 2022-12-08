@@ -24,8 +24,8 @@ class ProductDetailsRepo @Inject constructor(@ApplicationContext private val app
     }
 
     suspend fun addToCard(product: Product , count : Int) = withContext(Dispatchers.IO){
-        db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Products").document(product.id).set(product).await()
-        db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Count").document(product.id).set(hashMapOf("count" to count))
+        db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Products").document(product.id).set({null}).await()
+        db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Count").document(product.id).set(hashMapOf("count" to count)).await()
         withContext(Dispatchers.Main){ToastyUtil.successToasty(appContext,"Added To Card Successfully",Toast.LENGTH_SHORT)}
      }
 

@@ -52,7 +52,7 @@ class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRec
          val holderBinding : ItemProductMerchantBinding = binding
 
         init {
-            binding.imageCardItemInCart.setOnClickListener {
+            binding.imageCardItemProductMerchant.setOnClickListener {
                 val position: Int = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
@@ -63,7 +63,7 @@ class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRec
                 }
             }
 
-            binding.deleteItemInCart.setOnClickListener {
+            binding.deleteItemProductMerchant.setOnClickListener {
                 val position: Int = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
