@@ -14,13 +14,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.ProductsInCartRecyclerAdapter
-import com.example.e_commerce.adapters.ProductsMerchantRecyclerAdapter
-import com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentCartBinding
 import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.ui.homemarket.cart.shipto.ShipToFragment
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,16 +62,30 @@ class CartFragment : Fragment() {
         binding.viewModel = viewModel
         binding.adapter = productsInCartRecyclerAdapter
         setOnClickOnBack()
+        setOnClickOnNextButton()
         observeErrorMessage()
 
         return binding.root
+    }
+
+    private fun setOnClickOnNextButton() {
+        binding.nextButtonCartFragment.setOnClickListener {
+            val args = Bundle()
+            val listOfProducts = productsInCartRecyclerAdapter.getList()
+            val listOfCounts = productsInCartRecyclerAdapter.getListOfCount()
+            args.putSerializable("listOfProducts",listOfProducts as Serializable)
+            args.putSerializable("listOfCounts",listOfCounts as Serializable)
+            val shipToFragment = ShipToFragment()
+            shipToFragment.arguments = args
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, shipToFragment).addToBackStack(null).commit()
+
+        }
     }
 
     private fun setOnClickOnMinusOfRecyclerItem() {
         productsInCartRecyclerAdapter.setOnMinusClickListener(object : ProductsInCartRecyclerAdapter.OnClickOnItemMinus{
             override fun onClickMinus(position: Int, count: Int) {
                 if (count != 1){
-                    Log.d("BBBBBB", "onClickMinus: Position : $position , Count : $count")
                     productsInCartRecyclerAdapter.editCount(position,count-1)
                     productsInCartRecyclerAdapter.notifyDataSetChanged()
                 }
@@ -85,7 +99,6 @@ class CartFragment : Fragment() {
         productsInCartRecyclerAdapter.setOnPlusClickListener(object : ProductsInCartRecyclerAdapter.OnClickOnItemPlus{
             override fun onClickPlus(position: Int, count: Int) {
                 if (count != 5){
-                    Log.d("BBBBBB", "onClickPlus: Position : $position , Count : $count")
                     productsInCartRecyclerAdapter.editCount(position,count+1)
                     productsInCartRecyclerAdapter.notifyDataSetChanged()
                 }

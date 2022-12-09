@@ -315,7 +315,7 @@
                         android:layout_weight="5"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/btnshape"
-                        android:text="@string/check_out"
+                        android:text="@string/add_to_cart"
                         android:textColor="@color/white"
                         android:fontFamily="@font/poppins_bold"
                         android:textAllCaps="false"

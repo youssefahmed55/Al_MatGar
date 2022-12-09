@@ -20,6 +20,7 @@ import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.ui.homemarket.subcategory.subcategory.SubCategoryFragment
 import com.example.e_commerce.utils.ToastyUtil
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,6 +60,7 @@ class HomeFragment : Fragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
         binding.lifecycleOwner = this
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
+        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
         setOnClickOnCategoriesItem()
         setOnClickOnBeautyItem()
         setOnClickOnFoodItem()

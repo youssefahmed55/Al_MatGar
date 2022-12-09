@@ -1,3 +1,6 @@
 package com.example.e_commerce.pojo
 
-data class Order(val id : Long ,val product: Product , val date : String ,val count : Int, val status : String , val fullName : String , val phoneNumber : String , val email : String , val location : String)
+import com.google.firebase.firestore.ServerTimestamp
+import java.util.*
+
+data class Order(val id : String = "", val productId : String = "", val merchantId : String = "", val customerId : String = "", val count : Int = 0, @ServerTimestamp val timeStamp: Date? = null, val status : String = "Process")
