@@ -20,9 +20,6 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
     private val _mutableStateFlowProductModels = MutableStateFlow(emptyList<Product>())
     val stateFlowProductModels : StateFlow<List<Product>> get() = _mutableStateFlowProductModels
 
-    private val _mutableStateFlowFavorites = MutableStateFlow(emptyList<String>())
-    val stateFlowFavorites : StateFlow<List<String>> get() = _mutableStateFlowFavorites
-
     val mutableStateFlowTextSearch = MutableStateFlow("")
 
     private val _mutableStateFlowType = MutableStateFlow(R.id.beauty_offerFragment)
@@ -34,17 +31,18 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
     val _error = MutableLiveData<String>()
     val error : LiveData<String> get() = _error
 
+    private val _deletedFromFavorites = MutableLiveData<String?>()
+    val deleteFromFavorites : LiveData<String?> get() = _deletedFromFavorites
+
+    private val _addedToFavorites = MutableLiveData<String?>()
+    val addedToFavorites : LiveData<String?> get() = _addedToFavorites
+
     private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
     init {
         getBeautyProductOffers()
     }
 
-    fun getFavorites(){
-        viewModelScope.launch(handler) {
-            _mutableStateFlowFavorites.value = favoritesRepo.getListOfFavoritesId()
-        }
-    }
 
     fun getBeautyProductOffers() {
         viewModelScope.launch(handler) {
@@ -82,15 +80,18 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
         }
     }
 
-    fun addToFavorite(id : String){
+    fun editFavorite(id : String, isFavorite : Boolean){
         viewModelScope.launch(handler) {
-            favoritesRepo.addToFavorite(id)
-        }
-    }
-
-    fun deleteFromFavorite(id : String){
-        viewModelScope.launch(handler) {
-            favoritesRepo.deleteFromFavorite(id)
+            if (isFavorite) {
+                favoritesRepo.deleteFromFavorite(id)
+                _deletedFromFavorites.value = id
+                _deletedFromFavorites.value = null
+            }
+            else {
+                favoritesRepo.addToFavorite(id)
+                _addedToFavorites.value = id
+                _addedToFavorites.value = null
+            }
         }
     }
 

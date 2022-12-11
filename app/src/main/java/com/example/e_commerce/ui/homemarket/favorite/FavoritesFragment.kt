@@ -60,7 +60,21 @@ class FavoritesFragment : Fragment() {
         binding.adapter = productsRecyclerAdapter
         setOnClickOnBackIcon()
         observeErrorMessage()
+        observeAddedToFavoritesItems()
+        observeDeletedFromFavoritesItems()
         return binding.root
+    }
+
+    private fun observeAddedToFavoritesItems() {
+        viewModel.addedToFavorites.observe(viewLifecycleOwner) {
+            it?.let { productsRecyclerAdapter.setFavoriteItem(it); productsRecyclerAdapter.notifyDataSetChanged() }
+        }
+    }
+
+    private fun observeDeletedFromFavoritesItems() {
+        viewModel.deleteFromFavorites.observe(viewLifecycleOwner){
+            it?.let { productsRecyclerAdapter.removeFavoriteItem(it)  ; productsRecyclerAdapter.notifyDataSetChanged()}
+        }
     }
 
     private fun setOnClickOnBackIcon() {
@@ -98,17 +112,8 @@ class FavoritesFragment : Fragment() {
     private fun setOnClickOnFavoriteOfRecyclerItem() {
         productsRecyclerAdapter.setOnItemClickFavoriteListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItemFavorite{
             override fun onClick1(id: String, isFavorite: Boolean) {
-                if (isFavorite){
-                    viewModel.deleteFromFavorite(id)
-                    productsRecyclerAdapter.removeFavoriteItem(id)
-                }else{
-                    viewModel.addToFavorite(id)
-                    productsRecyclerAdapter.setFavoriteItem(id)
-                }
-                productsRecyclerAdapter.notifyDataSetChanged()
+                viewModel.editFavorite(id,isFavorite)
             }
-
-
         })
     }
 }

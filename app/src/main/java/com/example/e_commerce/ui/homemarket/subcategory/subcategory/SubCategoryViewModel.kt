@@ -18,9 +18,6 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
     private val _mutableStateFlowProductModels = MutableStateFlow(emptyList<Product>())
     val stateFlowProductModels : StateFlow<List<Product>> get() = _mutableStateFlowProductModels
 
-    private val _mutableStateFlowFavorites = MutableStateFlow(emptyList<String>())
-    val stateFlowFavorites : StateFlow<List<String>> get() = _mutableStateFlowFavorites
-
     val mutableStateFlowTextSearch = MutableStateFlow("")
 
     private val _mutableStateFlowIsLoading = MutableStateFlow(true)
@@ -28,6 +25,12 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
 
     val _error = MutableLiveData<String>()
     val error : LiveData<String> get() = _error
+
+    private val _deletedFromFavorites = MutableLiveData<String?>()
+    val deleteFromFavorites : LiveData<String?> get() = _deletedFromFavorites
+
+    private val _addedToFavorites = MutableLiveData<String?>()
+    val addedToFavorites : LiveData<String?> get() = _addedToFavorites
 
     private val _mutableLiveDataNameOfCategory = MutableLiveData<String>()
     val nameOfCategory : LiveData<String> = _mutableLiveDataNameOfCategory
@@ -37,31 +40,34 @@ class SubCategoryViewModel @Inject constructor(private val subCategoryRepo: SubC
     init {
         val catId = savedStateHandle.get<Int>("catId")
         val catName = savedStateHandle.get<String>("catName")
-        getAllAndFavorite(catId!!)
+        getAllProductsByTypeId(catId!!)
         _mutableLiveDataNameOfCategory.value = catName!!
     }
 
 
-    fun getAllAndFavorite(id : Int){
+    private fun getAllProductsByTypeId(id : Int){
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
-            _mutableStateFlowFavorites.value = favoritesRepo.getListOfFavoritesId()
             _mutableStateFlowProductModels.value = subCategoryRepo.getAllProducts(id)
             _mutableStateFlowIsLoading.value = false
         }
     }
 
-    fun addToFavorite(id : String){
+    fun editFavorite(id : String, isFavorite : Boolean){
         viewModelScope.launch(handler) {
-            favoritesRepo.addToFavorite(id)
+            if (isFavorite) {
+                favoritesRepo.deleteFromFavorite(id)
+                _deletedFromFavorites.value = id
+                _deletedFromFavorites.value = null
+            }
+            else {
+                favoritesRepo.addToFavorite(id)
+                _addedToFavorites.value = id
+                _addedToFavorites.value = null
+            }
         }
     }
 
-    fun deleteFromFavorite(id : String){
-        viewModelScope.launch(handler) {
-            favoritesRepo.deleteFromFavorite(id)
-        }
-    }
 
 
 

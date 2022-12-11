@@ -7,11 +7,13 @@ import android.view.View
 import android.widget.*
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.e_commerce.Constants.DATE_FORMAT
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -80,5 +82,9 @@ fun BottomNavigationView.setMenuOfBottomNavigation(res : Int){
     inflateMenu(res)
     selectedItemId = R.id.home
 }
-
+@BindingAdapter("DateFromTimeStamp")
+fun getDateFromTImeStamp(textView: TextView, date : Date) {
+    val sdf = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+    textView.text = sdf.format(date)
+}
 

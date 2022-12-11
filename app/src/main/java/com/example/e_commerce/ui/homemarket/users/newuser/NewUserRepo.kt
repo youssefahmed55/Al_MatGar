@@ -11,8 +11,7 @@ import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.utils.Network
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -20,9 +19,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class NewUserRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
-
-    private val db  = Firebase.firestore
+class NewUserRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
     suspend fun createAccount(fullName : String, email: String, gender : Int, type : Int , birthday :String, phone: String, location :String, password: String): DefaultStates = withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)

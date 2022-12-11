@@ -199,7 +199,6 @@
             android:layout_marginBottom="@dimen/_10sdp"
             productsSubExploreAdapter  = "@{adapter}"
             productsSubExploreList = "@{viewModel.stateFlowProductModels}"
-            favoriteSubExploreList = "@{null}"
             searchProductText = "@{viewModel.mutableStateFlowTextSearch}"
             />
 

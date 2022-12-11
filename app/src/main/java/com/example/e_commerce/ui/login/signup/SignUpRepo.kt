@@ -6,17 +6,15 @@ import com.example.e_commerce.R
 import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.DefaultStates
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SignUpRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
+class SignUpRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
-    private val db  = Firebase.firestore
     suspend fun createUserFireBase (email : String , password : String, phone : String, fullName : String) : DefaultStates =
         withContext(Dispatchers.IO) {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()

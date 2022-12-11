@@ -52,8 +52,6 @@ class OfferFragment : Fragment() {
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_offer, container, false)
         binding.lifecycleOwner = this
-        Log.d("gggggggggggg", "onCreateView: ")
-        viewModel.getFavorites()
         binding.viewModel = viewModel
         setOnClickOnRecyclerItem()
         setOnClickOnFavoriteOfRecyclerItem()
@@ -61,8 +59,23 @@ class OfferFragment : Fragment() {
         binding.adapter = productsRecyclerAdapter
         setOnClickOnBack()
         observeErrorMessage()
+        observeAddedToFavoritesItems()
+        observeDeletedFromFavoritesItems()
         return binding.root
     }
+
+    private fun observeAddedToFavoritesItems() {
+        viewModel.addedToFavorites.observe(viewLifecycleOwner) {
+            it?.let { productsRecyclerAdapter.setFavoriteItem(it); productsRecyclerAdapter.notifyDataSetChanged() }
+        }
+    }
+
+    private fun observeDeletedFromFavoritesItems() {
+        viewModel.deleteFromFavorites.observe(viewLifecycleOwner){
+            it?.let { productsRecyclerAdapter.removeFavoriteItem(it)  ; productsRecyclerAdapter.notifyDataSetChanged()}
+        }
+    }
+
     private fun setOnClickOnBack() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
@@ -99,17 +112,8 @@ class OfferFragment : Fragment() {
     private fun setOnClickOnFavoriteOfRecyclerItem() {
         productsRecyclerAdapter.setOnItemClickFavoriteListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItemFavorite{
             override fun onClick1(id: String, isFavorite: Boolean) {
-                if (isFavorite){
-                    viewModel.deleteFromFavorite(id)
-                    productsRecyclerAdapter.removeFavoriteItem(id)
-                }else{
-                    viewModel.addToFavorite(id)
-                    productsRecyclerAdapter.setFavoriteItem(id)
-                }
-                productsRecyclerAdapter.notifyDataSetChanged()
+                viewModel.editFavorite(id,isFavorite)
             }
-
-
         })
     }
 

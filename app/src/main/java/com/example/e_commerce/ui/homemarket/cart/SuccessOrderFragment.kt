@@ -53,6 +53,7 @@ class SuccessOrderFragment : Fragment() {
     private fun setOnClickOnBackToHomeButton() {
         binding.backToHomeButtonSuccessOrderFragment.setOnClickListener {
             activity!!.findViewById<TextView>(R.id.title_homeActivity).text = ""
+            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.home
             activity!!.findViewById<TextView>(R.id.welcomeText_homeActivity).visibility = View.VISIBLE
             activity!!.findViewById<TextView>(R.id.wishText_homeActivity).visibility = View.VISIBLE
             activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()

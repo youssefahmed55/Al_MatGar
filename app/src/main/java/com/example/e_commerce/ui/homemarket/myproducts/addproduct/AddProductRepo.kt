@@ -11,8 +11,7 @@ import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -21,10 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.random.Random
 
-class AddProductRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
-
-   private val db  = Firebase.firestore
-
+class AddProductRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
    suspend fun createNewProduct(nameOfProduct: String, description: String, price: String, hasOffer: Boolean, offerPrice: String , category : Int , deliveryTime :Int , listOfImages: List<Uri>) :DefaultStates = withContext(Dispatchers.IO){
        Network.checkConnectionType(appContext)
@@ -42,7 +38,7 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
        val doc = db.collection("MyProduct").document(getIdOfUser()).collection("Product").document()
        val docId = doc.id
        val myRandomValue = Random.nextInt(0, 2)
-       val product = Product(docId,nameOfProduct.trim(),category2,SharedPrefsUtil.getName(appContext),getIdOfUser(),description.trim(),price.trim().toDouble(), null,hasOffer,offerPrice2.trim().toDouble(),deliveryTime2,myRandomValue)
+       val product = Product(docId,nameOfProduct.trim(),category2,SharedPrefsUtil.getName(appContext)!!,getIdOfUser(),description.trim(),price.trim().toDouble(), null,hasOffer,offerPrice2.trim().toDouble(),deliveryTime2,myRandomValue)
 
        db.collection("MyProduct").document(getIdOfUser()).collection("Products").document(docId).set({null}).await()
        db.collection("AllProducts").document(docId).set(product).await()

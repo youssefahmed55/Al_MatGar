@@ -20,6 +20,7 @@ import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.*
 import com.example.e_commerce.ui.homemarket.favorite.FavoritesFragment
+import com.example.e_commerce.ui.homemarket.orders.customer.OrdersCustomerFragment
 import com.example.e_commerce.ui.login.MainActivity
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.ToastyUtil
@@ -86,8 +87,15 @@ class AccountFragment : Fragment() {
         setOnClickOnProfileImage()
         setOnClickOnSaveButton()
         setOnClickOnFavorites()
+        setOnClickOnOrders()
         setOnClickOnBack()
         return  binding.root
+    }
+
+    private fun setOnClickOnOrders() {
+        binding.ordersAccountFragment.setOnClickListener {
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, OrdersCustomerFragment()).addToBackStack(null).commit()
+        }
     }
 
     private fun setOnClickOnBack() {

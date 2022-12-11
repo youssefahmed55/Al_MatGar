@@ -49,6 +49,7 @@
                    android:textColor="@color/black"
                    android:background="@drawable/shape3"
                    android:maxLines="1"
+                   android:maxLength="50"
                    android:inputType="text"
                    android:layout_marginStart="@dimen/_5sdp"
                    android:fontFamily="@font/poppins_regular"

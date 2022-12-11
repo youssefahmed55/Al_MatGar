@@ -6,23 +6,27 @@ import com.example.e_commerce.Constants.CLOTHES
 import com.example.e_commerce.Constants.FOOD
 import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
 import com.example.e_commerce.utils.Network
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.e_commerce.utils.SharedPrefsUtil
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FavoritesFragmentRepo @Inject constructor(@ApplicationContext private val appContext: Context , private val favoritesRepo: FavoritesRepo) {
+class FavoritesFragmentRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
-    private val db  = Firebase.firestore
+    private suspend fun getListOfFavoritesId(): List<String> = withContext(Dispatchers.IO) {
+        val favoriteQuery = db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").get().await()
+        val mutableFavoriteList = mutableListOf<String>()
+        favoriteQuery.forEach { mutableFavoriteList.add(it.id)}
+        return@withContext mutableFavoriteList.toList()
+    }
 
     private suspend fun getListOfFavorites(category : String) : List<Product> {
         Network.checkConnectionType(appContext)
-        val favoriteList = favoritesRepo.getListOfFavoritesId()
+        val favoriteList = getListOfFavoritesId()
         val mutableListProducts = mutableListOf<Product>()
         favoriteList.forEach {
             val productDoc = db.collection("AllProducts").document(it).get().await()
@@ -48,14 +52,6 @@ class FavoritesFragmentRepo @Inject constructor(@ApplicationContext private val 
 
     suspend fun getHouseWareFavorites() : List<Product> = withContext(Dispatchers.IO){
         return@withContext getListOfFavorites(HOUSE_WARE)
-    }
-
-    suspend fun addToFavorite(id : String) = withContext(Dispatchers.IO) {
-        favoritesRepo.addToFavorite(id)
-    }
-
-    suspend fun deleteFromFavorite(id : String) = withContext(Dispatchers.IO) {
-        favoritesRepo.deleteFromFavorite(id)
     }
 
 }

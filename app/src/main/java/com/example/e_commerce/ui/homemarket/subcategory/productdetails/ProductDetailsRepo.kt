@@ -6,8 +6,7 @@ import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.ToastyUtil
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -15,10 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class ProductDetailsRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
-
-    private val db  = Firebase.firestore
-
+class ProductDetailsRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
   suspend fun getUserType() : String = withContext(Dispatchers.IO){
         return@withContext SharedPrefsUtil.getType(appContext) ?: ""
@@ -30,6 +26,8 @@ class ProductDetailsRepo @Inject constructor(@ApplicationContext private val app
         db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Count").document(product.id).set(hashMapOf("count" to count)).await()
         withContext(Dispatchers.Main){ToastyUtil.successToasty(appContext,"Added To Card Successfully",Toast.LENGTH_SHORT)}
      }
+
+
 
 
 

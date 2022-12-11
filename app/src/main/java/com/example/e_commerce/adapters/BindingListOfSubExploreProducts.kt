@@ -6,15 +6,8 @@ import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.SearchUtil
 
 
-@BindingAdapter(*["productsSubExploreAdapter", "productsSubExploreList","favoriteSubExploreList","searchProductText"])
-fun RecyclerView.setListOfProductsSubExplore(productsSubExploreRecyclerAdapter: ProductsSubExploreRecyclerAdapter, listOfProducts : List<Product> , listOfFavorites : List<String>? , searchText : String) {
-
-    listOfFavorites?.forEach { favorite ->
-        listOfProducts.forEach { product ->
-            if (favorite == product.id){product.isFavorite = true}
-        }
-    }
-
+@BindingAdapter(*["productsSubExploreAdapter", "productsSubExploreList","searchProductText"])
+fun RecyclerView.setListOfProductsSubExplore(productsSubExploreRecyclerAdapter: ProductsSubExploreRecyclerAdapter, listOfProducts : List<Product> , searchText : String) {
 
     var myList = listOfProducts
     if (searchText.trim().isNotEmpty()){

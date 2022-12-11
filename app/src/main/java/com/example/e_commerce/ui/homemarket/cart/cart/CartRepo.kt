@@ -1,13 +1,10 @@
 package com.example.e_commerce.ui.homemarket.cart.cart
 
 import android.content.Context
-import android.widget.Toast
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
-import com.example.e_commerce.utils.ToastyUtil
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -15,9 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class CartRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
-
-    private val db  = Firebase.firestore
+class CartRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
     suspend fun getInCartProducts() : List<Product> = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
@@ -29,9 +24,11 @@ class CartRepo @Inject constructor(@ApplicationContext private val appContext: C
                 mutableListOfProducts.add(productQuery.toObject(Product::class.java)!!)
             }
         }
-
+        mutableListOfProducts.forEach {
+            val favoriteQuery = db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(it.id).get().await()
+            if (favoriteQuery.exists()) it.isFavorite = true
+        }
         return@withContext  mutableListOfProducts.toList()
-        //db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Count").document(product.id).set(hashMapOf("count" to count))
      }
 
     suspend fun getProductsCount(list : List<Product>) : List<Int> = withContext(Dispatchers.IO){

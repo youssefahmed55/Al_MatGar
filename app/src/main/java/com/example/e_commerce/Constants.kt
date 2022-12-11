@@ -16,4 +16,9 @@ object Constants {
      const val MALE = "Male"
      const val FEMALE = "Female"
      const val ANONYMOUS = "Anonymous"
+     const val DATE_FORMAT = "dd/MM/yyyy"
+     //STATUS
+     const val PROCESS = "Process"
+     const val COMPLETED = "Completed"
+     const val CANCELED = "Canceled"
 }

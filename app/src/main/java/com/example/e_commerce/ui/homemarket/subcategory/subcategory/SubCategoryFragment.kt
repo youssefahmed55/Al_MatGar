@@ -59,19 +59,28 @@ class SubCategoryFragment : Fragment()  {
         binding.adapter = productsRecyclerAdapter
         setOnClickOnBackIcon()
         observeErrorMessage()
+        observeDeletedFromFavoritesItems()
+        observeAddedToFavoritesItems()
 
         return binding.root
+    }
+
+    private fun observeAddedToFavoritesItems() {
+        viewModel.addedToFavorites.observe(viewLifecycleOwner) {
+            it?.let { productsRecyclerAdapter.setFavoriteItem(it); productsRecyclerAdapter.notifyDataSetChanged() }
+        }
+    }
+
+    private fun observeDeletedFromFavoritesItems() {
+        viewModel.deleteFromFavorites.observe(viewLifecycleOwner){
+            it?.let { productsRecyclerAdapter.removeFavoriteItem(it)  ; productsRecyclerAdapter.notifyDataSetChanged()}
+        }
     }
 
     private fun setOnClickOnBackIcon() {
         binding.backCardSubCategoryFragment.setOnClickListener {
             activity!!.supportFragmentManager.popBackStack()
         }
-    }
-
-    override fun onDetach() {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        super.onDetach()
     }
 
     private fun observeErrorMessage() {
@@ -103,17 +112,8 @@ class SubCategoryFragment : Fragment()  {
     private fun setOnClickOnFavoriteOfRecyclerItem() {
         productsRecyclerAdapter.setOnItemClickFavoriteListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItemFavorite{
             override fun onClick1(id: String, isFavorite: Boolean) {
-                    if (isFavorite){
-                        viewModel.deleteFromFavorite(id)
-                        productsRecyclerAdapter.removeFavoriteItem(id)
-                    }else{
-                        viewModel.addToFavorite(id)
-                        productsRecyclerAdapter.setFavoriteItem(id)
-                    }
-                    productsRecyclerAdapter.notifyDataSetChanged()
+                viewModel.editFavorite(id,isFavorite)
             }
-
-
         })
     }
 

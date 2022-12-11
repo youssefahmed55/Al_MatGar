@@ -8,8 +8,7 @@ import com.example.e_commerce.pojo.UserModel
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -18,10 +17,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class AccountRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
+class AccountRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
     val userModel = SharedPrefsUtil.getUserModel(appContext)
-    private val db  = Firebase.firestore
-
 
     suspend fun changeGender(gender : String) = withContext(Dispatchers.IO){
         if (userModel?.gender != gender) {

@@ -3,13 +3,11 @@ package com.example.e_commerce.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.ItemProduct2Binding
 import com.example.e_commerce.pojo.Product
-import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
 
 
@@ -53,7 +51,7 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding : ItemProduct2Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product2,parent,false)
-        return Holder(binding,onClickOnItem,onClickOnItemFavorite,list,context)
+        return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -65,7 +63,7 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
 
     }
 
-    class Holder(binding: ItemProduct2Binding,listener: OnClickOnItem , listener2 : OnClickOnItemFavorite, list: List<Product>,context:Context) : RecyclerView.ViewHolder(binding.root) {
+   inner class Holder(binding: ItemProduct2Binding) : RecyclerView.ViewHolder(binding.root) {
          val holderBinding : ItemProduct2Binding = binding
 
         init {
@@ -75,8 +73,8 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
                     // do whatever you intend to do with this position
-                    if (listener != null)
-                        listener.onClick1(list[adapterPosition])
+                    if (onClickOnItem != null)
+                        onClickOnItem.onClick1(list[adapterPosition])
 
                 }
             }
@@ -86,13 +84,8 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
                     // do whatever you intend to do with this position
-                    if (listener2 != null){
-                        try {
-                            Network.checkConnectionType(it.context)
-                            listener2.onClick1(list[adapterPosition].id!!,list[adapterPosition].isFavorite!!)
-                        }catch (e : Exception){
-                            Toast.makeText(it.context,e.message!!,Toast.LENGTH_SHORT).show()
-                        }
+                    if (onClickOnItemFavorite != null){
+                        onClickOnItemFavorite.onClick1(list[adapterPosition].id,list[adapterPosition].isFavorite)
                     }
 
                 }

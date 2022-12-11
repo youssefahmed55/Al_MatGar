@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragmentRepo: FavoritesFragmentRepo) : ViewModel() {
+class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragmentRepo: FavoritesFragmentRepo, private val favoritesRepo: FavoritesRepo) : ViewModel() {
 
     private val _mutableStateFlowProductModels = MutableStateFlow(emptyList<Product>())
     val stateFlowProductModels : StateFlow<List<Product>> get() = _mutableStateFlowProductModels
@@ -29,6 +30,12 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
 
     val _error = MutableLiveData<String>()
     val error : LiveData<String> get() = _error
+
+    private val _deletedFromFavorites = MutableLiveData<String?>()
+    val deleteFromFavorites : LiveData<String?> get() = _deletedFromFavorites
+
+    private val _addedToFavorites = MutableLiveData<String?>()
+    val addedToFavorites : LiveData<String?> get() = _addedToFavorites
 
     private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
@@ -72,16 +79,21 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
         }
     }
 
-    fun addToFavorite(id : String){
+    fun editFavorite(id : String, isFavorite : Boolean){
         viewModelScope.launch(handler) {
-            favoritesFragmentRepo.addToFavorite(id)
+            if (isFavorite) {
+                favoritesRepo.deleteFromFavorite(id)
+                _deletedFromFavorites.value = id
+                _deletedFromFavorites.value = null
+            }
+            else {
+                favoritesRepo.addToFavorite(id)
+                _addedToFavorites.value = id
+                _addedToFavorites.value = null
+            }
         }
     }
 
-    fun deleteFromFavorite(id : String){
-        viewModelScope.launch(handler) {
-            favoritesFragmentRepo.deleteFromFavorite(id)
-        }
-    }
+
 
 }

@@ -12,8 +12,7 @@ import com.example.e_commerce.ui.room.CategoryModelDao
 import com.example.e_commerce.ui.room.ProductModelDao
 import com.example.e_commerce.ui.room.SliderModelDao
 import com.example.e_commerce.utils.Network
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -21,9 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.random.Random
 
-class HomeFragmentRepo @Inject constructor(@ApplicationContext private val appContext: Context , private val categoryModelDao: CategoryModelDao , private val productModelDao: ProductModelDao , private val sliderModelDao: SliderModelDao) {
-
-    private val db  = Firebase.firestore
+class HomeFragmentRepo @Inject constructor(@ApplicationContext private val appContext: Context , private val categoryModelDao: CategoryModelDao , private val productModelDao: ProductModelDao , private val sliderModelDao: SliderModelDao, private val db : FirebaseFirestore) {
     private val myRandomValues = MutableList(2) { Random.nextInt(0, 2) }
 
     suspend fun getSliderProductsImages() = withContext(Dispatchers.IO){
