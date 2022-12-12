@@ -57,7 +57,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:maxLines="2"
                         android:ellipsize="end"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@{product.name}" />
 
                     <ImageView

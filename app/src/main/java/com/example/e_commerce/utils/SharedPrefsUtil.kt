@@ -51,4 +51,16 @@ object SharedPrefsUtil{
 
     }
 
+    fun getLocation(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.location
+
+    }
+
+    fun getPhone(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.phone
+
+    }
+
 }

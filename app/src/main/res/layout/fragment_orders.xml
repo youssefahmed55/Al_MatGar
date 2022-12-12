@@ -4,9 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
-            name="imageUrl"
-            type="String" />
+            name="viewModel"
+            type="com.example.e_commerce.ui.homemarket.myproducts.orders.OrdersViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.e_commerce.adapters.OrdersMerchantRecyclerAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,25 +68,6 @@
                     android:text="@string/orders"
                     />
 
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    app:cardCornerRadius="@dimen/_40sdp">
-
-                    <ImageView
-                        android:id="@+id/profileImage_ordersFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:contentDescription="@string/profile_image"
-                        android:src="@drawable/ic_launcher_background"
-                        imageUrl="@{imageUrl}"
-                        />
-
-                </androidx.cardview.widget.CardView>
-
             </RelativeLayout>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -105,6 +91,8 @@
                         android:hint="@string/search"
                         android:maxLines="1"
                         android:inputType="text"
+                        android:textAlignment="viewStart"
+                        android:text="@={viewModel.mutableStateFlowTextSearch}"
                         android:background="@null"
                         android:layout_marginStart="@dimen/_5sdp" />
                     <ImageView
@@ -138,8 +126,10 @@
                 android:text="@string/process"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="@dimen/_5sdp"
+                android:onClick="@{()-> viewModel.getProcessProducts()}"
+                selectedType="@{viewModel.stateFlowType}"
                 android:background="@drawable/shape2"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_marginEnd="@dimen/_10sdp" />
 
             <TextView
@@ -152,6 +142,8 @@
                 android:text="@string/completed"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="@dimen/_5sdp"
+                android:onClick="@{()-> viewModel.getCompletedProducts()}"
+                selectedType="@{viewModel.stateFlowType}"
                 android:background="@drawable/shape3"
                 android:textColor="@color/black"
                 android:layout_marginEnd="@dimen/_10sdp" />
@@ -166,6 +158,8 @@
                 android:text="@string/canceled"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="@dimen/_5sdp"
+                android:onClick="@{()-> viewModel.getCanceledProducts()}"
+                selectedType="@{viewModel.stateFlowType}"
                 android:background="@drawable/shape3"
                 android:textColor="@color/black"
                 android:layout_marginEnd="@dimen/_10sdp" />
@@ -181,7 +175,49 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            ordersMerchantAdapter ="@{adapter}"
+            ordersMerchantList="@{viewModel.stateFlowOrderModels}"
+            searchMerchantOrdersText="@{viewModel.mutableStateFlowTextSearch}"
+            />
 
+        <ProgressBar
+            android:id="@+id/myProgress_ordersFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_ordersFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_ordersFragment"
+            android:indeterminate="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
+
+        <ImageView
+            android:id="@+id/emptyImage_ordersFragment"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_ordersFragment"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_ordersFragment"
+            android:visibility="@{viewModel.stateFlowOrderModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:srcCompat="@drawable/ic_empty_list"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_data"
+            android:textColor="@color/hintColor"
+            app:layout_constraintTop_toBottomOf="@+id/emptyImage_ordersFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="@{viewModel.stateFlowOrderModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
 
 

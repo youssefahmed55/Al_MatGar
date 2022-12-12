@@ -5,4 +5,4 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "sliderTable")
-data class SliderModel(@PrimaryKey val id : Int = 0, val image : String ?= "")
+data class SliderModel(@PrimaryKey val id : Int = 0, val image : String = "" , val productId : String = "")

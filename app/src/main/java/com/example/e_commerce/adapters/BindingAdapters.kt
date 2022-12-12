@@ -28,7 +28,7 @@ fun bindTextViewToPrice(textView: TextView, number: Double) {
 fun bindPictureToImage(image: ImageView, url: String?) {
     if(url!=null)
         if(url.isNotEmpty())
-        Glide.with(image.context).load(url).into(image)
+        Glide.with(image.context).load(url).fitCenter().into(image)
 }
 
 @BindingAdapter("strikeThrough")

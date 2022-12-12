@@ -16,6 +16,7 @@ import com.example.e_commerce.adapters.ProductsMerchantRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentMyProductsBinding
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.myproducts.addproduct.AddProductFragment
+import com.example.e_commerce.ui.homemarket.myproducts.orders.OrdersFragment
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,8 +63,15 @@ class MyProductsFragment : Fragment() {
         setOnClickOnBack()
         observeErrorMessage()
         setOnClickOnAddButton()
+        setOnClickOnOrdersButton()
 
         return binding.root
+    }
+
+    private fun setOnClickOnOrdersButton() {
+        binding.ordersFloatingButtonMyProductsFragment.setOnClickListener {
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, OrdersFragment()).commit()
+        }
     }
 
     private fun setOnClickOnBack() {

@@ -145,6 +145,10 @@
     <string name="add_to_cart">Add To Cart</string>
     <string name="items">Items</string>
     <string name="This_Product_Not_Available_Now">This Product Not Available Now</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="Do_You_Want_To_Cancel_This_Order">Do You Want To Cancel This Order?</string>
+    <string name="Do_You_Want_To_Complete_This_Order">Do You Want To Complete This Order?</string>
 
 
     <string-array name="genders">

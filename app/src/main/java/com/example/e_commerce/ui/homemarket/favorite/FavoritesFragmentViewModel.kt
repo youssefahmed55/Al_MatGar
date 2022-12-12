@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
@@ -47,7 +51,7 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.beauty_favoritesFragment
-            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getBeautyFavorites()
+            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getListOfFavoritesByCategory(BEAUTY)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -56,7 +60,7 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.clothes_favoritesFragment
-            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getClothesFavorites()
+            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getListOfFavoritesByCategory(CLOTHES)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -65,7 +69,7 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.food_favoritesFragment
-            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getFoodFavorites()
+            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getListOfFavoritesByCategory(FOOD)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -74,7 +78,7 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.houseWare_favoritesFragment
-            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getHouseWareFavorites()
+            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getListOfFavoritesByCategory(HOUSE_WARE)
             _mutableStateFlowIsLoading.value = false
         }
     }

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
+import com.example.e_commerce.adapters.SliderAdapterHome
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
@@ -52,6 +53,7 @@ class HomeFragment : Fragment() {
     private val foodRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val clothesRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val houseWareRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
+    private val sliderAdapter : SliderAdapterHome by lazy { SliderAdapterHome() }
     private val viewModel: HomeFragmentViewModel by lazy { ViewModelProvider(this)[HomeFragmentViewModel::class.java] }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,21 +63,33 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
         activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
+        setOnClickOnSliderImage()
         setOnClickOnCategoriesItem()
         setOnClickOnBeautyItem()
         setOnClickOnFoodItem()
         setOnClickOnClothesItem()
         setOnClickOnHouseWareItem()
         binding.viewModel = viewModel
+        binding.sliderAdapter = sliderAdapter
         binding.categoriesRecyclerAdapter = categoriesRecyclerAdapter
         binding.beautyRecyclerAdapter = beautyRecyclerAdapter
         binding.foodRecyclerAdapter = foodRecyclerAdapter
         binding.clothesRecyclerAdapter = clothesRecyclerAdapter
         binding.houseWareRecyclerAdapter = houseWareRecyclerAdapter
 
+
         observeErrorMessage()
         setOnClickOnBack()
         return binding.root
+    }
+
+    private fun setOnClickOnSliderImage() {
+        sliderAdapter.setOnClickItem(object : SliderAdapterHome.OnClickOnItem{
+            override fun onClick(id: String) {
+                Toast.makeText(context!!,id,Toast.LENGTH_SHORT).show()
+                //TODO
+            }
+        })
     }
 
     private fun setOnClickOnBack() {

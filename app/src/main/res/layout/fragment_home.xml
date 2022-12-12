@@ -29,7 +29,9 @@
             name="houseWareRecyclerAdapter"
             type="com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter" />
 
-
+       <variable
+           name="sliderAdapter"
+           type="com.example.e_commerce.adapters.SliderAdapterHome" />
     </data>
 
 
@@ -85,7 +87,8 @@
                         app:sliderIndicatorUnselectedColor="#FFF"
                         app:sliderScrollTimeInSec="3"
                         app:sliderStartAutoCycle="true"
-                        setListOfSlider="@{viewModel.stateFlowSliderAdapter}"
+                        setListOfSlidersHome="@{viewModel.stateFlowSliderList}"
+                        sliderAdapterHome="@{sliderAdapter}"
 
                         />
 

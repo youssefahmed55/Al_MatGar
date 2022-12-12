@@ -48,10 +48,10 @@ class ShipToViewModel @Inject constructor(private val shipToRepo: ShipToRepo, pr
         listOfCounts.forEach { itemsCount += it }
 
         for (i in listOfProducts.indices){
-            if (listOfProducts[i].hasOffer)
-                totalPrice +=  listOfProducts[i].offerPrice!! * listOfCounts[i]
+            totalPrice += if (listOfProducts[i].hasOffer)
+                listOfProducts[i].offerPrice * listOfCounts[i]
             else
-                totalPrice +=  listOfProducts[i].price!! * listOfCounts[i]
+                listOfProducts[i].price * listOfCounts[i]
         }
 
         _mutableLiveDataItemsCount.value = itemsCount

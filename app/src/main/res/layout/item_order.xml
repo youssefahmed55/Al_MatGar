@@ -113,20 +113,20 @@
                         android:id="@+id/dateText_itemOrder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_9ssp"
-                        android:text="@string/date"
-                        android:layout_marginEnd="@dimen/_2sdp"
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="@string/date"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_regular" />
+                        android:textSize="@dimen/_9ssp" />
 
                     <TextView
                         android:id="@+id/date_itemOrder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_9ssp"
-                        DateFromTimeStamp = "@{order.timeStamp}"
+                        DateFromTimeStamp = "@{order.end_timeStamp == null ? order.start_timeStamp : order.end_timeStamp}"
                         android:layout_toEndOf="@id/dateText_itemOrder"
                         android:layout_centerInParent="true"
                         android:textColor="@color/black"

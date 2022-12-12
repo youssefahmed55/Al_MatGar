@@ -2,7 +2,6 @@ package com.example.e_commerce.ui.homemarket.subcategory.productdetails
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
+import com.example.e_commerce.adapters.SliderAdapterProductDetails
 import com.example.e_commerce.databinding.BottomsheetquantityBinding
 import com.example.e_commerce.databinding.FragmentProductDetailsBinding
 import com.example.e_commerce.ui.homemarket.cart.cart.CartFragment
@@ -47,14 +47,16 @@ class ProductDetailsFragment : Fragment() {
     private val viewModel : ProductDetailsViewModel by viewModels()
     private lateinit var bindingBottomsheetquantityBinding: BottomsheetquantityBinding
     private lateinit var bottomSheetDialog: BottomSheetDialog
+    private val sliderAdapter : SliderAdapterProductDetails by lazy { SliderAdapterProductDetails() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_product_details, container, false)
         bindingBottomsheetquantityBinding = DataBindingUtil.inflate(inflater,R.layout.bottomsheetquantity, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.sliderAdapter = sliderAdapter
         inti()
         activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
         activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE

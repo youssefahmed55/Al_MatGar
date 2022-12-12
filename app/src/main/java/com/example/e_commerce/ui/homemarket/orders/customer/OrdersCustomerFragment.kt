@@ -9,10 +9,8 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.OrdersCustomerRecyclerAdapter
-import com.example.e_commerce.databinding.FragmentOrdersBinding
 import com.example.e_commerce.databinding.FragmentOrdersCustomerBinding
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.utils.ToastyUtil
@@ -61,7 +59,7 @@ class OrdersCustomerFragment : Fragment() {
     }
 
     private fun observeProduct() {
-        viewModel.liveDataProduct.observe(viewLifecycleOwner, Observer {
+        viewModel.liveDataProduct.observe(viewLifecycleOwner){
             it?.let {
                 viewModel.mutableLiveDataProduct.value = null
                 val args = Bundle()
@@ -74,7 +72,7 @@ class OrdersCustomerFragment : Fragment() {
                 transaction.commit()
             }
 
-        })
+        }
     }
 
     private fun observeErrorMessage() {

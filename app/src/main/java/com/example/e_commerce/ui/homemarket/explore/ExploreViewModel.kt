@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
@@ -47,7 +51,7 @@ class ExploreViewModel @Inject constructor(private val exploreRepo: ExploreRepo,
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.beauty_exploreFragment
-            _mutableStateFlowProductModels.value = exploreRepo.getBeauty()
+            _mutableStateFlowProductModels.value = exploreRepo.getListProductsByType(BEAUTY)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -56,7 +60,7 @@ class ExploreViewModel @Inject constructor(private val exploreRepo: ExploreRepo,
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.clothes_exploreFragment
-            _mutableStateFlowProductModels.value = exploreRepo.getClothes()
+            _mutableStateFlowProductModels.value = exploreRepo.getListProductsByType(CLOTHES)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -65,7 +69,7 @@ class ExploreViewModel @Inject constructor(private val exploreRepo: ExploreRepo,
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.food_exploreFragment
-            _mutableStateFlowProductModels.value = exploreRepo.getFood()
+            _mutableStateFlowProductModels.value = exploreRepo.getListProductsByType(FOOD)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -74,7 +78,7 @@ class ExploreViewModel @Inject constructor(private val exploreRepo: ExploreRepo,
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.houseWare_exploreFragment
-            _mutableStateFlowProductModels.value = exploreRepo.getHouseWare()
+            _mutableStateFlowProductModels.value = exploreRepo.getListProductsByType(HOUSE_WARE)
             _mutableStateFlowIsLoading.value = false
         }
     }

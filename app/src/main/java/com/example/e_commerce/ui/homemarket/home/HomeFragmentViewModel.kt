@@ -4,9 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.e_commerce.adapters.SliderAdapter
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.pojo.Category
 import com.example.e_commerce.pojo.Product
+import com.example.e_commerce.pojo.SliderModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,8 +33,8 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     private val _mutableStateFlowHouseWareModels = MutableStateFlow(emptyList<Product>())
     val stateFlowHouseWareModels : StateFlow<List<Product>> get() = _mutableStateFlowHouseWareModels
 
-    private val _mutableStateFlowSliderAdapter = MutableStateFlow(SliderAdapter(emptyList()))
-    val stateFlowSliderAdapter : StateFlow<SliderAdapter> get() = _mutableStateFlowSliderAdapter
+    private val _mutableStateFlowSliderList = MutableStateFlow(emptyList<SliderModel>())
+    val stateFlowSliderList : StateFlow<List<SliderModel>> get() = _mutableStateFlowSliderList
 
     private val _mutableStateFlowCategoryModels = MutableStateFlow(emptyList<Category>())
     val stateFlowCategoryModels : StateFlow<List<Category>> get() = _mutableStateFlowCategoryModels
@@ -64,10 +68,7 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
 
         launch(job) {
             homeFragmentRepo.getSliderProductsImages()
-            val sliders = homeFragmentRepo.getSlidersDataBase()
-            val mutableListOfImages = mutableListOf<String>()
-            sliders.forEach { mutableListOfImages.add(it.image!!) }
-            _mutableStateFlowSliderAdapter.value = SliderAdapter(mutableListOfImages)
+            _mutableStateFlowSliderList.value = homeFragmentRepo.getSlidersDataBase()
         }
 
         launch(job) {
@@ -77,24 +78,24 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
         }
 
         launch(job) {
-            homeFragmentRepo.getBeautyProducts()
-            _mutableStateFlowBeautyModels.value = homeFragmentRepo.getBeautyProductsDataBase()
+            homeFragmentRepo.getProductsByCategoryType(BEAUTY)
+            _mutableStateFlowBeautyModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(BEAUTY)
             mutableStateFlowHideBeauty.value = true
         }
         launch(job) {
-            homeFragmentRepo.getClothesProducts()
-            _mutableStateFlowClothesModels.value = homeFragmentRepo.getClothesProductsDataBase()
+            homeFragmentRepo.getProductsByCategoryType(CLOTHES)
+            _mutableStateFlowClothesModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(CLOTHES)
             mutableStateFlowHideClothes.value = true
         }
         launch(job) {
-            homeFragmentRepo.getFoodProducts()
-            _mutableStateFlowFoodModels.value = homeFragmentRepo.getFoodProductsDataBase()
+            homeFragmentRepo.getProductsByCategoryType(FOOD)
+            _mutableStateFlowFoodModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(FOOD)
             mutableStateFlowHideFood.value = true
 
         }
         launch(job) {
-            homeFragmentRepo.getHouseWareProducts()
-            _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getHouseWareProductsDataBase()
+            homeFragmentRepo.getProductsByCategoryType(HOUSE_WARE)
+            _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(HOUSE_WARE)
             mutableStateFlowHideHouseWare.value = true
         }
         }
@@ -104,10 +105,7 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
        viewModelScope.launch {
 
            launch(job) {
-               val sliders = homeFragmentRepo.getSlidersDataBase()
-               val mutableListOfImages = mutableListOf<String>()
-               sliders.forEach { mutableListOfImages.add(it.image!!) }
-               _mutableStateFlowSliderAdapter.value = SliderAdapter(mutableListOfImages)
+               _mutableStateFlowSliderList.value = homeFragmentRepo.getSlidersDataBase()
            }
 
            launch(job) {
@@ -116,20 +114,20 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
            }
 
            launch(job) {
-               _mutableStateFlowBeautyModels.value = homeFragmentRepo.getBeautyProductsDataBase()
+               _mutableStateFlowBeautyModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(BEAUTY)
                mutableStateFlowHideBeauty.value = true
            }
            launch(job) {
-               _mutableStateFlowClothesModels.value = homeFragmentRepo.getClothesProductsDataBase()
+               _mutableStateFlowClothesModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(CLOTHES)
                mutableStateFlowHideClothes.value = true
            }
            launch(job) {
-               _mutableStateFlowFoodModels.value = homeFragmentRepo.getFoodProductsDataBase()
+               _mutableStateFlowFoodModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(FOOD)
                mutableStateFlowHideFood.value = true
 
            }
            launch(job) {
-               _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getHouseWareProductsDataBase()
+               _mutableStateFlowHouseWareModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(HOUSE_WARE)
                mutableStateFlowHideHouseWare.value = true
            }
        }

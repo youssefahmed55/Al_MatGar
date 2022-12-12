@@ -232,7 +232,7 @@
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/ordersPurchasedFloatingButton_myProductsFragment"
+            android:id="@+id/ordersFloatingButton_myProductsFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabCustomSize="@dimen/_40sdp"

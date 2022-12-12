@@ -8,7 +8,9 @@
         <variable
             name="viewModel"
             type="com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsViewModel" />
-
+        <variable
+            name="sliderAdapter"
+            type="com.example.e_commerce.adapters.SliderAdapterProductDetails" />
     </data>
 
     <ScrollView
@@ -113,7 +115,8 @@
                 app:sliderIndicatorUnselectedColor="#FFF"
                 app:sliderScrollTimeInSec="3"
                 app:sliderStartAutoCycle="true"
-                setListOfSlider="@{viewModel.stateFlowSliderAdapter}"
+                setListOfImagesProductDetails="@{viewModel.stateFlowSliderImagesList}"
+                sliderAdapterProductDetails="@{sliderAdapter}"
                 />
 
         </androidx.cardview.widget.CardView>
@@ -141,7 +144,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:text="@string/about_this_item"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:textColor="@color/black"
@@ -151,7 +154,7 @@
                     android:id="@+id/description_productDetailsFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_7ssp"
+                    android:textSize="@dimen/_8ssp"
                     android:text="@{viewModel.liveDataProduct.description}"
                     android:textColor="@color/color1"
                     android:fontFamily="@font/poppins_regular" />
@@ -223,7 +226,6 @@
                                 android:textSize="@dimen/_12ssp"
                                 strikeThrough="@{viewModel.liveDataProduct.price}"
                                 android:visibility="@{viewModel.liveDataProduct.hasOffer ? View.VISIBLE : View.INVISIBLE}"
-                                android:layout_marginTop="@dimen/_2sdp"
                                 android:textColor="@color/hintColor"
                                 android:fontFamily="@font/poppins_semibold" />
 

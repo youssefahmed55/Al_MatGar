@@ -2,7 +2,6 @@ package com.example.e_commerce.ui.homemarket.subcategory.productdetails
 
 
 import androidx.lifecycle.*
-import com.example.e_commerce.adapters.SliderAdapter
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +17,8 @@ class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo
     private val _mutableLiveDataProduct = MutableLiveData<Product?>()
     val liveDataProduct : LiveData<Product?> get() = _mutableLiveDataProduct
 
-    private val _mutableStateFlowSliderAdapter = MutableStateFlow(SliderAdapter(emptyList()))
-    val stateFlowSliderAdapter : StateFlow<SliderAdapter> get() = _mutableStateFlowSliderAdapter
+    private val _mutableStateFlowSliderImagesList = MutableStateFlow(emptyList<String>())
+    val stateFlowSliderImagesList : StateFlow<List<String>> get() = _mutableStateFlowSliderImagesList
 
     val _error = MutableLiveData<String>()
     val error : LiveData<String> get() = _error
@@ -36,7 +35,7 @@ class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo
 
     init {
         _mutableLiveDataProduct.value =  product
-        product?.images?.let { _mutableStateFlowSliderAdapter.value = SliderAdapter(it) }
+        product?.images?.let { _mutableStateFlowSliderImagesList.value = product.images }
         viewModelScope.launch(handler) {
             _mutableStateFlowType.value = productDetailsRepo.getUserType()
         }

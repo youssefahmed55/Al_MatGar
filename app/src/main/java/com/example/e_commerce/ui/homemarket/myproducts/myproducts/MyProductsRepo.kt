@@ -21,6 +21,8 @@ class MyProductsRepo @Inject constructor(@ApplicationContext private val appCont
         querySnapshots.forEach{
              mutableListIdsOfProducts.add(it.id)
         }
+        if(mutableListIdsOfProducts.size == 0) return@withContext emptyList()
+        else
         return@withContext db.collection("AllProducts").whereIn("id", mutableListIdsOfProducts).get().await().toObjects(Product::class.java)
     }
 

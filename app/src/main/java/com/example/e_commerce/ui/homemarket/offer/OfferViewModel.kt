@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.e_commerce.Constants.BEAUTY
+import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.FOOD
+import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
@@ -48,7 +52,7 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.beauty_offerFragment
-            _mutableStateFlowProductModels.value = offerRepo.getBeautyOffers()
+            _mutableStateFlowProductModels.value = offerRepo.getProductsOffersByType(BEAUTY)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -57,7 +61,7 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.clothes_offerFragment
-            _mutableStateFlowProductModels.value = offerRepo.getClothesOffers()
+            _mutableStateFlowProductModels.value = offerRepo.getProductsOffersByType(CLOTHES)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -66,7 +70,7 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.food_offerFragment
-            _mutableStateFlowProductModels.value = offerRepo.getFoodOffers()
+            _mutableStateFlowProductModels.value = offerRepo.getProductsOffersByType(FOOD)
             _mutableStateFlowIsLoading.value = false
         }
     }
@@ -75,7 +79,7 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
             _mutableStateFlowType.value = R.id.houseWare_offerFragment
-            _mutableStateFlowProductModels.value = offerRepo.getHouseWareOffers()
+            _mutableStateFlowProductModels.value = offerRepo.getProductsOffersByType(HOUSE_WARE)
             _mutableStateFlowIsLoading.value = false
         }
     }
