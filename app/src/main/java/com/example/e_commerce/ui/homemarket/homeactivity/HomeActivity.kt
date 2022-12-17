@@ -97,6 +97,7 @@ class HomeActivity : AppCompatActivity() , NavigationBarView.OnItemSelectedListe
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        viewModel.getProfileImage()
         when (item.itemId) {
             R.id.home -> {
                 binding.title = ""

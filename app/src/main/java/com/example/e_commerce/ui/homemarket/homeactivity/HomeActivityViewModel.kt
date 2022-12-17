@@ -34,10 +34,16 @@ class HomeActivityViewModel @Inject constructor(private val homeActivityRepo: Ho
     private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message) }
     init {
         viewModelScope.launch(handler) {
-            _mutableStateFlowProfileImage.value = homeActivityRepo.getImageUrl()
+            getProfileImage()
             _mutableStateFlowWelcomeMessage.value = homeActivityRepo.getWelcomeMessage()
             _mutableLiveDataMenu.value = homeActivityRepo.getMenuByGetType()
             homeActivityRepo.updateMyToken()
+        }
+    }
+
+    fun getProfileImage(){
+        viewModelScope.launch(handler) {
+            _mutableStateFlowProfileImage.value = homeActivityRepo.getImageUrl()
         }
     }
 
