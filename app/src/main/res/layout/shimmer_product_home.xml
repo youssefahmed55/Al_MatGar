@@ -9,14 +9,14 @@
         app:cardElevation="@dimen/_3sdp"
         android:layout_marginEnd="@dimen/_10sdp">
 
-
+    <!-- LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
             >
-
+            <!-- ImageView -->
             <ImageView
                 android:id="@+id/image_productHome"
                 android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:background="@color/shimmerColor"
 
                 />
-
+            <!-- TextView -->
             <TextView
                 android:id="@+id/name_productHome"
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:fontFamily="@font/poppins_medium" />
-
+            <!-- LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:layout_margin="@dimen/_10sdp"
                 android:gravity="center"
                 >
-
+                <!-- TextView -->
                 <TextView
                     android:id="@+id/price_productHome"
                     android:layout_width="@dimen/_50sdp"
@@ -60,6 +60,7 @@
                     android:background="@color/shimmerColor"
                     android:maxLines="1"
                     android:fontFamily="@font/poppins_medium" />
+                <!-- TextView -->
                 <TextView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="wrap_content"

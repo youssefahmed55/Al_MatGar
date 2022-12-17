@@ -2,23 +2,28 @@ package com.example.e_commerce.ui.homemarket.cart.cart
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.example.e_commerce.Constants.LIST_COUNTS
+import com.example.e_commerce.Constants.LIST_PRODUCTS
+import com.example.e_commerce.Constants.PRODUCT
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.ProductsInCartRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentCartBinding
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.cart.shipto.ShipToFragment
+import com.example.e_commerce.ui.homemarket.home.HomeFragment
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
 import com.example.e_commerce.utils.ToastyUtil
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.Serializable
 
@@ -51,34 +56,46 @@ class CartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_cart, container, false)
-        binding.lifecycleOwner = this
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        setOnClickOnDeleteIconItemOfRecycler()
-        setOnClickOnItemOfRecycler()
-        setOnClickOnPlusOfRecyclerItem()
-        setOnClickOnMinusOfRecyclerItem()
-        binding.viewModel = viewModel
-        binding.adapter = productsInCartRecyclerAdapter
-        setOnClickOnBack()
-        setOnClickOnNextButton()
-        observeErrorMessage()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE    //Set Activity's RelativeLayout VISIBLE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_cart, container, false) //Initialize binding
+        binding.lifecycleOwner = this                    //Set lifecycleOwner
+        setOnClickOnDeleteIconItemOfRecycler()           //Set On Click On Delete Icon From Recycler Item
+        setOnClickOnItemOfRecycler()                     //Set On Click On Recycler Item
+        setOnClickOnPlusOfRecyclerItem()                 //Set On Click On + Icon From Recycler Item
+        setOnClickOnMinusOfRecyclerItem()                //Set On Click On - Icon From Recycler Item
+        setOnClickOnNextButton()                         //Set On Click On Next Button
+        binding.viewModel = viewModel                    //Set Variable Of ViewModel (DataBinding)
+        binding.adapter = productsInCartRecyclerAdapter  //Set Variable Of adapter (DataBinding)
+        setOnClickOnBack()                               //Set On Press Back
+        setOnClickOnStartShoppingButton()                //Set On Click On Start Shopping Button
+        observeErrorMessage()                            //Observe Error
 
         return binding.root
     }
 
+    private fun setOnClickOnStartShoppingButton() {
+        binding.startShoppingButtonCartFragment.setOnClickListener {
+            activity!!.findViewById<TextView>(R.id.title_homeActivity).text = ""                                   //Set Text Of Title
+            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.home    //Set Selected Item Id To BottomNavigationView
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit() //Replace HomeFragment
+        }
+    }
+
     private fun setOnClickOnNextButton() {
         binding.nextButtonCartFragment.setOnClickListener {
+            //Pass List Of Products And List Of Counts To ShipToFragment
             val args = Bundle()
             val listOfProducts = productsInCartRecyclerAdapter.getList()
             val listOfCounts = productsInCartRecyclerAdapter.getListOfCount()
-            args.putSerializable("listOfProducts",listOfProducts as Serializable)
-            args.putSerializable("listOfCounts",listOfCounts as Serializable)
-            val shipToFragment = ShipToFragment()
-            shipToFragment.arguments = args
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, shipToFragment).addToBackStack(null).commit()
-
+            if (listOfProducts.isNotEmpty()&&listOfCounts.isNotEmpty()) {
+                args.putSerializable(LIST_PRODUCTS, listOfProducts as Serializable)
+                args.putSerializable(LIST_COUNTS, listOfCounts as Serializable)
+                val shipToFragment = ShipToFragment()
+                shipToFragment.arguments = args
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.flFragment, shipToFragment).addToBackStack(null).commit()
+            }
         }
     }
 
@@ -119,8 +136,8 @@ class CartFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                viewModel._error.value = null
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT) //Toast Error Message
+                viewModel.errorMessage.value = null
             }
         }
     }
@@ -129,7 +146,7 @@ class CartFragment : Fragment() {
         productsInCartRecyclerAdapter.setOnDeleteClickListener(object : ProductsInCartRecyclerAdapter.OnClickOnItemDelete{
             override fun onClickDelete(id: String) {
                 val builder = AlertDialog.Builder(context!!)
-                builder.setMessage("Are you sure that you want to delete it ?")
+                builder.setMessage(getString(R.string.Are_you_sure_that_you_want_to_delete_it))
                     .setCancelable(true)
                     .setPositiveButton(getString(R.string.Yes)) { dialog, _ ->
                         viewModel.deleteProductFromInCard(id)
@@ -140,7 +157,7 @@ class CartFragment : Fragment() {
                         dialog.dismiss()
                     }
                 val alert = builder.create()
-                alert.show()
+                alert.show()  //Show Alert Dialog
             }
 
         })
@@ -149,8 +166,9 @@ class CartFragment : Fragment() {
     private fun setOnClickOnItemOfRecycler() {
         productsInCartRecyclerAdapter.setOnItemClickListener(object : ProductsInCartRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
+                //Pass Product To ProductDetailsFragment
                 val args = Bundle()
-                args.putSerializable("product", product)
+                args.putSerializable(PRODUCT, product)
                 val productDetailsFragment = ProductDetailsFragment()
                 productDetailsFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()

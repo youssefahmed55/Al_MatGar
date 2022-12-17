@@ -1,4 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">المتجر</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign in</string>
     <string name="appicon">AppIcon</string>
+    <string name="sign_in_to_your_account">Sign in to your account</string>
+    <string name="forgot_passwordQ">Forgot password?</string>
+    <string name="password">Password</string>
+    <string name="didn_t_hava_account_yet">Didn\'t hava account yet?</string>
+    <string name="green_logo">green Logo</string>
+    <string name="full_name">Full name</string>
+    <string name="email_address">Email address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="cart">Cart</string>
+    <string name="offer">Offer</string>
+    <string name="account">Account</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="categories">Categories</string>
+    <string name="beauty">Beauty</string>
+    <string name="food">Food</string>
+    <string name="search">Search</string>
+    <string name="back_icon">back Icon</string>
+    <string name="account_details">Account Details</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="email">Email</string>
+    <string name="save">Save</string>
+    <string name="success">Success</string>
+    <string name="thank_you_for_shopping_using_our_store">thank you for shopping using our store</string>
+    <string name="back_to_home">Back to home</string>
+    <string name="success_icon">Success Icon</string>
+    <string name="about_this_item">About this item</string>
+    <string name="price">Price</string>
+    <string name="brand">Brand</string>
+    <string name="qty">QTY</string>
+    <string name="FullName_Is_Required">FullName Is Required</string>
+    <string name="Email_Is_Required">Email Is Required</string>
+    <string name="Phone_Number_Is_Required">Phone Number Is Required</string>
+    <string name="Password_Is_Required">Password Is Required</string>
+    <string name="Confirm_Password_Is_Required">Confirm Password Is Required</string>
+    <string name="Password_Donot_match">Password Don\'t match</string>
+    <string name="google">Google</string>
+    <string name="you_also_can_sign_in_with">You also can sign in with</string>
+    <string name="estimated_delivery_Days">Estimated Delivery Days :</string>
+    <string name="your_orders_in_cart">Your Orders In Cart</string>
+    <string name="next">Next</string>
+    <string name="date">Date:</string>
+    <string name="ship_to">Ship to</string>
+    <string name="your_shipping_details">Your shipping details</string>
+    <string name="receiver_name">Receiver Name</string>
+    <string name="receiver_address">Receiver Address</string>
+    <string name="receiver_phone">Receiver Phone</string>
+    <string name="edit">Edit</string>
+    <string name="your_receipt">Your receipt</string>
+    <string name="shipping">Shipping</string>
+    <string name="total_price">Total Price</string>
+    <string name="cash_on_delivery">Cash On Delivery</string>
+    <string name="process">Process</string>
+    <string name="users">Users</string>
+    <string name="all">All</string>
+    <string name="merchants">Merchants</string>
+    <string name="admins">Admins</string>
+    <string name="new_user">New User</string>
+    <string name="address">Address</string>
+    <string name="create_user">Create User</string>
+    <string name="houseware">HouseWare</string>
+    <string name="my_products">My Products</string>
+    <string name="products">Products</string>
+    <string name="receive_password">Receive Password</string>
+    <string name="please_Check_your_email_address">Please check your email address, it may take few minutes, Make Sure To Check Spam Messages</string>
+    <string name="orders">Orders</string>
+    <string name="completed">Completed</string>
+    <string name="canceled">Canceled</string>
+    <string name="location">Location</string>signInAnonymous
+    <string name="Sign_In_Anonymous_Successfully">Sign In Anonymous Successfully</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="profile">Profile</string>
+    <string name="Sign_In_With_Google_Account_Successfully">Sign In With Google Account Successfully</string>
+    <string name="Please_Check_Your_Email_to_Verification_Make_Sure_To_Check_Spam_Messages">Please Check Your Email to Verification, Make Sure To Check Spam Messages</string>
+    <string name="Sign_In_Successfully">Sign In Successfully</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="put_your_new_email">Put your new email</string>
+    <string name="put_your_phone_number">Put your phone number</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="put_your_location">Put your location</string>
+    <string name="put_your_password">Put your password</string>
+    <string name="Saved_Successfully">Saved Successfully</string>
+    <string name="current_password">Current password</string>
+    <string name="You_canot_change_the_email_or_password_of_Google_account">You can\'t change the email or password of Google account</string>
+    <string name="customers">Customers</string>
+    <string name="No_Network_Connection">No Network Connection</string>
+    <string name="Gender_Is_Required">Gender Is Required</string>
+    <string name="Type_Is_Required">Type Is Required</string>
+    <string name="Birthday_Is_Required">Birthday Is Required</string>
+    <string name="Location_Is_Required">Location Is Required</string>
+    <string name="Created_Account_Successfully">Created Account Successfully</string>
+    <string name="add_product">Add Product</string>
+    <string name="name_of_your_product">Name of your product :</string>
+    <string name="description">Description :</string>
+    <string name="categorie">Categorie :</string>
+    <string name="delivery_time">Delivery Time :</string>
+    <string name="pricee">Price :</string>
+    <string name="offer_price">Offer Price :</string>
+    <string name="upload_images">Upload Images</string>
+    <string name="has_offer">Has Offer</string>
+    <string name="Name_Of_Product_Is_Required">Name Of Product Is Required</string>
+    <string name="Description_Is_Required">Description Is Required</string>
+    <string name="Price_Is_Required">Price Is Required</string>
+    <string name="Offer_Price_Is_Required">Offer Price Is Required</string>
+    <string name="You_Must_Upload_Between_Three_And_Seven_Images">You Must Upload Between Three And Seven Images</string>
+    <string name="Offer_Price_Must_Be_Less_than_Price">Offer Price Must Be Less than Price</string>
+    <string name="Added_Product_Successfully">Added Product Successfully</string>
+    <string name="Photos_Uploaded">Photos Uploaded.</string>
+    <string name="Price_Must_Not_To_Be_Equal_Zero">Price Must Not To Be Equal 0</string>
+    <string name="Offer_Price_Must_Not_To_Be_Equal_Zero">Offer Price Must Not To Be Equal 0</string>
+    <string name="Are_you_sure_you_want_to_Logout">Are you sure you want to Logout ?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="wish_you_have_a_good_day">Wish you have a good day</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="welcome">Welcome</string>
+    <string name="no_data">No Data</string>
+    <string name="quantity">Quantity</string>
+    <string name="favorites_and_order_details">Favorites and order Details</string>
+    <string name="favorites">Favorites</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="items">Items</string>
+    <string name="This_Product_Not_Available_Now">This Product Not Available Now</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="Do_You_Want_To_Cancel_This_Order">Do You Want To Cancel This Order?</string>
+    <string name="Do_You_Want_To_Complete_This_Order">Do You Want To Complete This Order?</string>
+    <string name="Added_To_Cart">Added To Cart</string>
+    <string name="start_shopping">Start shopping</string>
+    <string name="cart_is_empty">Cart Is Empty</string>
+    <string name="This_section_requires_that_you_be_signed_in_Do_You_Want_To_Sign_In_Now">This section requires that you be signed in, Do You Want To Sign In Now?</string>
+    <string name="You_Have_A_New_Order">You Have A New Order</string>
+    <string name="requested_a_new_order_From_You">requested a new order from you 😀</string>
+    <string name="Product_Name">Product Name</string>
+    <string name="electronics">Electronics</string>
+    <string name="change_password">Change Password</string>
+    <string name="Please_Sign_Out_Then_Sign_In_And_Try_Again">Error : Please Sign Out Then Sign In And Try Again</string>
+    <string name="Are_you_sure_that_you_want_to_delete_it">Are you sure that you want to delete it ?</string>
+    <string name="logout_image">Logout Image</string>
+    <string name="close_icon">Close Icon</string>
+    <string name="gender_icon">Gender Icon</string>
+    <string name="arrow">Arrow</string>
+    <string name="slider_image">Slider Image</string>
+    <string name="product_image">Product Image</string>
+    <string name="delete_icon">Delete Icon</string>
+    <string name="favorite_icon">Favorite Icon</string>
+    <string name="user_icon">User Icon</string>
+    <string name="phone_icon">Phone Icon</string>
+    <string name="location_icon">Location Icon</string>
+    <string name="status_image">Status Image</string>
+    <string name="minus_icon">Minus Icon</string>
+    <string name="plus_icon">Plus Icon</string>
+    <string name="category_image">Category Image</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="empty_cart_icon">Empty Cart Icon</string>
+    <string name="google_icon">Google Icon</string>
+    <string name="calender_icon">Calender Icon</string>
+    <string name="email_icon">Email Icon</string>
+    <string name="cart_icon">Cart Icon</string>
+    <string name="password_icon">Password Icon</string>
+
+
+    <string-array name="genders">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="types">
+        <item>Type</item>
+        <item>Customer</item>
+        <item>Merchant</item>
+        <item>Admin</item>
+    </string-array>
+    <string-array name="categories">
+        <item>Beauty</item>
+        <item>Electronics</item>
+        <item>Food</item>
+        <item>HouseWare</item>
+    </string-array>
+
+    <string-array name="Days">
+        <item>1 Day</item>
+        <item>2 Days</item>
+        <item>3 Days</item>
+        <item>4 Days</item>
+        <item>5 Days</item>
+        <item>6 Days</item>
+        <item>7 Days</item>
+        <item>8 Days</item>
+        <item>9 Days</item>
+        <item>10 Days</item>
+    </string-array>
+
+
 </resources>

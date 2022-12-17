@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.pojo.Product
 
 
-@BindingAdapter(*["productsHomeAdapter", "productsHomeList"])
+@BindingAdapter("productsHomeAdapter", "productsHomeList")
 fun setListOfProductsHome(view: RecyclerView, productsHomeRecyclerAdapter: ProductsHomeRecyclerAdapter, listOfProductsHome : List<Product>) {
     view.visibility = View.VISIBLE
     productsHomeRecyclerAdapter.setList(listOfProductsHome)

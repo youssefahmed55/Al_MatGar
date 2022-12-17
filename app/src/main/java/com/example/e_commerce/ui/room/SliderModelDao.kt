@@ -9,11 +9,11 @@ import com.example.e_commerce.pojo.SliderModel
 
 @Dao
 interface SliderModelDao {
-    //Get Product Model From DataBase
+    //Get List Of SliderModel From DataBase
     @Query("SELECT * FROM sliderTable")
     suspend fun getAllSliderModels(): List<SliderModel>
 
-    //Insert Product Model In DataBase
+    //Insert List Of SliderModel In DataBase
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllSliderModels(listOfSliderModels : List<SliderModel>)
 

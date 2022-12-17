@@ -7,7 +7,7 @@
            name="cat"
            type="com.example.e_commerce.pojo.Category" />
     </data>
-
+    <!--CardView-->
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_100sdp"
@@ -16,23 +16,24 @@
         app:cardBackgroundColor="@color/itemBackgroundColor"
         android:layout_marginEnd="@dimen/_5sdp">
 
-
+        <!--LinearLayout-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
             >
-
+            <!--ImageView Appears Image Of Category-->
             <ImageView
                 android:id="@+id/image_catItem"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
                 android:scaleType="fitXY"
                 android:src="@color/shimmerColor"
+                android:contentDescription="@string/category_image"
                 imageUrl="@{cat.image}"
                 />
-
+            <!--TextView Appears Name Of Category-->
             <TextView
                 android:id="@+id/name_catItem"
                 android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp"
                 android:maxLines="1"
-                android:text="@{cat.name}"
+                android:text="@{cat.id == 1 ? @string/beauty : cat.id == 2 ? @string/electronics : cat.id == 3 ? @string/food : cat.id == 4 ? @string/houseware : `` }"
                 android:fontFamily="@font/poppins_medium" />
 
         </LinearLayout>

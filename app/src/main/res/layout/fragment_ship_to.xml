@@ -9,14 +9,11 @@
 
 
     </data>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+    <!-- ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="match_parent">
+        <!-- RelativeLayout -->
         <RelativeLayout
             android:id="@+id/relative1_shipToFragment"
             android:layout_width="match_parent"
@@ -24,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/shape_top"
             android:padding="@dimen/_10sdp">
-
+            <!-- CardView -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/backCard_shipToFragment"
                 android:layout_width="@dimen/_25sdp"
@@ -38,7 +35,7 @@
                 canClickable="@{viewModel.states}"
 
                 >
-
+                <!-- ImageView Appears Back Icon -->
                 <ImageView
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
@@ -49,7 +46,7 @@
                     />
 
             </androidx.cardview.widget.CardView>
-
+            <!-- TextView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,14 +56,14 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp" />
 
-
+            <!-- CardView -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/profileCard_shipToFragment"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 app:cardCornerRadius="@dimen/_40sdp">
-
+                <!-- ImageView Appears Profile Image -->
                 <ImageView
                     android:id="@+id/profileImage_shipToFragment"
                     android:layout_width="match_parent"
@@ -80,14 +77,14 @@
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
-
+        <!-- LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/relative1_shipToFragment"
             android:layout_margin="@dimen/_13sdp">
-
+            <!-- TextView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,25 +93,25 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/poppins_semibold" />
-
+            <!-- CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5sdp"
                 app:cardBackgroundColor="@color/itemBackgroundColor"
                 android:layout_marginTop="@dimen/_10sdp">
-
+                <!-- LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
-
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
+                        <!-- TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -124,7 +121,7 @@
                             android:textColor="@color/color1"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Receiver Name-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -136,12 +133,12 @@
                             android:fontFamily="@font/poppins_semibold" />
 
                     </LinearLayout>
-
+                    <!-- LinearLayout-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
+                        <!-- TextView-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -151,24 +148,26 @@
                             android:textColor="@color/color1"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Receiver Address-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:text="@{viewModel.liveDataUserModel.location}"
                             android:layout_marginEnd="@dimen/_10sdp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
 
                     </LinearLayout>
-
+                    <!-- LinearLayout-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
+                        <!-- TextView-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -178,7 +177,7 @@
                             android:textColor="@color/color1"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Receiver Phone Number-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -190,7 +189,7 @@
                             android:fontFamily="@font/poppins_semibold" />
 
                     </LinearLayout>
-
+                    <!-- AppCompatButton To Edit Customer Data-->
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/editButton_shipToFragment"
                         android:layout_width="wrap_content"
@@ -209,7 +208,7 @@
 
 
             </androidx.cardview.widget.CardView>
-
+            <!-- TextView-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,26 +217,26 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/poppins_semibold" />
-
+            <!-- CardView-->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5sdp"
                 app:cardBackgroundColor="@color/itemBackgroundColor"
                 android:layout_marginTop="@dimen/_10sdp">
-
+                <!-- LinearLayout-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/_10sdp">
-
+                    <!-- LinearLayout-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-
+                        <!-- TextView-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -247,7 +246,7 @@
                             android:textColor="@color/color1"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Count Of Products-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -257,7 +256,7 @@
                             android:textColor="@color/color1"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Price Before Shipping Price-->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -270,12 +269,12 @@
                             android:fontFamily="@font/poppins_semibold" />
 
                     </LinearLayout>
-
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
+                        <!-- TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -285,7 +284,7 @@
                             android:textColor="@color/color1"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Shipping Price -->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -298,12 +297,12 @@
                             android:fontFamily="@font/poppins_semibold" />
 
                     </LinearLayout>
-
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
+                        <!-- TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -313,7 +312,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9ssp"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Total Price -->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -332,7 +331,7 @@
 
 
             </androidx.cardview.widget.CardView>
-
+            <!-- AppCompatButton To Pay Cash On Delivery-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cashOnDeliveryButton_shipToFragment"
                 android:layout_width="match_parent"
@@ -346,7 +345,7 @@
                 android:onClick="@{() -> viewModel.createOrders()}"
                 canClickable="@{viewModel.states}"
                 />
-
+            <!-- ProgressBar -->
             <ProgressBar
                 android:id="@+id/myProgress_shipToFragment"
                 android:layout_width="wrap_content"
@@ -360,5 +359,5 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
 </layout>

@@ -11,8 +11,8 @@ object SearchUtil {
         val arrayList: ArrayList<Product> = ArrayList<Product>()
 
         if (s != "")
-            s2.forEach { it ->
-                if (it.name?.lowercase()!![0] == s.lowercase()[0])
+            s2.forEach {
+                if (it.name.lowercase()[0] == s.lowercase()[0])
                     if (it.name.lowercase().contains(s.lowercase())) {
                         arrayList.add(it)
                     }
@@ -25,8 +25,8 @@ object SearchUtil {
         val arrayList: ArrayList<UserModel> = ArrayList<UserModel>()
 
         if (s != "")
-            s2.forEach { it ->
-                if (it.fullName?.lowercase()!![0] == s.lowercase()[0])
+            s2.forEach {
+                if (it.fullName.lowercase()[0] == s.lowercase()[0])
                     if (it.fullName.lowercase().contains(s.lowercase())) {
                         arrayList.add(it)
                     }
@@ -39,7 +39,7 @@ object SearchUtil {
         val arrayList: ArrayList<Order> = ArrayList<Order>()
 
         if (s != "")
-            s2.forEach { it ->
+            s2.forEach {
                 if (it.productName.lowercase()[0] == s.lowercase()[0])
                     if (it.productName.lowercase().contains(s.lowercase())) {
                         arrayList.add(it)

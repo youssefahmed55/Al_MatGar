@@ -3,7 +3,7 @@ package com.example.e_commerce.ui.homemarket.myproducts.addproduct
 import android.content.Context
 import android.net.Uri
 import com.example.e_commerce.Constants.BEAUTY
-import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.ELECTRONICS
 import com.example.e_commerce.Constants.FOOD
 import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.DefaultStates
@@ -21,7 +21,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class AddProductRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+   //Create New Product
    suspend fun createNewProduct(nameOfProduct: String, description: String, price: String, hasOffer: Boolean, offerPrice: String , category : Int , deliveryTime :Int , listOfImages: List<Uri>) :DefaultStates = withContext(Dispatchers.IO){
        Network.checkConnectionType(appContext)
        val offerPrice2 = if (!hasOffer) "0.0" else offerPrice
@@ -29,7 +29,7 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
 
        val category2 : String = when (category){
            0 -> BEAUTY
-           1 -> CLOTHES
+           1 -> ELECTRONICS
            2 -> FOOD
            3 -> HOUSE_WARE
            else -> ""
@@ -46,7 +46,7 @@ class AddProductRepo @Inject constructor(@ApplicationContext private val appCont
 
        val mutableListOfImages = mutableListOf<String>()
        listOfImages.forEachIndexed  {index, imageUri ->
-
+           //Add Images To Firebase Storage
            val image = FirebaseStorage.getInstance().getReference("Users").child(getIdOfUser()).child("Products").child(docId).child(docId + index).putFile(imageUri)
                .await() // await() instead of snapshot
                .storage

@@ -5,7 +5,7 @@
     <data>
 
     </data>
-
+    <!-- LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:paddingStart="@dimen/_5sdp"
         android:paddingEnd="@dimen/_5sdp"
         android:paddingBottom="@dimen/_20sdp">
-
+        <!-- ImageView -->
         <ImageView
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
@@ -23,14 +23,14 @@
             android:layout_gravity="center" />
 
 
-
+        <!-- LinearLayout -->
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_margin="@dimen/_20sdp"
                android:orientation="horizontal"
                >
-
+               <!-- TextView -->
                <TextView
                    android:layout_width="0dp"
                    android:layout_weight="1"
@@ -40,7 +40,7 @@
                    android:textColor="@color/black"
                    android:fontFamily="@font/poppins_regular"
                    />
-
+               <!-- EditText To Write New Email -->
                <EditText
                    android:id="@+id/email_bottomSheetEmail"
                    android:layout_width="0dp"
@@ -48,6 +48,7 @@
                    android:layout_height="wrap_content"
                    android:padding="@dimen/_8sdp"
                    android:textSize="@dimen/_10ssp"
+                   android:textAlignment="viewStart"
                    android:textColor="@color/black"
                    android:background="@drawable/shape3"
                    android:maxLines="1"
@@ -59,6 +60,7 @@
 
            </LinearLayout>
 
+        <!-- LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +68,7 @@
             android:layout_marginEnd="@dimen/_20sdp"
             android:orientation="horizontal"
             >
-
+            <!-- TextView -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -76,7 +78,7 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_regular"
                 />
-
+            <!-- EditText To Write Password -->
             <EditText
                 android:id="@+id/password_bottomSheetEmail"
                 android:layout_width="0dp"
@@ -87,6 +89,7 @@
                 android:textColor="@color/black"
                 android:background="@drawable/shape3"
                 android:maxLines="1"
+                android:textAlignment="viewStart"
                 android:inputType="textPassword"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:fontFamily="@font/poppins_regular"

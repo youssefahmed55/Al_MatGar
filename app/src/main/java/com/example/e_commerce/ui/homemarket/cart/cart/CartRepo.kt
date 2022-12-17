@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 class CartRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+    //get List Of Products From FireStore
     suspend fun getInCartProducts() : List<Product> = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         val productIdsQuery = db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Products").get().await()
@@ -26,11 +26,11 @@ class CartRepo @Inject constructor(@ApplicationContext private val appContext: C
         }
         mutableListOfProducts.forEach {
             val favoriteQuery = db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(it.id).get().await()
-            if (favoriteQuery.exists()) it.isFavorite = true
+            if (favoriteQuery.exists()) it.isFavorite = true //Check If Is It Favorite To User
         }
         return@withContext  mutableListOfProducts.toList()
      }
-
+    //get List Of Counts From FireStore
     suspend fun getProductsCount(list : List<Product>) : List<Int> = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         val mutableList = mutableListOf<Int>()
@@ -40,12 +40,15 @@ class CartRepo @Inject constructor(@ApplicationContext private val appContext: C
         }
         return@withContext mutableList.toList()
     }
-
-    suspend fun deleteProductFromInCart(productId : String) = withContext(Dispatchers.IO){
-        Network.checkConnectionType(appContext)
-        db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Products").document(productId).delete().await()
-        db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!).collection("Count").document(productId).delete().await()
-
+    //delete Product And Count From FireStore By Id
+    suspend fun deleteProductFromInCart(productId : String) {
+        withContext(Dispatchers.IO) {
+            Network.checkConnectionType(appContext)
+            db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!)
+                .collection("Products").document(productId).delete().await()
+            db.collection("inCart").document(SharedPrefsUtil.getId(appContext)!!)
+                .collection("Count").document(productId).delete().await()
+        }
     }
 
 

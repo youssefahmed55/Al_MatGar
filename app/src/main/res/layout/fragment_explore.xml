@@ -11,12 +11,12 @@
             name="adapter"
             type="com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter" />
     </data>
-
+    <!--ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
+        <!--FrameLayout -->
         <FrameLayout
             android:id="@+id/frame_exploreFragment"
             android:layout_width="match_parent"
@@ -25,20 +25,20 @@
             android:background="@drawable/shape_top"
             android:padding="@dimen/_10sdp"
             >
-
+            <!--CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/searchBackgroundColor"
                 app:cardCornerRadius="@dimen/_2sdp"
                 >
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:orientation="horizontal">
-
+                    <!--EditText For Searching -->
                     <EditText
                         android:layout_width="0dp"
                         android:layout_weight="2"
@@ -48,12 +48,15 @@
                         android:inputType="text"
                         android:background="@null"
                         android:text="@={viewModel.mutableStateFlowTextSearch}"
+                        android:textAlignment="viewStart"
                         android:layout_marginStart="@dimen/_5sdp" />
+                    <!--ImageView -->
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/search_icon"
                         android:src="@drawable/ic_baseline_search_24_2" />
                 </LinearLayout>
 
@@ -62,7 +65,7 @@
 
         </FrameLayout>
 
-
+        <!--LinearLayout -->
         <LinearLayout
             android:id="@+id/linear2_exploreFragment"
             android:layout_width="wrap_content"
@@ -76,7 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             >
-
+            <!--TextView -->
             <TextView
                 android:id="@+id/beauty_exploreFragment"
                 android:layout_width="wrap_content"
@@ -91,22 +94,22 @@
                 android:onClick="@{() -> viewModel.getBeautyProduct()}"
                 selectedType="@{viewModel.stateFlowType}"
                 />
-
+            <!--TextView -->
             <TextView
-                android:id="@+id/clothes_exploreFragment"
+                android:id="@+id/Electronics_exploreFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_10ssp"
-                android:text="@string/clothes"
+                android:text="@string/electronics"
                 android:fontFamily="@font/poppins_regular"
                 android:padding="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/shape3"
                 android:textColor="@color/black"
-                android:onClick="@{() -> viewModel.getClothesProduct()}"
+                android:onClick="@{() -> viewModel.getElectronicsSProduct()}"
                 selectedType="@{viewModel.stateFlowType}"
                 />
-
+            <!--TextView -->
             <TextView
                 android:id="@+id/food_exploreFragment"
                 android:layout_width="wrap_content"
@@ -121,7 +124,7 @@
                 android:onClick="@{() -> viewModel.getFoodProduct()}"
                 selectedType="@{viewModel.stateFlowType}"
                 />
-
+            <!--TextView -->
             <TextView
                 android:id="@+id/houseWare_exploreFragment"
                 android:layout_width="wrap_content"
@@ -141,7 +144,7 @@
 
 
 
-
+        <!--RecyclerView Appears List Of Products -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_exploreFragment"
             android:layout_width="wrap_content"
@@ -150,18 +153,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linear2_exploreFragment"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_2sdp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
-            android:layout_marginBottom="@dimen/_10sdp"
             productsSubExploreAdapter  = "@{adapter}"
             productsSubExploreList = "@{viewModel.stateFlowProductModels}"
             searchProductText = "@{viewModel.mutableStateFlowTextSearch}"
-
             />
 
-
+        <!-- ProgressBar -->
         <ProgressBar
             android:id="@+id/myProgress_exploreFragment"
             android:layout_width="wrap_content"
@@ -173,11 +173,12 @@
             android:indeterminate="true"
             android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
-
+        <!--ImageView Appears Empty Cart Icon -->
         <ImageView
             android:id="@+id/emptyImage_exploreFragment"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
+            android:contentDescription="@string/empty_cart_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/recycler_exploreFragment"
@@ -185,7 +186,7 @@
             android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             app:srcCompat="@drawable/ic_empty_list"
             />
-
+        <!--TextView Appears No Data Text -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

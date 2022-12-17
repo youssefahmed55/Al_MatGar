@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MyProductsRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+    //Get All Products Of Merchant
     suspend fun getAllProductModels(): List<Product> = withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)
         val  querySnapshots = db.collection("MyProduct").document(getUserId()).collection("Products").get().await()
@@ -25,12 +25,12 @@ class MyProductsRepo @Inject constructor(@ApplicationContext private val appCont
         else
         return@withContext db.collection("AllProducts").whereIn("id", mutableListIdsOfProducts).get().await().toObjects(Product::class.java)
     }
-
+    //Delete Product From FireStore
     suspend fun deleteProduct(productId : String , list: List<String>?) = withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)
         db.collection("MyProduct").document(getUserId()).collection("Products").document(productId).delete().await()
         db.collection("AllProducts").document(productId).delete().await()
-
+        //Delete Images From Firebase Storage
         list?.let { list ->
             list.forEach {
                 FirebaseStorage.getInstance().getReferenceFromUrl(it).delete().await()

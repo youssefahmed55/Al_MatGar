@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class RegisterUtilTest {
 
-    lateinit var context : Context
+    private lateinit var context : Context
 
     // Initialize instantExecutorRule
     @get:Rule

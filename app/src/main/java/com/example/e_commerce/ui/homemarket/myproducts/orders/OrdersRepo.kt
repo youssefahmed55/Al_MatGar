@@ -17,12 +17,12 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class OrdersRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore)  {
-
+    //Get Orders By Status
     suspend fun getOrdersByStatus(status : String) : List<Order> = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         return@withContext db.collection("merchantOrders").document(SharedPrefsUtil.getId(appContext)!!).collection("Orders").whereEqualTo("status",status).get().await().toObjects(Order::class.java)
     }
-
+    //Get Product From FireStore By Id
     suspend fun getProduct(productId : String) : Product = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         val productQuery = db.collection("AllProducts").document(productId).get().await()
@@ -32,21 +32,21 @@ class OrdersRepo @Inject constructor(@ApplicationContext private val appContext:
             throw Exception(appContext.getString(R.string.This_Product_Not_Available_Now))
         }
     }
-
+    //Set Order Completed
     suspend fun setOrderCompleted(orderId: String, customerId : String) = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         db.collection("merchantOrders").document(SharedPrefsUtil.getId(appContext)!!).collection("Orders").document(orderId).update("status",COMPLETED).await()
         db.collection("customerOrders").document(customerId).collection("Orders").document(orderId).update("status",COMPLETED).await()
         setOrderEndDate(orderId,customerId)
     }
-
+    //Set Order Canceled
     suspend fun setOrderCanceled(orderId: String, customerId : String) = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         db.collection("merchantOrders").document(SharedPrefsUtil.getId(appContext)!!).collection("Orders").document(orderId).update("status",CANCELED).await()
         db.collection("customerOrders").document(customerId).collection("Orders").document(orderId).update("status",CANCELED).await()
         setOrderEndDate(orderId,customerId)
     }
-
+    //Set Order EndDate After Complete Or Cancel It
     private suspend fun setOrderEndDate(orderId: String, customerId : String) = withContext(Dispatchers.IO){
         db.collection("merchantOrders").document(SharedPrefsUtil.getId(appContext)!!).collection("Orders").document(orderId).update("end_timeStamp",FieldValue.serverTimestamp()).await()
         db.collection("customerOrders").document(customerId).collection("Orders").document(orderId).update("end_timeStamp",FieldValue.serverTimestamp()).await()

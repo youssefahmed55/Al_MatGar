@@ -2,8 +2,6 @@ package com.example.e_commerce.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.provider.Settings.Global.getString
-import android.widget.Toast
 import com.example.e_commerce.R
 
 object Network {

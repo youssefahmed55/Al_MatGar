@@ -25,16 +25,16 @@ class MyProductsViewModel @Inject constructor(private val myProductsRepo: MyProd
     private val _mutableStateFlowType = MutableStateFlow(R.id.all_myProductsFragment)
     val stateFlowType : StateFlow<Int> get() = _mutableStateFlowType
 
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
+    val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
 
     private val _mutableStateFlowIsLoading = MutableStateFlow(true)
     val isLoading : StateFlow<Boolean> get() = _mutableStateFlowIsLoading
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message!!) ; _mutableStateFlowIsLoading.value = false}
 
-    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) ; _mutableStateFlowIsLoading.value = false}
 
-
-
+    //Refresh Data
      fun refreshData(){
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -42,37 +42,37 @@ class MyProductsViewModel @Inject constructor(private val myProductsRepo: MyProd
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Get All Products Of Merchant
     fun getAllProducts(){
         _mutableStateFlowType.value = R.id.all_myProductsFragment
-        refreshData()
+        refreshData() //Refresh Data
 
     }
     fun getBeauty(){
         _mutableStateFlowType.value = R.id.beauty_myProductsFragment
-        refreshData()
+        refreshData() //Refresh Data
 
     }
 
-    fun getClothes(){
-        _mutableStateFlowType.value = R.id.clothes_myProductsFragment
-        refreshData()
+    fun getElectronics(){
+        _mutableStateFlowType.value = R.id.Electronics_myProductsFragment
+        refreshData() //Refresh Data
     }
 
     fun getFood(){
         _mutableStateFlowType.value = R.id.food_myProductsFragment
-        refreshData()
+        refreshData() //Refresh Data
     }
 
     fun getHouseWare(){
         _mutableStateFlowType.value = R.id.houseWare_myProductsFragment
-        refreshData()
+        refreshData() //Refresh Data
     }
-
+    //Delete Product From FireStore
     fun deleteProduct(productId : String , list: List<String>?){
         viewModelScope.launch(handler) {
             myProductsRepo.deleteProduct(productId,list)
-            refreshData()
+            refreshData() //Refresh Data
         }
     }
 

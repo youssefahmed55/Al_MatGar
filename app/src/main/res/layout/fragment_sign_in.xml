@@ -8,11 +8,11 @@
             type="com.example.e_commerce.ui.login.signin.SignInViewModel" />
 
     </data>
-
+    <!--ConstraintLayout-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <!--LinearLayout-->
         <LinearLayout
             android:id="@+id/linearTop_signIn"
             android:layout_width="match_parent"
@@ -21,16 +21,16 @@
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/ic_vectorup">
-
+            <!--TextView-->
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/TheShop"
+                android:text="@string/app_name"
                 android:fontFamily="@font/hsishraq_bold"
                 android:textSize="@dimen/_30ssp"
                 android:textColor="@color/white" />
-
+            <!--ImageView-->
             <ImageView
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_45sdp"
@@ -38,7 +38,7 @@
                 android:contentDescription="@string/appicon" />
         </LinearLayout>
 
-
+        <!--TextView-->
         <TextView
             android:id="@+id/signInText_signIn"
             android:layout_width="wrap_content"
@@ -54,13 +54,14 @@
             android:textSize="@dimen/_13ssp"
 
             />
-
+        <!--EditText To Write Email Address-->
         <EditText
             android:id="@+id/editTextEmail_signIn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/shape1"
             android:textCursorDrawable="@null"
+            android:textAlignment="viewStart"
             app:layout_constraintTop_toBottomOf="@id/signInText_signIn"
             app:layout_constraintBottom_toTopOf="@id/editTextPassword_signIn"
             android:layout_marginStart="@dimen/_10sdp"
@@ -77,7 +78,7 @@
             android:text="@={viewModel._email}"
             />
 
-
+        <!--EditText To Write Password-->
         <EditText
             android:id="@+id/editTextPassword_signIn"
             android:layout_width="match_parent"
@@ -99,6 +100,7 @@
             android:text="@={viewModel._password}"
             android:fontFamily="@font/poppins_regular" />
 
+        <!--TextView-->
         <TextView
             android:id="@+id/forgetPassword_signIn"
             android:layout_width="wrap_content"
@@ -113,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@id/editTextPassword_signIn"
             app:layout_constraintEnd_toEndOf="parent" />
 
-
+        <!--ProgressBar-->
         <ProgressBar
             android:id="@+id/myProgress_signIn"
             android:layout_width="wrap_content"
@@ -125,7 +127,7 @@
             android:indeterminate="true"
             android:visibility="gone"
             />
-
+        <!--AppCompatButton To Sign In-->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signInButton_signIn"
             android:layout_width="match_parent"
@@ -142,9 +144,9 @@
             android:textColor="@color/white"
             android:fontFamily="@font/poppins_bold"
             android:textAllCaps="false"
-
             />
 
+        <!-- TextView -->
         <TextView
             android:id="@+id/hintText_signIn"
             android:layout_width="wrap_content"
@@ -160,6 +162,7 @@
             android:textColor="@color/hintColor"
             />
 
+        <!-- LinearLayout -->
         <LinearLayout
             android:id="@+id/google_signIn"
             android:layout_width="wrap_content"
@@ -173,15 +176,16 @@
             android:padding="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_5sdp"
             >
-
+            <!-- ImageView -->
             <ImageView
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/ic_google_icon"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:contentDescription="@string/google_icon"
                 android:scaleType="fitXY"
                 />
-
+            <!-- TextView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -194,7 +198,7 @@
 
         </LinearLayout>
 
-
+        <!-- LinearLayout -->
         <LinearLayout
             android:id="@+id/linear_signIn"
             android:layout_width="match_parent"
@@ -204,6 +208,7 @@
             android:gravity="center"
             app:layout_constraintBottom_toTopOf="@id/vectordown_signIn">
 
+            <!-- TextView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -212,6 +217,7 @@
                 android:textColor="@color/hintColor"
                 android:fontFamily="@font/poppins_regular" />
 
+            <!-- TextView -->
             <TextView
                 android:id="@+id/signUpTextView_signIn"
                 android:layout_width="wrap_content"
@@ -221,14 +227,14 @@
                 canClickable="@{viewModel.states}"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold" />
-
+            <!-- View -->
             <View
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_1sdp"
                 android:background="@color/green" />
         </LinearLayout>
 
-
+        <!-- ImageView -->
         <ImageView
             android:id="@+id/vectordown_signIn"
             android:layout_width="match_parent"

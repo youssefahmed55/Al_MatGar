@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FavoritesFragmentRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+    //Get List Of Favorites Ids
     private suspend fun getListOfFavoritesId(): List<String> = withContext(Dispatchers.IO) {
         val favoriteQuery = db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").get().await()
         val mutableFavoriteList = mutableListOf<String>()
@@ -20,6 +20,7 @@ class FavoritesFragmentRepo @Inject constructor(@ApplicationContext private val 
         return@withContext mutableFavoriteList.toList()
     }
 
+    //Get List Of Favorites By Category
     suspend fun getListOfFavoritesByCategory(category : String) : List<Product> = withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)
         val favoriteList = getListOfFavoritesId()

@@ -41,30 +41,33 @@ class SuccessOrderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_success_order, container, false)
-        binding.lifecycleOwner = this
-        binding.image = SharedPrefsUtil.getImageUrl(context!!)
-        setOnClickOnBack()
-        setOnClickOnBackToHomeButton()
+        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE            //Set Visibility Of BottomNavigationView GONE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_success_order, container, false) //Initialize binding
+        binding.lifecycleOwner = this                          //Set lifecycleOwner
+        binding.image = SharedPrefsUtil.getImageUrl(context!!) //Set Variable Of image (DataBinding)
+        setOnClickOnBack()                                     //Set On Press Back
+        setOnClickOnBackToHomeButton()                         //Set On Click On Back To Home Button
         return binding.root
     }
 
     private fun setOnClickOnBackToHomeButton() {
         binding.backToHomeButtonSuccessOrderFragment.setOnClickListener {
-            activity!!.findViewById<TextView>(R.id.title_homeActivity).text = ""
-            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.home
-            activity!!.findViewById<TextView>(R.id.welcomeText_homeActivity).visibility = View.VISIBLE
-            activity!!.findViewById<TextView>(R.id.wishText_homeActivity).visibility = View.VISIBLE
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()
-
+            replaceHomeFragment() //Replace HomeFragment
         }
     }
+   private fun replaceHomeFragment(){
+       activity!!.findViewById<TextView>(R.id.title_homeActivity).text = ""
+       activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.home     //Set Selected Item
+       activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, HomeFragment()).commit()  //Replace HomeFragment()
+   }
+
 
     private fun setOnClickOnBack() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
-                override fun handleOnBackPressed() {}
+                override fun handleOnBackPressed() {
+                    replaceHomeFragment() //Replace HomeFragment
+                }
             }
         activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }

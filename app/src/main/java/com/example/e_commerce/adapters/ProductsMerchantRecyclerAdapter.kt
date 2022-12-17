@@ -23,7 +23,7 @@ class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRec
     }
 
     fun setList (List : List<Product>){
-        this.list = List
+        this.list = List.reversed()
     }
 
     fun setOnItemClickListener (listener : OnClickOnItem){
@@ -35,8 +35,8 @@ class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemProductMerchantBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product_merchant,parent,false)
-        return Holder(binding,onClickOnItem,onClickOnItemDelete,list)
+        val binding : ItemProductMerchantBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product_merchant,parent,false) //Initialize binding
+        return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -48,17 +48,17 @@ class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRec
 
     }
 
-    class Holder(binding: ItemProductMerchantBinding,listener: OnClickOnItem , listener2 : OnClickOnItemDelete , list: List<Product>) : RecyclerView.ViewHolder(binding.root) {
+   inner class Holder(binding: ItemProductMerchantBinding) : RecyclerView.ViewHolder(binding.root) {
          val holderBinding : ItemProductMerchantBinding = binding
 
         init {
-            binding.imageCardItemProductMerchant.setOnClickListener {
+            binding.root.setOnClickListener {
                 val position: Int = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
                     // do whatever you intend to do with this position
-                    if (listener != null)
-                        listener.onClick1(list[adapterPosition])
+                    if (onClickOnItem != null)
+                        onClickOnItem.onClick1(list[adapterPosition])
 
                 }
             }
@@ -68,8 +68,8 @@ class ProductsMerchantRecyclerAdapter : RecyclerView.Adapter<ProductsMerchantRec
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
                     // do whatever you intend to do with this position
-                    if (listener2 != null)
-                        listener2.onClickDelete(list[adapterPosition].id!!,list[adapterPosition].images)
+                    if (onClickOnItemDelete != null)
+                        onClickOnItemDelete.onClickDelete(list[adapterPosition].id,list[adapterPosition].images)
 
                 }
             }

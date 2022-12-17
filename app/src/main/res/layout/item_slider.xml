@@ -6,14 +6,15 @@
               name="image"
               type="String" />
     </data>
-
+    <!--ImageView we will display is our slider view-->
     <ImageView
         android:id="@+id/image_itemSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         imageUrl="@{image}"
-        android:layout_centerHorizontal="true" />
-        <!--Image we will display is our slider view-->
+        android:contentDescription="@string/slider_image"
+         />
+
 
 </layout>

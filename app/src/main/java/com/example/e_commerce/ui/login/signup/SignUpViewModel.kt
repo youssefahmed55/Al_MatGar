@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-private const val TAG = "SignUpViewModel"
+
 @HiltViewModel
 class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo) : ViewModel() {
 
@@ -48,16 +48,17 @@ class SignUpViewModel @Inject constructor(private val signUpRepo: SignUpRepo) : 
     private val _mutableStateFlow = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
     val states : StateFlow<DefaultStates> get() = _mutableStateFlow
 
+    //Initialize handler to handle Coroutine Exception
     private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlow.value = DefaultStates.Error(throwable.message!!)}
 
 
     fun signUpFirebase() {
-
+        // Get result Check Sign Up Data Entered
         val result =  RegisterUtil.checkSignUpValid(fullName.toString(),email.toString(),phone.toString(),password.toString(),confirmPassword.toString())
-        if (result == R.string.success) {
+        if (result == R.string.success) { //If All Data Valid
             viewModelScope.launch(handler) {
                     _mutableStateFlow.value = DefaultStates.Loading
-                    delay(2000)
+                    //Create User And Receive Success Message
                     _mutableStateFlow.value = signUpRepo.createUserFireBase(email.toString().trim(),password.toString().trim(),phone.toString().trim(),fullName.toString().trim())
             }
         }else{

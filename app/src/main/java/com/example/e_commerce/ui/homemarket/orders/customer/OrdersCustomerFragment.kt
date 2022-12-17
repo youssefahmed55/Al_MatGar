@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.example.e_commerce.Constants.PRODUCT
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.OrdersCustomerRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentOrdersCustomerBinding
@@ -46,24 +47,25 @@ class OrdersCustomerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_orders_customer, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        setOnClickOnItemOfRecycler()
-        binding.adapter = ordersCustomerRecyclerAdapter
-        setOnClickOnBackIcon()
-        observeProduct()
-        observeErrorMessage()
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE  //Set Activity's RelativeLayout GONE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_orders_customer, container, false) //Initialize binding
+        binding.lifecycleOwner = this                   //Set lifecycleOwner
+        binding.viewModel = viewModel                   //Set Variable Of ViewModel (DataBinding)
+        setOnClickOnItemOfRecycler()                    //Set On Click On Recycler Item
+        binding.adapter = ordersCustomerRecyclerAdapter //Set Variable Of adapter (DataBinding)
+        setOnClickOnBackIcon()                          //Set On Click On Back Icon
+        observeProduct()                                //Observe Product If User Clicked On Recycler Item
+        observeErrorMessage()                           //Observe Error
         return binding.root
     }
 
     private fun observeProduct() {
         viewModel.liveDataProduct.observe(viewLifecycleOwner){
             it?.let {
+                //Pass Product To ProductDetailsFragment
                 viewModel.mutableLiveDataProduct.value = null
                 val args = Bundle()
-                args.putSerializable("product", it)
+                args.putSerializable(PRODUCT, it)
                 val productDetailsFragment = ProductDetailsFragment()
                 productDetailsFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
@@ -78,8 +80,8 @@ class OrdersCustomerFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                viewModel._error.value = null
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT) //Toast Error Message
+                viewModel.errorMessage.value = null
             }
         }
     }
@@ -87,13 +89,13 @@ class OrdersCustomerFragment : Fragment() {
     private fun setOnClickOnItemOfRecycler() {
         ordersCustomerRecyclerAdapter.setOnItemClickListener(object : OrdersCustomerRecyclerAdapter.OnClickOnItem{
             override fun onClick1(productId: String) {
-                viewModel.getProduct(productId)
+                viewModel.getProduct(productId) //Get Product
             }
         })
     }
     private fun setOnClickOnBackIcon() {
         binding.backCardOrdersCustomer.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 

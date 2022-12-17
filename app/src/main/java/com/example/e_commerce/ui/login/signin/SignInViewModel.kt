@@ -15,37 +15,31 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(private val signInRepo: SignInRepo) : ViewModel() {
 
-
-
     val _email = ObservableField("")
     var email: String?
         get() = _email.get()
         set(value) = _email.set(value)
-
 
     val _password = ObservableField("")
     var password: String?
         get() = _password.get()
         set(value) = _password.set(value)
 
-
     private val _errorMessage = MutableLiveData<Int?>()
     val liveDataErrorMessage : LiveData<Int?> get() = _errorMessage
 
-
-
     private val _mutableStateFlow = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
     val states : StateFlow<DefaultStates> get() = _mutableStateFlow
-
+    //Initialize handler to handle Coroutine Exception
     private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlow.value = DefaultStates.Error(throwable.message!!) ; _mutableStateFlow.value = DefaultStates.Idle}
 
 
     fun signInFirebase() {
+        // Get result Check Sign In Data Entered
         val result = LoginUtil.checkSignInValid(email.toString(),password.toString())
-        if (result == R.string.success) {
+        if (result == R.string.success) { //If All Data Valid
             viewModelScope.launch(handler) {
                        _mutableStateFlow.value = DefaultStates.Loading
-                       delay(2000)
                        _mutableStateFlow.value = signInRepo.signInWithEmailAndPassword(email.toString().trim(), password.toString().trim())
             }
         }else{

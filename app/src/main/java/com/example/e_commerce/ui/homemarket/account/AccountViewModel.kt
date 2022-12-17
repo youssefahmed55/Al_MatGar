@@ -23,6 +23,9 @@ class AccountViewModel @Inject constructor(private val accountRepo: AccountRepo)
     private val _mutableStateFlow = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
     val states : StateFlow<DefaultStates> get() = _mutableStateFlow
 
+    private val _mutableLiveDataSignedOut = MutableLiveData<Boolean>()
+    val liveDataSignedOut : LiveData<Boolean> get() = _mutableLiveDataSignedOut
+    //Initialize handler to handle Coroutine Exception
     private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlow.value = DefaultStates.Error(throwable.message!!)}
 
 
@@ -49,6 +52,14 @@ class AccountViewModel @Inject constructor(private val accountRepo: AccountRepo)
           }
 
 
+    }
+
+    fun signOut(){
+        viewModelScope.launch(handler) {
+            accountRepo.removeMyToken()
+            accountRepo.signOut()
+            _mutableLiveDataSignedOut.value = true
+        }
     }
 
 

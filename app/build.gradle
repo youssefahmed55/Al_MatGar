@@ -4,7 +4,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
 }
 
@@ -18,6 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField("String","GOOGLE_API_KEY",GOOGLE_API_KEY)
+        buildConfigField("String","FCM_API_KEY",FCM_API_KEY)
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -126,6 +126,9 @@ dependencies {
     // Add the dependency for the Cloud Storage library
     implementation 'com.google.firebase:firebase-storage'
 
+    //FCM
+    implementation 'com.google.firebase:firebase-messaging:23.1.1'
+    implementation 'com.google.firebase:firebase-core:21.1.1'
     //Toasty
     implementation 'com.github.GrenderG:Toasty:1.5.2'
 
@@ -144,6 +147,11 @@ dependencies {
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.5.0-alpha02")
+
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // GSON Converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
 kapt {
     correctErrorTypes = true

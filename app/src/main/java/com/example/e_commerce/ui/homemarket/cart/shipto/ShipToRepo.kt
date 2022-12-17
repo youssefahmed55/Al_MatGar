@@ -6,6 +6,9 @@ import com.example.e_commerce.R
 import com.example.e_commerce.pojo.Order
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.pojo.UserModel
+import com.example.e_commerce.pojo.notification.NotificationModel
+import com.example.e_commerce.pojo.notification.RootModel
+import com.example.e_commerce.sendNotificationApi.APIService
 import com.example.e_commerce.utils.Network
 import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.ShipToUtil
@@ -17,12 +20,12 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class ShipToRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore){
-
+class ShipToRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore, private val apiService: APIService){
+    //Get User Model From SharedPreference DataBase
     suspend fun getUserModelData() : UserModel = withContext(Dispatchers.IO){
         return@withContext SharedPrefsUtil.getUserModel(appContext)!!
     }
-
+    //Create Orders
     suspend fun createOrder(listOfProducts : List<Product>, listOfCounts : List<Int>) : DefaultStates = withContext(Dispatchers.IO){
         val checkUserDataRequired = ShipToUtil.checkIfDataRequiredAvailable(SharedPrefsUtil.getLocation(appContext)!!,SharedPrefsUtil.getPhone(appContext)!!)
         if (checkUserDataRequired == R.string.success) {
@@ -39,10 +42,10 @@ class ShipToRepo @Inject constructor(@ApplicationContext private val appContext:
                     totalPrice,
                     product.name,
                     product.merchantId,
-                    customerModel.id!!,
-                    customerModel.phone!!,
-                    customerModel.location!!,
-                    customerModel.fullName!!,
+                    customerModel.id,
+                    customerModel.phone,
+                    customerModel.location,
+                    customerModel.fullName,
                     listOfCounts[i],
                     product.images?.get(0),
                 )
@@ -54,12 +57,18 @@ class ShipToRepo @Inject constructor(@ApplicationContext private val appContext:
                     .document(product.id).delete().await()
                 db.collection("inCart").document(customerModel.id).collection("Count")
                     .document(product.id).delete().await()
+
+                //Send Notification
+                val userToken = db.collection("Tokens").document(product.merchantId).get().await()
+                if (userToken.exists()){
+                    val token = userToken.getString("token")
+                    apiService.sendNotification(RootModel(token!!, NotificationModel(appContext.getString(R.string.You_Have_A_New_Order),"${SharedPrefsUtil.getName(appContext)} " +appContext.getString(R.string.requested_a_new_order_From_You) + "\n"+ appContext.getString(R.string.Product_Name) +": ${product.name}"+ "\n"+ appContext.getString(R.string.quantity) +": ${listOfCounts[i]}")))
+                }
             }
             return@withContext DefaultStates.Success(appContext.getString(R.string.success))
         }else{
             return@withContext DefaultStates.Error(appContext.getString(checkUserDataRequired))
         }
     }
-
 
 }

@@ -26,8 +26,8 @@ class ProductsHomeRecyclerAdapter : RecyclerView.Adapter<ProductsHomeRecyclerAda
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemProductHomeBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product_home,parent,false)
-        return Holder(binding,onClickOnItem,list)
+        val binding : ItemProductHomeBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product_home,parent,false) //Initialize binding
+        return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -39,7 +39,7 @@ class ProductsHomeRecyclerAdapter : RecyclerView.Adapter<ProductsHomeRecyclerAda
 
     }
 
-    class Holder(binding: ItemProductHomeBinding,listener: OnClickOnItem, list: List<Product>) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(binding: ItemProductHomeBinding) : RecyclerView.ViewHolder(binding.root) {
          val holderBinding : ItemProductHomeBinding = binding
 
         init {
@@ -48,8 +48,8 @@ class ProductsHomeRecyclerAdapter : RecyclerView.Adapter<ProductsHomeRecyclerAda
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
                     // do whatever you intend to do with this position
-                    if (listener != null)
-                        listener.onClick1(list[adapterPosition])
+                    if (onClickOnItem != null)
+                        onClickOnItem.onClick1(list[adapterPosition])
 
                 }
             }

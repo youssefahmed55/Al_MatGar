@@ -1,7 +1,6 @@
 package com.example.e_commerce.ui.homemarket.myproducts.addproduct
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.e_commerce.Constants.PICK_IMAGE_MULTIPLE
@@ -53,23 +51,19 @@ class AddProductFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_add_product, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-        observeErrorMessage()
-        render()
-        setOnClickOnBackIcon()
-        setOnClickOnBack()
-        setOnClickOnUploadImages()
-        setOnClickOnSaveButton()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE              //Set Activity's RelativeLayout GONE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_add_product, container, false) //Initialize binding
+        binding.lifecycleOwner = this           //Set lifecycleOwner
+        binding.viewModel = viewModel           //Set Variable Of ViewModel (DataBinding)
+        observeErrorMessage()                   //Observe Error
+        render()                                //render states From ViewModel
+        setOnClickOnBackIcon()                  //Set On Click On Back Icon
+        setOnClickOnBack()                      //Set On Press Back
+        setOnClickOnUploadImages()              //Set On Click On Upload Images
+        setOnClickOnSaveButton()                //Set On Click On Save Button
 
         return binding.root
-    }
-    override fun onDetach() {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        super.onDetach()
     }
 
     private fun setOnClickOnBack() {
@@ -117,7 +111,7 @@ class AddProductFragment : Fragment() {
 
     private fun setOnClickOnBackIcon() {
         binding.backCardAddProduct.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 
@@ -125,10 +119,10 @@ class AddProductFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when (it) {
-                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
+                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT) //Toast Error Message
                     is DefaultStates.Success -> {
-                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
-                        activity!!.supportFragmentManager.popBackStack()
+                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT) //Toast Successful Message
+                        activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
                     }
                     else -> {}
                 }
@@ -138,17 +132,16 @@ class AddProductFragment : Fragment() {
     }
 
     private fun observeErrorMessage() {
-        viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.liveDataErrorMessage.observe(viewLifecycleOwner) {
             when(it){
                 R.string.Name_Of_Product_Is_Required -> binding.nameOfProductAddProduct.error = getString(it)
                 R.string.Description_Is_Required -> binding.descriptionAddProduct.error = getString(it)
                 R.string.Price_Is_Required , R.string.Price_Must_Not_To_Be_Equal_Zero ->   binding.priceOfProductAddProduct.error = getString(it)
                 R.string.Offer_Price_Must_Be_Less_than_Price , R.string.Offer_Price_Is_Required , R.string.Offer_Price_Must_Not_To_Be_Equal_Zero -> binding.offerPriceOfProductAddProduct.error = getString(it)
-                R.string.You_Must_Upload_Between_Three_And_Seven_Images -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
+                R.string.You_Must_Upload_Between_Three_And_Seven_Images -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT) //Toast Error Message
                 else -> {}
-
             }
-        })
+        }
     }
 
 

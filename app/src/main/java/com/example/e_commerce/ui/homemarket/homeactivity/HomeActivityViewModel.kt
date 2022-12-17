@@ -1,9 +1,10 @@
 package com.example.e_commerce.ui.homemarket.homeactivity
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.e_commerce.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "HomeActivityViewModel"
+
 @HiltViewModel
 class HomeActivityViewModel @Inject constructor(private val homeActivityRepo: HomeActivityRepo) : ViewModel(){
 
@@ -21,17 +22,30 @@ class HomeActivityViewModel @Inject constructor(private val homeActivityRepo: Ho
     private val _mutableStateFlowWelcomeMessage = MutableStateFlow("")
     val stateFlowWelcomeMessage : StateFlow<String> get() = _mutableStateFlowWelcomeMessage
 
+    private val _mutableLiveDataMenu = MutableLiveData<Int>()
+    val liveDataMenu : LiveData<Int> get() = _mutableLiveDataMenu
 
-    private val _mutableStateFlowMenu = MutableStateFlow(R.menu.bottom_nav_menu)
-    val stateFlowMenu : StateFlow<Int> get() = _mutableStateFlowMenu
+    private val _mutableLiveDataSignedOut = MutableLiveData<Boolean>()
+    val liveDataSignedOut : LiveData<Boolean> get() = _mutableLiveDataSignedOut
 
-
-    private val handler = CoroutineExceptionHandler { _, throwable -> Log.d(TAG, "handler: ${throwable.message!!}") }
+    private val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message) }
     init {
         viewModelScope.launch(handler) {
             _mutableStateFlowProfileImage.value = homeActivityRepo.getImageUrl()
             _mutableStateFlowWelcomeMessage.value = homeActivityRepo.getWelcomeMessage()
-            _mutableStateFlowMenu.value = homeActivityRepo.getMenuByGetType()
+            _mutableLiveDataMenu.value = homeActivityRepo.getMenuByGetType()
+            homeActivityRepo.updateMyToken()
+        }
+    }
+
+    fun signOut(){
+        viewModelScope.launch(handler) {
+            homeActivityRepo.removeMyToken()
+            homeActivityRepo.signOut()
+            _mutableLiveDataSignedOut.value = true
         }
     }
 }

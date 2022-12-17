@@ -63,4 +63,10 @@ object SharedPrefsUtil{
 
     }
 
+    fun getEmail(context: Context) : String?{
+        val user = getUserModel(context)
+        return  user?.email
+
+    }
+
 }

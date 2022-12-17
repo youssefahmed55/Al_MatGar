@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.Constants.BEAUTY
-import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.ELECTRONICS
 import com.example.e_commerce.Constants.FOOD
 import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.R
@@ -32,22 +32,22 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
     private val _mutableStateFlowIsLoading = MutableStateFlow(true)
     val isLoading : StateFlow<Boolean> get() = _mutableStateFlowIsLoading
 
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
+    val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
 
     private val _deletedFromFavorites = MutableLiveData<String?>()
     val deleteFromFavorites : LiveData<String?> get() = _deletedFromFavorites
 
     private val _addedToFavorites = MutableLiveData<String?>()
     val addedToFavorites : LiveData<String?> get() = _addedToFavorites
-
-    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
     init {
         getBeautyProductOffers()
     }
 
-
+    //Get Beauty Products Offers
     fun getBeautyProductOffers() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -56,16 +56,16 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
             _mutableStateFlowIsLoading.value = false
         }
     }
-
-    fun getClothesProductOffers() {
+    //Get Electronics Products Offers
+    fun getElectronicsProductOffers() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
-            _mutableStateFlowType.value = R.id.clothes_offerFragment
-            _mutableStateFlowProductModels.value = offerRepo.getProductsOffersByType(CLOTHES)
+            _mutableStateFlowType.value = R.id.electronics_offerFragment
+            _mutableStateFlowProductModels.value = offerRepo.getProductsOffersByType(ELECTRONICS)
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Get Food Products Offers
     fun getFoodProductOffers() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -74,7 +74,7 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Get HouseWare Products Offers
     fun getHouseWareProductOffers() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -83,7 +83,7 @@ class OfferViewModel @Inject constructor(private val offerRepo: OfferRepo, priva
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Edit Item (Add Or Remove Item From Favorites)
     fun editFavorite(id : String, isFavorite : Boolean){
         viewModelScope.launch(handler) {
             if (isFavorite) {

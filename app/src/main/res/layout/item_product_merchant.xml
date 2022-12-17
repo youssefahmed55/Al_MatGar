@@ -9,45 +9,46 @@
            type="com.example.e_commerce.pojo.Product" />
 
     </data>
-
+    <!--CardView-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_5sdp"
         android:background="@color/itemBackgroundColor"
         android:layout_margin="@dimen/_5sdp">
-
+        <!--LinearLayout-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/_10sdp">
-
+            <!--CardView-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageCard_itemProductMerchant"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 app:cardCornerRadius="@dimen/_40sdp">
-
+                <!--ImageView Appears Product Image -->
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
                     imageUrl="@{product.images != null ? product.images.get(0) : null }"
+                    android:contentDescription="@string/product_image"
                     />
             </androidx.cardview.widget.CardView>
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:orientation="vertical">
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
+                    <!--TextView Appears Name Of Product -->
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -60,20 +61,23 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="@{product.name}" />
 
+                    <!--ImageView Appears Delete Icon -->
                     <ImageView
                         android:id="@+id/delete_itemProductMerchant"
                         android:layout_width="0dp"
                         android:layout_weight="0.1"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/delete_icon"
                         app:srcCompat="@drawable/ic_delete_icon" />
 
                 </LinearLayout>
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     >
+                    <!--TextView -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,7 +87,7 @@
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_regular" />
-
+                    <!--TextView Appears Number Of Estimated Delivery Days -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -95,7 +99,7 @@
 
                 </LinearLayout>
 
-
+                <!--TextView Appears Offer Price Or Price If It Hasn't Offer Price -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -105,6 +109,7 @@
                     android:fontFamily="@font/poppins_regular"
                     price="@{product.hasOffer ? product.offerPrice : product.price}" />
 
+                <!--TextView Appears Price If It Has Offer Price -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

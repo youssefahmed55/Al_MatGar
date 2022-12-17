@@ -13,12 +13,12 @@
             name="adapter"
             type="com.example.e_commerce.adapters.OrdersMerchantRecyclerAdapter" />
     </data>
-
+    <!--ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
+        <!--LinearLayout -->
         <LinearLayout
             android:id="@+id/linear_ordersFragment"
             android:layout_width="match_parent"
@@ -28,11 +28,13 @@
             android:background="@drawable/shape_top"
             android:padding="@dimen/_10sdp"
             >
+            <!--RelativeLayout -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="0dp"
                 >
+                <!--CardView -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/backCard_ordersFragment"
                     android:layout_width="@dimen/_25sdp"
@@ -43,20 +45,18 @@
                     app:cardElevation="@dimen/_3sdp"
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
-
                     >
-
+                    <!--ImageView Appears Back Icon -->
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_back"
                         android:contentDescription="@string/back_icon"
-
                         />
 
                 </androidx.cardview.widget.CardView>
-
+                <!--TextView -->
                 <TextView
                     android:id="@+id/orders_ordersFragment"
                     android:layout_width="wrap_content"
@@ -69,6 +69,8 @@
                     />
 
             </RelativeLayout>
+
+            <!--CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -77,13 +79,13 @@
                 android:background="@color/searchBackgroundColor"
                 app:cardCornerRadius="@dimen/_2sdp"
                 >
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:orientation="horizontal">
-
+                    <!--EditText For Searching -->
                     <EditText
                         android:layout_width="0dp"
                         android:layout_weight="2"
@@ -95,18 +97,21 @@
                         android:text="@={viewModel.mutableStateFlowTextSearch}"
                         android:background="@null"
                         android:layout_marginStart="@dimen/_5sdp" />
+                    <!--ImageView -->
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="@dimen/_25sdp"
+                        android:contentDescription="@string/search_icon"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_baseline_search_24_2" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-
         </LinearLayout>
+
+        <!--LinearLayout -->
         <LinearLayout
             android:id="@+id/linear2_ordersFragment"
             android:layout_width="match_parent"
@@ -116,6 +121,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="@dimen/_10sdp"
             >
+            <!--TextView -->
             <TextView
                 android:id="@+id/inProcess_ordersFragment"
                 android:layout_width="0dp"
@@ -131,7 +137,7 @@
                 android:background="@drawable/shape2"
                 android:textColor="@color/white"
                 android:layout_marginEnd="@dimen/_10sdp" />
-
+            <!--TextView -->
             <TextView
                 android:id="@+id/completed_ordersFragment"
                 android:layout_width="0dp"
@@ -147,7 +153,7 @@
                 android:background="@drawable/shape3"
                 android:textColor="@color/black"
                 android:layout_marginEnd="@dimen/_10sdp" />
-
+            <!--TextView -->
             <TextView
                 android:id="@+id/canceled_ordersFragment"
                 android:layout_width="0dp"
@@ -165,7 +171,7 @@
                 android:layout_marginEnd="@dimen/_10sdp" />
 
         </LinearLayout>
-
+        <!--RecyclerView Appears Orders Of Merchant -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_ordersFragment"
             android:layout_width="match_parent"
@@ -173,13 +179,14 @@
             app:layout_constrainedHeight="true"
             app:layout_constraintTop_toBottomOf="@id/linear2_ordersFragment"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             ordersMerchantAdapter ="@{adapter}"
             ordersMerchantList="@{viewModel.stateFlowOrderModels}"
             searchMerchantOrdersText="@{viewModel.mutableStateFlowTextSearch}"
             />
-
+        <!--ProgressBar -->
         <ProgressBar
             android:id="@+id/myProgress_ordersFragment"
             android:layout_width="wrap_content"
@@ -192,7 +199,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
-
+        <!--ImageView Appears Empty Cart Icon -->
         <ImageView
             android:id="@+id/emptyImage_ordersFragment"
             android:layout_width="@dimen/_40sdp"
@@ -204,7 +211,7 @@
             android:visibility="@{viewModel.stateFlowOrderModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             app:srcCompat="@drawable/ic_empty_list"
             />
-
+        <!--TextView Appears No Data Text -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.e_commerce.BuildConfig
+import com.example.e_commerce.Constants.NAV_ACTION_LOGIN
 import com.example.e_commerce.Constants.PICK_IMAGE
 import com.example.e_commerce.DefaultStates
 import com.example.e_commerce.R
@@ -22,13 +22,9 @@ import com.example.e_commerce.databinding.*
 import com.example.e_commerce.ui.homemarket.favorite.FavoritesFragment
 import com.example.e_commerce.ui.homemarket.orders.customer.OrdersCustomerFragment
 import com.example.e_commerce.ui.login.MainActivity
-import com.example.e_commerce.utils.SharedPrefsUtil
 import com.example.e_commerce.utils.ToastyUtil
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
@@ -58,11 +54,11 @@ class AccountFragment : Fragment() {
     private lateinit var binding : FragmentAccountBinding
     private val viewModel: AccountViewModel by lazy { ViewModelProvider(this)[AccountViewModel::class.java] }
     private lateinit var bindingBottomSheetGender : BottomsheetgenderBinding
-    private lateinit var bindingBottomsheetemail : BottomsheetemailBinding
-    private lateinit var bindingBottomsheetphone : BottomsheetphoneBinding
-    private lateinit var bindingBottomsheetpassword : BottomsheetpasswordBinding
-    private lateinit var bindingBottomsheetdate : BottomsheetdateBinding
-    private lateinit var bindingBottomsheetlocation : BottomsheetlocationBinding
+    private lateinit var bindingBottomSheetEmail : BottomsheetemailBinding
+    private lateinit var bindingBottomSheetPhone : BottomsheetphoneBinding
+    private lateinit var bindingBottomSheetPassword : BottomsheetpasswordBinding
+    private lateinit var bindingBottomSheetDate : BottomsheetdateBinding
+    private lateinit var bindingBottomSheetLocation : BottomsheetlocationBinding
     private lateinit var bottomSheetDialog: BottomSheetDialog
     private var imageUri : Uri? = null
     private var passwordOfNewEmail : String ?= null
@@ -72,29 +68,30 @@ class AccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_account, container, false)
-        inti(inflater,container)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        setOnclickOnGender()
-        setOnclickOnBirthday()
-        setOnclickOnEmail()
-        setOnclickOnPhone()
-        setOnclickOnLocation()
-        setOnclickOnPassword()
-        setOnClickOnProfileImage()
-        setOnClickOnSaveButton()
-        setOnClickOnFavorites()
-        setOnClickOnOrders()
-        setOnClickOnBack()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE       //Set Activity's RelativeLayout VISIBLE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_account, container, false) //Initialize binding
+        inti(inflater,container)      //Initialize Variables
+        binding.lifecycleOwner = this //Set lifecycleOwner
+        binding.viewModel = viewModel //Set Variable Of ViewModel (DataBinding)
+        setOnclickOnGender()          //Set On Click On Gender Linear
+        setOnclickOnBirthday()        //Set On Click On Birthday Linear
+        setOnclickOnEmail()           //Set On Click On Email Linear
+        setOnclickOnPhone()           //Set On Click On Phone Linear
+        setOnclickOnLocation()        //Set On Click On Location Linear
+        setOnclickOnPassword()        //Set On Click On Password Linear
+        setOnClickOnProfileImage()    //Set On Click On ProfileImage
+        setOnClickOnSaveButton()      //Set On Click On Save Button
+        setOnClickOnFavorites()       //Set On Click On Favorites
+        setOnClickOnOrders()          //Set On Click On Orders
+        setOnClickOnBack()            //Set On Press Back
+        observeSignOut()              //Observe Sign Out
         return  binding.root
     }
 
     private fun setOnClickOnOrders() {
         binding.ordersAccountFragment.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, OrdersCustomerFragment()).addToBackStack(null).commit()
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, OrdersCustomerFragment()).addToBackStack(null).commit() //Replace OrdersCustomerFragment
         }
     }
 
@@ -108,13 +105,13 @@ class AccountFragment : Fragment() {
 
     private fun setOnClickOnFavorites() {
         binding.favoritesAccountFragment.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, FavoritesFragment()).addToBackStack(null).commit()
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, FavoritesFragment()).addToBackStack(null).commit() //Replace FavoritesFragment
         }
     }
 
     private fun setOnClickOnSaveButton() {
        binding.saveButtonAccountFragment.setOnClickListener {
-
+           //Save All Changes
            viewModel.saveAllChanges(binding.genderAccountFragment.text.toString().trim()
                                     ,binding.birthdayAccountFragment.text.toString().trim()
                                     ,binding.emailAccountFragment.text.toString().trim()
@@ -128,13 +125,13 @@ class AccountFragment : Fragment() {
     }
 
     override fun onPause() {
-        job?.cancel()
+        job?.cancel()   //Cancel job
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        render()
+        render()  //render states From ViewModel
     }
 
     private fun render() {
@@ -143,38 +140,40 @@ class AccountFragment : Fragment() {
                 when(it){
                     is DefaultStates.Success -> {
 
-                        ToastyUtil.successToasty(context!!,getString(R.string.Saved_Successfully), Toast.LENGTH_SHORT)
+                        ToastyUtil.successToasty(context!!,getString(R.string.Saved_Successfully), Toast.LENGTH_SHORT) //Toast Successful Message
 
                         imageUri = null
                         passwordOfNewEmail = null
                         passwordOfNewPassword = null
                         newPassword = null
-                        bindingBottomsheetemail.passwordBottomSheetEmail.setText("")
-                        bindingBottomsheetpassword.currentPasswordBottomSheetPassword.setText("")
-                        bindingBottomsheetpassword.passwordBottomSheetPassword.setText("")
-                        bindingBottomsheetpassword.confirmPasswordBottomSheetPassword.setText("")
+                        bindingBottomSheetEmail.passwordBottomSheetEmail.setText("")
+                        bindingBottomSheetPassword.currentPasswordBottomSheetPassword.setText("")
+                        bindingBottomSheetPassword.passwordBottomSheetPassword.setText("")
+                        bindingBottomSheetPassword.confirmPasswordBottomSheetPassword.setText("")
 
 
-                        if (it.toastMessage == "signInAgain"){
-                            FirebaseAuth.getInstance().signOut()
-                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestIdToken(BuildConfig.GOOGLE_API_KEY)
-                                .requestEmail()
-                                .build()
-                            val googleClient = GoogleSignIn.getClient(context!!, gso)
-                            googleClient.signOut()
-                            SharedPrefsUtil.clearUserModel(context!!)
-                            ToastyUtil.infoToasty(context!!,getString(R.string.please_Check_your_email_address), Toast.LENGTH_SHORT)
-                            activity?.startActivity(Intent(activity, MainActivity::class.java))
-                            activity?.finish()
+                        if (it.toastMessage == "signInAgain"){ //If User Changed His Email Need To Sign In Again
+                            viewModel.signOut()
                         }
                     }
                     is DefaultStates.Error -> {
-                        ToastyUtil.errorToasty(context!!,it.error, Toast.LENGTH_SHORT)
+                        ToastyUtil.errorToasty(context!!,it.error, Toast.LENGTH_SHORT) //Toast Error Message
                     }
 
                     else -> {}
                 }
+            }
+        }
+    }
+
+    private fun observeSignOut(){
+        viewModel.liveDataSignedOut.observe(viewLifecycleOwner){
+            if (it){
+                ToastyUtil.infoToasty(context!!,getString(R.string.please_Check_your_email_address), Toast.LENGTH_LONG) //Toast Info
+                val intent = Intent(activity, MainActivity::class.java)    //Intent To MainActivity
+                intent.putExtra(NAV_ACTION_LOGIN,R.id.action_splashFragment_to_signInFragment)
+                activity?.startActivity(intent)
+                activity?.finish() //Finish Activity
             }
         }
     }
@@ -216,11 +215,11 @@ class AccountFragment : Fragment() {
     private fun setOnclickOnBirthday() {
         binding.birthdayLinearAccountFragment.setOnClickListener {
 
-            bindingBottomsheetdate.calenderBottomSheetDate.setOnDateChangeListener { calendarView, i, i2, i3 ->
+            bindingBottomSheetDate.calenderBottomSheetDate.setOnDateChangeListener { _, i, i2, i3 ->
                 binding.birthdayAccountFragment.text = "$i3-${i2+1}-$i"
                 bottomSheetDialog.dismiss()
             }
-            bottomSheetDialog.setContentView(bindingBottomsheetdate.root)
+            bottomSheetDialog.setContentView(bindingBottomSheetDate.root)
             bottomSheetDialog.show()
         }
 
@@ -228,13 +227,13 @@ class AccountFragment : Fragment() {
 
     private fun setOnclickOnEmail() {
         binding.emailLinearAccountFragment.setOnClickListener {
-            bottomSheetDialog.setContentView(bindingBottomsheetemail.root)
+            bottomSheetDialog.setContentView(bindingBottomSheetEmail.root)
             bottomSheetDialog.show()
-            bindingBottomsheetemail.emailBottomSheetEmail.setText(binding.emailAccountFragment.text.toString())
+            bindingBottomSheetEmail.emailBottomSheetEmail.setText(binding.emailAccountFragment.text.toString())
             bottomSheetDialog.setOnCancelListener {
-                if (bindingBottomsheetemail.emailBottomSheetEmail.text.toString().trim().isNotEmpty()&&bindingBottomsheetemail.passwordBottomSheetEmail.text.toString().trim().isNotEmpty())
-                    binding.emailAccountFragment.text =  bindingBottomsheetemail.emailBottomSheetEmail.text.toString().trim()
-                    passwordOfNewEmail = bindingBottomsheetemail.passwordBottomSheetEmail.text.toString().trim()
+                if (bindingBottomSheetEmail.emailBottomSheetEmail.text.toString().trim().isNotEmpty()&&bindingBottomSheetEmail.passwordBottomSheetEmail.text.toString().trim().isNotEmpty())
+                    binding.emailAccountFragment.text =  bindingBottomSheetEmail.emailBottomSheetEmail.text.toString().trim()
+                    passwordOfNewEmail = bindingBottomSheetEmail.passwordBottomSheetEmail.text.toString().trim()
             }
         }
 
@@ -242,12 +241,12 @@ class AccountFragment : Fragment() {
 
     private fun setOnclickOnPhone() {
         binding.phoneNumberLinearAccountFragment.setOnClickListener {
-            bottomSheetDialog.setContentView(bindingBottomsheetphone.root)
+            bottomSheetDialog.setContentView(bindingBottomSheetPhone.root)
             bottomSheetDialog.show()
-            bindingBottomsheetphone.phoneNumberBottomSheetPhone.setText(binding.phoneNumberAccountFragment.text.toString())
+            bindingBottomSheetPhone.phoneNumberBottomSheetPhone.setText(binding.phoneNumberAccountFragment.text.toString())
             bottomSheetDialog.setOnCancelListener {
-                if (bindingBottomsheetphone.phoneNumberBottomSheetPhone.text.toString().trim().isNotEmpty())
-                    binding.phoneNumberAccountFragment.text =  bindingBottomsheetphone.phoneNumberBottomSheetPhone.text.toString().trim()
+                if (bindingBottomSheetPhone.phoneNumberBottomSheetPhone.text.toString().trim().isNotEmpty())
+                    binding.phoneNumberAccountFragment.text =  bindingBottomSheetPhone.phoneNumberBottomSheetPhone.text.toString().trim()
             }
         }
 
@@ -255,27 +254,27 @@ class AccountFragment : Fragment() {
 
     private fun setOnclickOnLocation() {
         binding.locationLinearAccountFragment.setOnClickListener {
-            bottomSheetDialog.setContentView(bindingBottomsheetlocation.root)
+            bottomSheetDialog.setContentView(bindingBottomSheetLocation.root)
             bottomSheetDialog.show()
-            bindingBottomsheetlocation.locationBottomSheetLocation.setText(binding.locationAccountFragment.text.toString())
+            bindingBottomSheetLocation.locationBottomSheetLocation.setText(binding.locationAccountFragment.text.toString())
             bottomSheetDialog.setOnCancelListener {
-                if (bindingBottomsheetlocation.locationBottomSheetLocation.text.toString().trim().isNotEmpty())
-                    binding.locationAccountFragment.text =  bindingBottomsheetlocation.locationBottomSheetLocation.text.toString().trim()
+                if (bindingBottomSheetLocation.locationBottomSheetLocation.text.toString().trim().isNotEmpty())
+                    binding.locationAccountFragment.text =  bindingBottomSheetLocation.locationBottomSheetLocation.text.toString().trim()
             }
         }
     }
 
     private fun setOnclickOnPassword() {
         binding.changePasswordLinearAccountFragment.setOnClickListener {
-            bottomSheetDialog.setContentView(bindingBottomsheetpassword.root)
+            bottomSheetDialog.setContentView(bindingBottomSheetPassword.root)
             bottomSheetDialog.show()
             bottomSheetDialog.setOnCancelListener {
-                val newPass = bindingBottomsheetpassword.passwordBottomSheetPassword.text.toString().trim()
-                val confirmPass = bindingBottomsheetpassword.confirmPasswordBottomSheetPassword.text.toString().trim()
-                if (newPass.isNotEmpty() && confirmPass.isNotEmpty() && bindingBottomsheetpassword.currentPasswordBottomSheetPassword.text.toString().trim().isNotEmpty()){
+                val newPass = bindingBottomSheetPassword.passwordBottomSheetPassword.text.toString().trim()
+                val confirmPass = bindingBottomSheetPassword.confirmPasswordBottomSheetPassword.text.toString().trim()
+                if (newPass.isNotEmpty() && confirmPass.isNotEmpty() && bindingBottomSheetPassword.currentPasswordBottomSheetPassword.text.toString().trim().isNotEmpty()){
                     if (newPass == confirmPass){
                         newPassword = newPass
-                        passwordOfNewPassword = bindingBottomsheetpassword.currentPasswordBottomSheetPassword.text.toString().trim()
+                        passwordOfNewPassword = bindingBottomSheetPassword.currentPasswordBottomSheetPassword.text.toString().trim()
                     }else{
                         Snackbar.make(activity!!.findViewById(R.id.flFragment),getString(R.string.Password_Donot_match),Snackbar.LENGTH_SHORT).show()
                     }
@@ -290,12 +289,18 @@ class AccountFragment : Fragment() {
     private fun inti(inflater: LayoutInflater, container: ViewGroup?) {
         //Initialize bottomSheetDialog
         bottomSheetDialog = BottomSheetDialog(context!!, R.style.AppBottomSheetDialogTheme)
+        //Initialize bindingBottomSheetGender
         bindingBottomSheetGender = DataBindingUtil.inflate(inflater,R.layout.bottomsheetgender, container, false)
-        bindingBottomsheetemail = DataBindingUtil.inflate(inflater,R.layout.bottomsheetemail, container, false)
-        bindingBottomsheetphone = DataBindingUtil.inflate(inflater,R.layout.bottomsheetphone, container, false)
-        bindingBottomsheetpassword = DataBindingUtil.inflate(inflater,R.layout.bottomsheetpassword, container, false)
-        bindingBottomsheetdate = DataBindingUtil.inflate(inflater,R.layout.bottomsheetdate, container, false)
-        bindingBottomsheetlocation = DataBindingUtil.inflate(inflater,R.layout.bottomsheetlocation, container, false)
+        //Initialize bindingBottomSheetEmail
+        bindingBottomSheetEmail = DataBindingUtil.inflate(inflater,R.layout.bottomsheetemail, container, false)
+        //Initialize bindingBottomSheetPhone
+        bindingBottomSheetPhone = DataBindingUtil.inflate(inflater,R.layout.bottomsheetphone, container, false)
+        //Initialize bindingBottomSheetPassword
+        bindingBottomSheetPassword = DataBindingUtil.inflate(inflater,R.layout.bottomsheetpassword, container, false)
+        //Initialize bindingBottomSheetDate
+        bindingBottomSheetDate = DataBindingUtil.inflate(inflater,R.layout.bottomsheetdate, container, false)
+        //Initialize bindingBottomSheetLocation
+        bindingBottomSheetLocation = DataBindingUtil.inflate(inflater,R.layout.bottomsheetlocation, container, false)
     }
 
 

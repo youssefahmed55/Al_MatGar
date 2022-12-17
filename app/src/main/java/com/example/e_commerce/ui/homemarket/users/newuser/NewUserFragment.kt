@@ -10,7 +10,6 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.e_commerce.DefaultStates
@@ -27,11 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 @AndroidEntryPoint
 class NewUserFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -48,29 +43,24 @@ class NewUserFragment : Fragment() {
     private lateinit var binding : FragmentNewUserBinding
     private val viewModel: NewUSerViewModel by lazy { ViewModelProvider(this)[NewUSerViewModel::class.java] }
     private lateinit var bottomSheetDialog: BottomSheetDialog
-    private lateinit var bindingBottomsheetdate : BottomsheetdateBinding
+    private lateinit var bindingBottomSheetDate : BottomsheetdateBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_new_user, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-        inti(inflater,container)
-        setOnclickOnBirthday()
-        setSpinnersAdapter()
-        setOnClickOnBackIcon()
-        observeErrorMessage()
-        showHidePass()
-        render()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE //Set Activity's RelativeLayout GONE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_new_user, container, false) //Initialize binding
+        binding.lifecycleOwner = this //Set lifecycleOwner
+        binding.viewModel = viewModel //Set Variable Of ViewModel (DataBinding)
+        inti(inflater,container)      //Initialize Variables
+        setOnClickOnBirthday()        //Set On Click On Birthday
+        setSpinnersAdapter()          //Set Spinners Adapter
+        setOnClickOnBackIcon()        //Set On Click On Back Icon
+        observeErrorMessage()         //Observe Error Message That Appears On EditTexts
+        showHidePass()                //Show And Hide Password
+        render()                      //render states From ViewModel
 
         return binding.root
-    }
-
-    override fun onDetach() {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        super.onDetach()
     }
 
     private fun showHidePass(){
@@ -94,9 +84,9 @@ class NewUserFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.states.collect{
                 when(it){
-                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
-                    is DefaultStates.Success -> {ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
-                        activity!!.supportFragmentManager.popBackStack()
+                    is DefaultStates.Error -> ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT) //Toast Error Message
+                    is DefaultStates.Success -> {ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT) //Toast Successful Message
+                        activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
                     }
                     else -> {}
                 }
@@ -107,31 +97,29 @@ class NewUserFragment : Fragment() {
     }
 
     private fun observeErrorMessage() {
-        viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.liveDataErrorMessage.observe(viewLifecycleOwner) {
             when(it){
                 R.string.FullName_Is_Required -> binding.fullNameNewuser.error =  getString(it)
                 R.string.Email_Is_Required -> binding.emailNewuser.error =  getString(it)
                 R.string.Phone_Number_Is_Required -> binding.phoneNumberNewuser.error =  getString(it)
                 R.string.Password_Is_Required -> binding.passwordNewuser.error =  getString(it)
-                R.string.Gender_Is_Required -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
-                R.string.Type_Is_Required -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)
+                R.string.Gender_Is_Required -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT) //Toast Error Message
+                R.string.Type_Is_Required -> ToastyUtil.errorToasty(context!!,getString(it),Toast.LENGTH_SHORT)   //Toast Error Message
                 R.string.Birthday_Is_Required -> binding.dateOfBirthdayNewuser.error =  getString(it)
                 R.string.Location_Is_Required -> binding.addressNewuser.error =  getString(it)
-
-
             }
-        })
+        }
     }
 
-    private fun setOnclickOnBirthday() {
+    private fun setOnClickOnBirthday() {
         binding.dateOfBirthdayNewuser.setOnClickListener {
 
-            bindingBottomsheetdate.calenderBottomSheetDate.setOnDateChangeListener { _, i, i2, i3 ->
+            bindingBottomSheetDate.calenderBottomSheetDate.setOnDateChangeListener { _, i, i2, i3 ->
                 binding.dateOfBirthdayNewuser.text = "$i3-${i2+1}-$i"
                 binding.dateOfBirthdayNewuser.error = null
                 bottomSheetDialog.dismiss()
             }
-            bottomSheetDialog.setContentView(bindingBottomsheetdate.root)
+            bottomSheetDialog.setContentView(bindingBottomSheetDate.root)
             bottomSheetDialog.show()
         }
 
@@ -139,21 +127,24 @@ class NewUserFragment : Fragment() {
     private fun inti(inflater: LayoutInflater, container: ViewGroup?) {
         //Initialize bottomSheetDialog
         bottomSheetDialog = BottomSheetDialog(context!!, R.style.AppBottomSheetDialogTheme)
-        bindingBottomsheetdate = DataBindingUtil.inflate(inflater,R.layout.bottomsheetdate, container, false)
+        //Initialize bindingBottomSheetDate
+        bindingBottomSheetDate = DataBindingUtil.inflate(inflater,R.layout.bottomsheetdate, container, false)
     }
 
     private fun setOnClickOnBackIcon() {
         binding.backCardNewuser.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 
     private fun setSpinnersAdapter() {
+        //Initialize spinnerArrayAdapterGender
         val spinnerArrayAdapterGender = object  : CustomArrayAdapter(context!!,R.layout.spinner_item,resources.getStringArray(R.array.genders)){
             override fun isEnabled(position: Int): Boolean {
                 return position != 0
             }
         }
+        //Initialize spinnerArrayAdapterType
         val spinnerArrayAdapterType = object  :  CustomArrayAdapter(context!!,R.layout.spinner_item,resources.getStringArray(R.array.types)){
             override fun isEnabled(position: Int): Boolean {
                 return position != 0
@@ -163,29 +154,10 @@ class NewUserFragment : Fragment() {
         spinnerArrayAdapterGender.setDropDownViewResource(R.layout.spinner_item2) //Set Drop Down View Resource To Spinner
         spinnerArrayAdapterType.setDropDownViewResource(R.layout.spinner_item2)   //Set Drop Down View Resource To Spinner
 
-        binding.genderNewuser.adapter = spinnerArrayAdapterGender
-        binding.typeNewuser.adapter = spinnerArrayAdapterType
+        binding.genderNewuser.adapter = spinnerArrayAdapterGender //Set Adapter Of Spinner
+        binding.typeNewuser.adapter = spinnerArrayAdapterType     //Set Adapter Of Spinner
 
 
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewUserFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

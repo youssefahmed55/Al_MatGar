@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.e_commerce.Constants.PRODUCT
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.ProductsSubExploreRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentSubCategoryBinding
@@ -48,19 +49,19 @@ class SubCategoryFragment : Fragment()  {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_sub_category, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-        setOnClickOnRecyclerItem()
-        setOnClickOnFavoriteOfRecyclerItem()
-        productsRecyclerAdapter.setContext(context!!)
-        binding.adapter = productsRecyclerAdapter
-        setOnClickOnBackIcon()
-        observeErrorMessage()
-        observeDeletedFromFavoritesItems()
-        observeAddedToFavoritesItems()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE //Set Activity's RelativeLayout GONE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_sub_category, container, false) //Initialize binding
+        binding.lifecycleOwner = this                  //Set lifecycleOwner
+        binding.viewModel = viewModel                  //Set Variable Of ViewModel (DataBinding)
+        setOnClickOnRecyclerItem()                     //Set On Click On Recycler Item
+        setOnClickOnFavoriteOfRecyclerItem()           //Set On Click On Favorite Recycler Item
+        productsRecyclerAdapter.setContext(context!!)  //Set Context To Recycler
+        binding.adapter = productsRecyclerAdapter      //Set Variable Of adapter (DataBinding)
+        setOnClickOnBackIcon()                         //Set On Click On Back Icon
+        observeErrorMessage()                          //Observe Error
+        observeDeletedFromFavoritesItems()             //Observe Delete Or Remove Item From Favorites
+        observeAddedToFavoritesItems()                 //Observe Add Item From Favorites
 
         return binding.root
     }
@@ -79,15 +80,15 @@ class SubCategoryFragment : Fragment()  {
 
     private fun setOnClickOnBackIcon() {
         binding.backCardSubCategoryFragment.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                viewModel._error.value = null
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT) //Toast Error Message
+                viewModel.errorMessage.value = null
             }
         }
     }
@@ -95,8 +96,9 @@ class SubCategoryFragment : Fragment()  {
     private fun setOnClickOnRecyclerItem() {
         productsRecyclerAdapter.setOnItemClickListener(object : ProductsSubExploreRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
+                //Pass Product To productDetailsFragment
                 val args = Bundle()
-                args.putSerializable("product", product)
+                args.putSerializable(PRODUCT, product)
                 val productDetailsFragment = ProductDetailsFragment()
                 productDetailsFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()

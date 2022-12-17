@@ -1,8 +1,5 @@
 package com.example.e_commerce.ui.homemarket.users.newuser
 
-
-
-
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.e_commerce.R
@@ -13,7 +10,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
-
 
 @HiltViewModel
 class NewUSerViewModel @Inject constructor(private val newUserRepo: NewUserRepo) : ViewModel() {
@@ -67,17 +63,18 @@ class NewUSerViewModel @Inject constructor(private val newUserRepo: NewUserRepo)
     private val _mutableStateFlow = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
     val states : StateFlow<DefaultStates> get() = _mutableStateFlow
 
+    //Initialize handler to handle Coroutine Exception
     private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlow.value = DefaultStates.Error(throwable.message!!)}
 
 
     fun createAccount(){
+        // Get result Check Create Account Data Entered
         val result = NewUserUtil.checkCreateAccountValid(fullName.toString(),email.toString(),gender.toString().toInt(),type.toString().toInt(),dateOfBirthday.toString(),phone.toString(),address.toString(),password.toString())
         if(result == R.string.success){
             viewModelScope.launch(handler) {
                 _mutableStateFlow.value = DefaultStates.Loading
                 _mutableStateFlow.value = newUserRepo.createAccount(fullName.toString(),email.toString(),gender.toString().toInt(),type.toString().toInt(),dateOfBirthday.toString(),phone.toString(),address.toString(),password.toString())
             }
-
         }else{
             _errorMessage.value = result
         }

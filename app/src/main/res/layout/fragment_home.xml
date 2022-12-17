@@ -22,7 +22,7 @@
             type="com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter" />
 
         <variable
-            name="clothesRecyclerAdapter"
+            name="electronicsRecyclerAdapter"
             type="com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter" />
 
         <variable
@@ -36,11 +36,12 @@
 
 
 
-
+    <!--ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <!--SwipeRefreshLayout To Refresh Data -->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh_homeFragment"
             android:layout_width="match_parent"
@@ -49,6 +50,7 @@
             app:onRefreshListener="@{() -> viewModel.onRefresh()}"
             app:refreshing="@{viewModel.mutableStateFlowIsRefreshing}"
             >
+         <!--ScrollView -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -57,19 +59,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/_5sdp"
             >
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/_20sdp"
                 >
-
+                <!--CardView -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardImageSlider_homeFragment"
                     app:cardCornerRadius="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_150sdp">
-
+                    <!--SliderView -->
                     <com.smarteist.autoimageslider.SliderView
                         android:id="@+id/imageSlider_homeFragment"
                         android:layout_width="match_parent"
@@ -89,11 +92,10 @@
                         app:sliderStartAutoCycle="true"
                         setListOfSlidersHome="@{viewModel.stateFlowSliderList}"
                         sliderAdapterHome="@{sliderAdapter}"
-
                         />
 
                 </androidx.cardview.widget.CardView>
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,6 +106,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_semibold"
                     />
+                <!--ShimmerFrameLayout -->
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/categoriesShimmer_homeFragment"
                     android:layout_width="match_parent"
@@ -112,6 +115,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -126,7 +130,7 @@
                     </LinearLayout>
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
-
+                <!--RecyclerView Appears Categories -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerCategories_homeFragment"
                     android:layout_width="match_parent"
@@ -140,7 +144,7 @@
                     android:visibility="gone"
                     />
 
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,19 +156,20 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:visibility="@{viewModel.stateFlowBeautyModels.size() > 0 ? View.VISIBLE : View.GONE}"
                     />
-
+                <!--ShimmerFrameLayout -->
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/beautyShimmer_homeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     showShimmerOnLoading="@{viewModel.mutableStateFlowHideBeauty}"
                     >
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:orientation="horizontal"
-
+                    android:layout_marginBottom="@dimen/_10sdp"
                     >
 
                     <include layout="@layout/shimmer_product_home" />
@@ -174,8 +179,8 @@
 
 
                 </LinearLayout>
-
                 </com.facebook.shimmer.ShimmerFrameLayout>
+                <!--RecyclerView Appears Beauty Products -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerBeauty_homeFragment"
                     android:layout_width="match_parent"
@@ -183,11 +188,12 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:visibility="gone"
                     productsHomeAdapter="@{beautyRecyclerAdapter}"
                     productsHomeList="@{viewModel.stateFlowBeautyModels}"
                     />
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -195,18 +201,19 @@
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_semibold"
                     android:visibility="@{viewModel.stateFlowFoodModels.size() > 0 ? View.VISIBLE : View.GONE}"
                     />
-
+                <!--ShimmerFrameLayout -->
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/FoodShimmer_homeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     showShimmerOnLoading="@{viewModel.mutableStateFlowHideFood}"
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -222,7 +229,7 @@
                     </LinearLayout>
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
-
+                <!--RecyclerView Appears Food Products -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerFood_homeFragment"
                     android:layout_width="match_parent"
@@ -230,30 +237,32 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:visibility="gone"
                     productsHomeAdapter="@{foodRecyclerAdapter}"
                     productsHomeList="@{viewModel.stateFlowFoodModels}"
                     />
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/clothes"
+                    android:text="@string/electronics"
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:visibility="@{viewModel.stateFlowClothesModels.size() > 0 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.stateFlowElectronicsModels.size() > 0 ? View.VISIBLE : View.GONE}"
                     />
-
+                <!--ShimmerFrameLayout -->
                 <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/ClothesShimmer_homeFragment"
+                    android:id="@+id/ElectronicsShimmer_homeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    showShimmerOnLoading="@{viewModel.mutableStateFlowHideClothes}"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    showShimmerOnLoading="@{viewModel.mutableStateFlowHideElectronics}"
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -269,20 +278,21 @@
                     </LinearLayout>
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
-
+                <!--RecyclerView Appears Electronics Products -->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerClothes_homeFragment"
+                    android:id="@+id/recyclerElectronics_homeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:visibility="gone"
-                    productsHomeAdapter="@{clothesRecyclerAdapter}"
-                    productsHomeList="@{viewModel.stateFlowClothesModels}"
+                    productsHomeAdapter="@{electronicsRecyclerAdapter}"
+                    productsHomeList="@{viewModel.stateFlowElectronicsModels}"
                     />
 
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -290,18 +300,19 @@
                     android:textSize="@dimen/_14ssp"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/poppins_semibold"
                     android:visibility="@{viewModel.stateFlowHouseWareModels.size() > 0 ? View.VISIBLE : View.GONE}"
                     />
-
+                <!--ShimmerFrameLayout -->
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/houseWareShimmer_homeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     showShimmerOnLoading="@{viewModel.mutableStateFlowHideHouseWare}"
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -318,6 +329,7 @@
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
+                <!--RecyclerView Appears HouseWare Products -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerHouseWare_homeFragment"
                     android:layout_width="match_parent"
@@ -325,15 +337,13 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:visibility="gone"
                     productsHomeAdapter="@{houseWareRecyclerAdapter}"
                     productsHomeList="@{viewModel.stateFlowHouseWareModels}"
                     />
 
-
-
             </LinearLayout>
-
 
         </ScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

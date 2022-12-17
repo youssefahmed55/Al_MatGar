@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 
 class NewUserRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+    //Create New Account
     suspend fun createAccount(fullName : String, email: String, gender : Int, type : Int , birthday :String, phone: String, location :String, password: String): DefaultStates = withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)
         val type2 :String = when(type){
@@ -36,10 +36,10 @@ class NewUserRepo @Inject constructor(@ApplicationContext private val appContext
             else -> ""
         }
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
-        FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await()
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await() //Create User With Email And Password
+        FirebaseAuth.getInstance().currentUser!!.sendEmailVerification().await() // Send Email Verification
+        //Save User In FireStore
         db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(UserModel(FirebaseAuth.getInstance().currentUser!!.uid,fullName,email,type2,false,phone,birthday,gender2,location)).await()
-
         return@withContext DefaultStates.Success(appContext.getString(R.string.Created_Account_Successfully))
     }
 

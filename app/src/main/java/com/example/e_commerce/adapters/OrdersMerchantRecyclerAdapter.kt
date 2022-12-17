@@ -28,7 +28,7 @@ class OrdersMerchantRecyclerAdapter : RecyclerView.Adapter<OrdersMerchantRecycle
     }
 
     fun setList (list : List<Order>){
-        this.list = list
+        this.list = list.reversed()
     }
 
     fun setOnItemClickListener (onClickOnItem : OnClickOnItem){
@@ -42,7 +42,7 @@ class OrdersMerchantRecyclerAdapter : RecyclerView.Adapter<OrdersMerchantRecycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemOrderMerchantBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_order_merchant,parent,false)
+        val binding : ItemOrderMerchantBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_order_merchant,parent,false) //Initialize binding
         return Holder(binding)
     }
 

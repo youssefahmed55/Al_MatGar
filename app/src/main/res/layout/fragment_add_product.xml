@@ -8,12 +8,12 @@
          name="viewModel"
          type="com.example.e_commerce.ui.homemarket.myproducts.addproduct.AddProductViewModel" />
     </data>
-
+    <!--ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
+        <!--ImageView -->
         <ImageView
             android:id="@+id/vectorUp_addProduct"
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="fitXY"
             android:src="@drawable/ic_vectorup" />
-
+        <!--ImageView -->
         <ImageView
             android:id="@+id/vectorDown_addProduct"
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/ic_vectordown" />
-
+        <!--CardView -->
         <androidx.cardview.widget.CardView
             android:id="@+id/backCard_addProduct"
             android:layout_width="@dimen/_25sdp"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             canClickable="@{viewModel.states}"
             >
-
+            <!--ImageView Appears Back Icon -->
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
@@ -53,7 +53,7 @@
                 />
 
         </androidx.cardview.widget.CardView>
-
+        <!--TextView -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-
+        <!--LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -77,12 +77,12 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:orientation="vertical">
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -92,7 +92,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/black" />
-
+                <!--EditText To Write Name Of Product -->
                 <EditText
                     android:id="@+id/nameOfProduct_addProduct"
                     android:layout_width="0dp"
@@ -103,19 +103,20 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:maxLines="1"
+                    android:textAlignment="viewStart"
                     android:text="@={viewModel._nameOfProduct}"
                     android:textSize="@dimen/_10ssp"
                     android:textColor="@color/black"
                     android:inputType="text"
                     android:fontFamily="@font/poppins_regular" />
             </LinearLayout>
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp">
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -125,7 +126,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/black" />
-
+                <!--EditText To Write Description Of Product -->
                 <EditText
                     android:id="@+id/description_addProduct"
                     android:layout_width="0dp"
@@ -135,18 +136,19 @@
                     android:textCursorDrawable="@null"
                     android:padding="@dimen/_5sdp"
                     android:text="@={viewModel._description}"
-                    android:gravity="top"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
                     android:textSize="@dimen/_10ssp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_regular" />
             </LinearLayout>
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp">
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -156,13 +158,13 @@
                     android:fontFamily="@font/poppins_regular"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/black" />
-
+                <!--FrameLayout -->
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/_30sdp"
                     android:background="@drawable/shape1">
-
+                    <!--AppCompatSpinner -->
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/categorie_addProduct"
                         android:layout_width="match_parent"
@@ -178,13 +180,13 @@
                 </FrameLayout>
 
             </LinearLayout>
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp">
-
+                <!--TextView -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -194,14 +196,14 @@
                     android:fontFamily="@font/poppins_regular"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/black" />
-
+                <!--FrameLayout -->
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/_30sdp"
                     android:background="@drawable/shape1"
                     >
-
+                    <!--AppCompatSpinner -->
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/deliveryTime_addProduct"
                         android:layout_width="match_parent"
@@ -216,20 +218,21 @@
                 </FrameLayout>
 
             </LinearLayout>
-
+            <!--LinearLayout -->
          <LinearLayout
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_marginTop="@dimen/_20sdp"
              android:orientation="horizontal"
              >
-
+             <!--LinearLayout -->
              <LinearLayout
                  android:layout_width="0dp"
                  android:layout_weight="1"
                  android:layout_height="wrap_content"
                  android:orientation="horizontal"
                  >
+                 <!--TextView -->
                  <TextView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -238,7 +241,7 @@
                      android:fontFamily="@font/poppins_regular"
                      android:layout_marginEnd="@dimen/_10sdp"
                      android:textColor="@color/black" />
-
+                 <!--EditText To Write Price Of Product -->
                  <EditText
                      android:id="@+id/priceOfProduct_addProduct"
                      android:layout_width="@dimen/_65sdp"
@@ -251,11 +254,12 @@
                      android:textColor="@color/black"
                      android:layout_marginEnd="@dimen/_10sdp"
                      android:text="@={viewModel._price}"
+                     android:textAlignment="viewStart"
                      android:maxLines="1"
-                     android:maxLength="5"
+                     android:maxLength="6"
                      android:inputType="numberDecimal"
                      android:fontFamily="@font/poppins_regular" />
-
+                 <!--TextView -->
                  <TextView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -265,6 +269,8 @@
                      android:layout_marginEnd="@dimen/_10sdp"
                      android:textColor="@color/black" />
              </LinearLayout>
+
+                <!--LinearLayout -->
                  <LinearLayout
                      android:id="@+id/linearOffer_addProduct"
                      android:layout_width="0dp"
@@ -273,6 +279,7 @@
                      android:orientation="horizontal"
                      android:visibility="@{viewModel._hasOffer ? View.VISIBLE : View.INVISIBLE}"
                      >
+                     <!--TextView -->
                      <TextView
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
@@ -282,7 +289,7 @@
                          android:layout_marginEnd="@dimen/_10sdp"
                          android:textColor="@color/black"
                          />
-
+                     <!--EditText To Write Offer Price Of Product -->
                      <EditText
                          android:id="@+id/offerPriceOfProduct_addProduct"
                          android:layout_width="@dimen/_65sdp"
@@ -294,32 +301,19 @@
                          android:layout_marginEnd="@dimen/_10sdp"
                          android:maxLines="1"
                          android:text="@={viewModel._offerPrice}"
-                         android:maxLength="5"
+                         android:textAlignment="viewStart"
+                         android:maxLength="6"
                          android:textSize="@dimen/_10ssp"
                          android:textColor="@color/black"
                          android:inputType="numberDecimal"
                          android:fontFamily="@font/poppins_regular"
                          />
 
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="$"
-                         android:textSize="@dimen/_11ssp"
-                         android:fontFamily="@font/poppins_regular"
-                         android:layout_marginEnd="@dimen/_10sdp"
-                         android:textColor="@color/black"
-                         />
-
 
                  </LinearLayout>
 
-
-
-
-
          </LinearLayout>
-
+            <!--CheckBox -->
             <CheckBox
                 android:id="@+id/hasOfferCheckBox_addProduct"
                 android:layout_width="wrap_content"
@@ -328,13 +322,14 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/has_offer"
                 />
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!--TextView Click On It To Upload Photos Of Product -->
                 <TextView
                     android:id="@+id/uploadImage_addProduct"
                     android:layout_width="@dimen/_150sdp"
@@ -350,7 +345,7 @@
                     app:drawableEndCompat="@drawable/ic_plus"
                     canClickable="@{viewModel.states}"
                     />
-
+                <!--TextView Appears Number Of Photos Uploaded -->
                 <TextView
                     android:id="@+id/uploadedImagesCount_addProduct"
                     android:layout_width="wrap_content"
@@ -364,7 +359,7 @@
             </LinearLayout>
 
 
-
+            <!--AppCompatButton To Save New Product -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/saveButton_addProduct"
                 android:layout_width="match_parent"
@@ -377,6 +372,7 @@
                 android:textAllCaps="false"
                 canClickable="@{viewModel.states}"
                 />
+            <!-- ProgressBar -->
             <ProgressBar
                 android:id="@+id/myProgress_addProduct"
                 android:layout_width="wrap_content"

@@ -12,14 +12,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ExploreRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+    //Get List Products By Type
     suspend fun getListProductsByType(type:String) : List<Product> = withContext(Dispatchers.IO){
         Network.checkConnectionType(appContext)
         val listOfProducts = db.collection("AllProducts").whereEqualTo("category", type).get().await().toObjects(
           Product::class.java)
         listOfProducts.forEach {
             val favoriteQuery = db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(it.id).get().await()
-            if (favoriteQuery.exists()) it.isFavorite = true
+            if (favoriteQuery.exists()) it.isFavorite = true //Check If Is It Favorite To User
         }
         return@withContext listOfProducts
     }

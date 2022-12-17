@@ -6,7 +6,7 @@ import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.utils.SearchUtil
 
 
-@BindingAdapter(*["productsSubExploreAdapter", "productsSubExploreList","searchProductText"])
+@BindingAdapter("productsSubExploreAdapter", "productsSubExploreList", "searchProductText")
 fun RecyclerView.setListOfProductsSubExplore(productsSubExploreRecyclerAdapter: ProductsSubExploreRecyclerAdapter, listOfProducts : List<Product> , searchText : String) {
 
     var myList = listOfProducts

@@ -77,10 +77,12 @@ fun selectedType(view: TextView, resource: Int) {
 
 }
 @BindingAdapter("setMenu")
-fun BottomNavigationView.setMenuOfBottomNavigation(res : Int){
-    menu.clear()
-    inflateMenu(res)
-    selectedItemId = R.id.home
+fun BottomNavigationView.setMenuOfBottomNavigation(res : Int?){
+    res?.let {
+        menu.clear()
+        inflateMenu(res)
+        selectedItemId = R.id.home
+    }
 }
 @BindingAdapter("DateFromTimeStamp")
 fun getDateFromTImeStamp(textView: TextView, date : Date) {

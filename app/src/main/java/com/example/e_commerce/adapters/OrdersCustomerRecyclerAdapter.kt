@@ -18,7 +18,7 @@ class OrdersCustomerRecyclerAdapter : RecyclerView.Adapter<OrdersCustomerRecycle
     }
 
     fun setList (list : List<Order>){
-        this.list = list
+        this.list = list.reversed()
     }
 
     fun setOnItemClickListener (listener : OnClickOnItem){
@@ -26,7 +26,7 @@ class OrdersCustomerRecyclerAdapter : RecyclerView.Adapter<OrdersCustomerRecycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemOrderBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_order,parent,false)
+        val binding : ItemOrderBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_order,parent,false) //Initialize binding
         return Holder(binding)
     }
 

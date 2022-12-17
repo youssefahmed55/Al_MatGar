@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UsersRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
-
+    //Get All Users From FireStore
     suspend fun getAllUserModels(): List<UserModel> = withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)
         return@withContext db.collection("Users").get().await().toObjects(UserModel::class.java)

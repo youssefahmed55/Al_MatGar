@@ -11,6 +11,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.e_commerce.Constants.CATEGORY_ID
+import com.example.e_commerce.Constants.CATEGORY_NAME
+import com.example.e_commerce.Constants.PRODUCT
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.CategoriesRecyclerAdapter
 import com.example.e_commerce.adapters.ProductsHomeRecyclerAdapter
@@ -34,7 +37,6 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-private const val TAG = "HomeFragment"
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -51,43 +53,50 @@ class HomeFragment : Fragment() {
     private val categoriesRecyclerAdapter : CategoriesRecyclerAdapter by lazy { CategoriesRecyclerAdapter() }
     private val beautyRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val foodRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
-    private val clothesRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
+    private val electronicsRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val houseWareRecyclerAdapter : ProductsHomeRecyclerAdapter by lazy { ProductsHomeRecyclerAdapter() }
     private val sliderAdapter : SliderAdapterHome by lazy { SliderAdapterHome() }
     private val viewModel: HomeFragmentViewModel by lazy { ViewModelProvider(this)[HomeFragmentViewModel::class.java] }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
-        binding.lifecycleOwner = this
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
-        setOnClickOnSliderImage()
-        setOnClickOnCategoriesItem()
-        setOnClickOnBeautyItem()
-        setOnClickOnFoodItem()
-        setOnClickOnClothesItem()
-        setOnClickOnHouseWareItem()
-        binding.viewModel = viewModel
-        binding.sliderAdapter = sliderAdapter
-        binding.categoriesRecyclerAdapter = categoriesRecyclerAdapter
-        binding.beautyRecyclerAdapter = beautyRecyclerAdapter
-        binding.foodRecyclerAdapter = foodRecyclerAdapter
-        binding.clothesRecyclerAdapter = clothesRecyclerAdapter
-        binding.houseWareRecyclerAdapter = houseWareRecyclerAdapter
-
-
-        observeErrorMessage()
-        setOnClickOnBack()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE     //Set Activity's RelativeLayout VISIBLE
+        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE //Set Visibility Of BottomNavigationView VISIBLE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)  //Initialize binding
+        binding.lifecycleOwner = this                                  //Set lifecycleOwner
+        setOnClickOnSliderImage()                                      //Set On Click On Slider Item Image
+        setOnClickOnCategoriesItem()                                   //Set On Click On Categories Recycler Item
+        setOnClickOnBeautyItem()                                       //Set On Click On Beauty Recycler Item
+        setOnClickOnFoodItem()                                         //Set On Click On Food Recycler Item
+        setOnClickOnElectronicsItem()                                  //Set On Click On Electronics Recycler Item
+        setOnClickOnHouseWareItem()                                    //Set On Click On HouseWare Recycler Item
+        binding.viewModel = viewModel                                  //Set Variable Of ViewModel (DataBinding)
+        binding.sliderAdapter = sliderAdapter                          //Set Variable Of sliderAdapter (DataBinding)
+        binding.categoriesRecyclerAdapter = categoriesRecyclerAdapter  //Set Variable Of categoriesRecyclerAdapter (DataBinding)
+        binding.beautyRecyclerAdapter = beautyRecyclerAdapter          //Set Variable Of beautyRecyclerAdapter (DataBinding)
+        binding.foodRecyclerAdapter = foodRecyclerAdapter              //Set Variable Of foodRecyclerAdapter (DataBinding)
+        binding.electronicsRecyclerAdapter = electronicsRecyclerAdapter//Set Variable Of electronicsRecyclerAdapter (DataBinding)
+        binding.houseWareRecyclerAdapter = houseWareRecyclerAdapter    //Set Variable Of houseWareRecyclerAdapter (DataBinding)
+        observeErrorMessage()                                          //Observe Error
+        observeResultOfClickedOnSliderImage()                          //Observe Result On Click On Slider Item Image
+        setOnClickOnBack()                                             //Set On Press Back
         return binding.root
+    }
+
+    private fun observeResultOfClickedOnSliderImage() {
+        viewModel.liveDataProduct.observe(viewLifecycleOwner){
+            it?.let {
+                viewModel.mutableLiveDataProduct.value = null
+                replaceProductDetailsFragment(it)    //Replace ProductDetailsFragment
+            }
+        }
     }
 
     private fun setOnClickOnSliderImage() {
         sliderAdapter.setOnClickItem(object : SliderAdapterHome.OnClickOnItem{
             override fun onClick(id: String) {
-                Toast.makeText(context!!,id,Toast.LENGTH_SHORT).show()
-                //TODO
+                viewModel.getProductOfSliderById(id)    //Get Product Of Slider Item Image By Id
             }
         })
     }
@@ -101,8 +110,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun replaceProductDetailsFragment(product : Product){
+        //Pass Product To ProductDetailsFragment
         val args = Bundle()
-        args.putSerializable("product", product)
+        args.putSerializable(PRODUCT, product)
         val productDetailsFragment = ProductDetailsFragment()
         productDetailsFragment.arguments = args
         val transaction = activity!!.supportFragmentManager.beginTransaction()
@@ -114,9 +124,9 @@ class HomeFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                viewModel.getRoomDataBase()
-                viewModel._error.value = null
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)  //Toast Error Message
+                viewModel.getRoomDataBase()                                //Get Room DataBase
+                viewModel.errorMessage.value = null
             }
         }
     }
@@ -124,7 +134,7 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnFoodItem() {
         foodRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                replaceProductDetailsFragment(product)
+                replaceProductDetailsFragment(product)  //Replace ProductDetailsFragment
             }
         })
     }
@@ -132,7 +142,7 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnBeautyItem() {
         beautyRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                replaceProductDetailsFragment(product)
+                replaceProductDetailsFragment(product)  //Replace ProductDetailsFragment
             }
         })
     }
@@ -140,9 +150,10 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnCategoriesItem() {
         categoriesRecyclerAdapter.setOnItemClickListener(object : CategoriesRecyclerAdapter.OnClickOnItem{
             override fun onClick1(cat: Category) {
+                //Pass CATEGORY_ID And CATEGORY_NAME To subCategoryFragment
                 val args = Bundle()
-                args.putInt("catId", cat.id)
-                args.putString("catName", cat.name)
+                args.putInt(CATEGORY_ID, cat.id)
+                args.putString(CATEGORY_NAME, cat.name)
                 val subCategoryFragment = SubCategoryFragment()
                 subCategoryFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
@@ -156,13 +167,13 @@ class HomeFragment : Fragment() {
     private fun setOnClickOnHouseWareItem() {
         houseWareRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
-                replaceProductDetailsFragment(product)
+                replaceProductDetailsFragment(product)   //Replace ProductDetailsFragment
             }
         })
     }
 
-    private fun setOnClickOnClothesItem() {
-        clothesRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
+    private fun setOnClickOnElectronicsItem() {
+        electronicsRecyclerAdapter.setOnItemClickListener(object : ProductsHomeRecyclerAdapter.OnClickOnItem{
             override fun onClick1(product: Product) {
                 replaceProductDetailsFragment(product)
             }

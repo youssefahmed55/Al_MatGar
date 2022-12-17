@@ -18,7 +18,7 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.Holder>()
     }
 
     fun setList (List : List<UserModel>){
-        this.list = List
+        this.list = List.reversed()
     }
 
     fun setOnItemClickListener (listener : OnClickOnItem){
@@ -26,8 +26,8 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.Holder>()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemUserBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_user,parent,false)
-        return Holder(binding,onClickOnItem,list)
+        val binding : ItemUserBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_user,parent,false) //Initialize binding
+        return Holder(binding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -39,7 +39,7 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.Holder>()
 
     }
 
-    class Holder(binding: ItemUserBinding,listener: OnClickOnItem, list: List<UserModel>) : RecyclerView.ViewHolder(binding.root) {
+   inner class Holder(binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
          val holderBinding : ItemUserBinding = binding
 
         init {
@@ -48,8 +48,8 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.Holder>()
                 if (position != RecyclerView.NO_POSITION) {
                     // you can trust the adapter position
                     // do whatever you intend to do with this position
-                    if (listener != null)
-                        listener.onClick1(list[adapterPosition])
+                    if (onClickOnItem != null)
+                        onClickOnItem.onClick1(list[adapterPosition])
 
                 }
             }

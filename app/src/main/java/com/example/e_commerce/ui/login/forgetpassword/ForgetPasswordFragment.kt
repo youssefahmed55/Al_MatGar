@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.R
@@ -41,35 +40,35 @@ class ForgetPasswordFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_forget_password, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+    ): View {
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_forget_password, container, false) //Initialize binding
+        binding.lifecycleOwner = this //Set lifecycleOwner
+        binding.viewModel = viewModel //Set Variable Of ViewModel (DataBinding)
 
-        observeErrorMessage()
-        observeErrorToast()
-        observeSentPassword()
+        observeErrorMessage()  //Observe Error Message That Appears On EditText
+        observeErrorToast()    //Observe Error
+        observeSentPassword()  //Observe Sent Password Result
 
         return binding.root
     }
 
     private fun observeSentPassword() {
-        viewModel.liveDataSentPassword.observe(viewLifecycleOwner, Observer {
-            ToastyUtil.infoToasty(context!!,getString(R.string.please_Check_your_email_address),Toast.LENGTH_SHORT)
-            findNavController().popBackStack()
-        })
+        viewModel.liveDataSentPassword.observe(viewLifecycleOwner){
+            ToastyUtil.infoToasty(context!!,getString(R.string.please_Check_your_email_address),Toast.LENGTH_LONG) //Toast Info
+            findNavController().popBackStack() //Pop Back To Previous Fragment
+        }
     }
 
     private fun observeErrorToast() {
-        viewModel.liveDataErrorToast.observe(viewLifecycleOwner, Observer {
-            ToastyUtil.errorToasty(context!!,it,Toast.LENGTH_SHORT)
-        })
+        viewModel.liveDataErrorToast.observe(viewLifecycleOwner){
+            ToastyUtil.errorToasty(context!!,it,Toast.LENGTH_SHORT) //Toast Error Message
+        }
     }
 
     private fun observeErrorMessage() {
-        viewModel.liveDataErrorMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.liveDataErrorMessage.observe(viewLifecycleOwner){
         binding.editTextEmailForgetPassFragment.error = it
-        })
+        }
     }
 
     companion object {

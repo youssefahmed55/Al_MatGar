@@ -50,7 +50,7 @@ class ProductsSubExploreRecyclerAdapter : RecyclerView.Adapter<ProductsSubExplor
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemProduct2Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product2,parent,false)
+        val binding : ItemProduct2Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_product2,parent,false) //Initialize binding
         return Holder(binding)
     }
 

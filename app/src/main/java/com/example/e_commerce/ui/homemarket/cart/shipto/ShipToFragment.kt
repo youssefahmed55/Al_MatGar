@@ -25,11 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ShipToFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 @AndroidEntryPoint
 class ShipToFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -49,13 +45,13 @@ class ShipToFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_ship_to, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        setOnClickOnBackIcon()
-        setOnClickOnEditButton()
-        render()
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE          //Set Activity's RelativeLayout GONE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_ship_to, container, false) //Initialize binding
+        binding.lifecycleOwner = this    //Set lifecycleOwner
+        binding.viewModel = viewModel    //Set Variable Of ViewModel (DataBinding)
+        setOnClickOnBackIcon()           //Set On Click On Back Icon
+        setOnClickOnEditButton()         //Set On Click On Edit Button
+        render()                         //render states From ViewModel
         return binding.root
     }
 
@@ -64,11 +60,11 @@ class ShipToFragment : Fragment() {
             viewModel.states.collect{
                 when(it){
                     is DefaultStates.Success -> {
-                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT)
+                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT) //Toast Successful Message
                         activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, SuccessOrderFragment()).addToBackStack(null).commit()
                     }
                     is DefaultStates.Error -> {
-                        ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)
+                        ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT)          //Toast Error Message
                     }
 
                     else -> {}
@@ -79,15 +75,15 @@ class ShipToFragment : Fragment() {
 
     private fun setOnClickOnEditButton() {
         binding.editButtonShipToFragment.setOnClickListener {
-            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.account
-            activity!!.findViewById<TextView>(R.id.title_homeActivity).text = getString(R.string.account)
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, AccountFragment()).commit()
+            activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).selectedItemId = R.id.account     //Set SelectedItemId To BottomNavigationView
+            activity!!.findViewById<TextView>(R.id.title_homeActivity).text = getString(R.string.account)                                //Set Text To Title
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.flFragment, AccountFragment()).commit()  //Replace AccountFragment
         }
     }
 
     private fun setOnClickOnBackIcon() {
         binding.backCardShipToFragment.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 }

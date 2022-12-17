@@ -15,10 +15,10 @@ import javax.inject.Inject
 
 class SplashRepo @Inject constructor(@ApplicationContext private val appContext: Context) {
 
-
+    //Sign In Anonymous
     suspend fun signInAnonymously () : DefaultStates = withContext(Dispatchers.IO) {
-            FirebaseAuth.getInstance().signInAnonymously().await()
-            SharedPrefsUtil.saveUserModel(appContext, UserModel(FirebaseAuth.getInstance().currentUser?.uid, type = ANONYMOUS))
+            FirebaseAuth.getInstance().signInAnonymously().await() //FireBaseAuth signInAnonymously
+            SharedPrefsUtil.saveUserModel(appContext, UserModel(FirebaseAuth.getInstance().currentUser?.uid!!, type = ANONYMOUS)) //Save User Model In SharedPreferences DataBase
             return@withContext DefaultStates.Success(appContext.getString(R.string.Sign_In_Anonymous_Successfully))
         }
 

@@ -6,6 +6,7 @@
 
     </data>
 
+    <!-- LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +15,7 @@
         android:paddingStart="@dimen/_5sdp"
         android:paddingEnd="@dimen/_5sdp"
         android:paddingBottom="@dimen/_20sdp">
-
+        <!-- ImageView -->
         <ImageView
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
@@ -24,13 +25,13 @@
             android:layout_gravity="center" />
 
 
-
+        <!-- RelativeLayout -->
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_margin="@dimen/_5sdp"
                >
-
+               <!-- TextView -->
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -41,6 +42,7 @@
                    android:layout_centerInParent="true"
                    android:text="@string/quantity" />
 
+               <!-- ImageView Appears Close Icon -->
                <ImageView
                    android:id="@+id/close_bottomSheetQuantity"
                    android:layout_width="wrap_content"
@@ -48,9 +50,11 @@
                    app:srcCompat = "@drawable/ic_close"
                    android:layout_alignParentEnd="true"
                    android:layout_centerInParent="true"
+                   android:contentDescription="@string/close_icon"
                    />
            </RelativeLayout>
 
+        <!-- LinearLayout -->
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -58,7 +62,7 @@
                android:orientation="horizontal"
                android:gravity="center"
                >
-
+               <!-- TextView Appears Number 1 -->
                <TextView
                    android:id="@+id/one_bottomSheetQuantity"
                    android:layout_width="wrap_content"
@@ -75,6 +79,7 @@
                    android:layout_marginEnd="@dimen/_10sdp"
                    />
 
+               <!-- TextView Appears Number 2 -->
                <TextView
                    android:id="@+id/two_bottomSheetQuantity"
                    android:layout_width="wrap_content"
@@ -91,6 +96,7 @@
                    android:layout_marginEnd="@dimen/_10sdp"
                    />
 
+               <!-- TextView Appears Number 3 -->
                <TextView
                    android:id="@+id/three_bottomSheetQuantity"
                    android:layout_width="wrap_content"
@@ -107,6 +113,7 @@
                    android:layout_marginEnd="@dimen/_10sdp"
                    />
 
+               <!-- TextView Appears Number 4 -->
                <TextView
                    android:id="@+id/four_bottomSheetQuantity"
                    android:layout_width="wrap_content"
@@ -123,6 +130,7 @@
                    android:layout_marginEnd="@dimen/_10sdp"
                    />
 
+               <!-- TextView Appears Number 5 -->
                <TextView
                    android:id="@+id/five_bottomSheetQuantity"
                    android:layout_width="wrap_content"
@@ -137,10 +145,6 @@
                    android:paddingTop="@dimen/_10sdp"
                    android:paddingBottom="@dimen/_10sdp"
                    />
-
-
-
-
 
            </LinearLayout>
 

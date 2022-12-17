@@ -8,20 +8,21 @@
             name="order"
             type="com.example.e_commerce.pojo.Order" />
     </data>
-
+    <!--CardView -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_5sdp"
         android:background="@color/itemBackgroundColor"
         android:layout_margin="@dimen/_5sdp">
-
+        <!--LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
             android:orientation="vertical"
             >
+            <!--LinearLayout -->
             <LinearLayout
                 android:id="@+id/linear1_itemOrdersMerchant"
                 android:layout_width="match_parent"
@@ -30,18 +31,20 @@
                 android:padding="@dimen/_5sdp"
                 android:background="@drawable/shape3"
                 >
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     >
+                    <!--ImageView -->
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/user2"
+                        android:contentDescription="@string/user_icon"
                         />
-
+                    <!--TextView Appears Name Of Customer -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -56,20 +59,21 @@
                         />
 
                 </LinearLayout>
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     android:layout_marginTop="@dimen/_5sdp"
                     >
+                    <!--ImageView -->
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_phone_icon"
+                        android:contentDescription="@string/phone_icon"
                         />
-
+                    <!--TextView Appears Phone Number Of Customer -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,19 +88,21 @@
                         />
 
                 </LinearLayout>
-
+                <!--LinearLayout-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_5sdp"
                     >
+                    <!--ImageView-->
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_baseline_location_on_24"
+                        android:contentDescription="@string/location_icon"
                         />
-
+                    <!--TextView Appears Location Of Customer -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -109,9 +115,8 @@
                         />
 
                 </LinearLayout>
-
-
             </LinearLayout>
+            <!--LinearLayout -->
             <LinearLayout
                 android:id="@+id/linear2_itemOrdersMerchant"
                 android:layout_width="match_parent"
@@ -119,25 +124,26 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_5sdp"
                 >
-
+                <!--FrameLayout -->
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
-
+                    <!--CardView -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         app:cardCornerRadius="@dimen/_40sdp">
-
+                        <!--ImageView Appears Profile Image -->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
+                            android:contentDescription="@string/profile_image"
                             imageUrl="@{order.image}"
                             />
                     </androidx.cardview.widget.CardView>
-
+                    <!--CardView -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
@@ -145,7 +151,7 @@
                         app:cardBackgroundColor="@color/green"
                         android:layout_gravity="bottom"
                         >
-
+                        <!--TextView Appears Count -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -158,13 +164,13 @@
                             />
                     </androidx.cardview.widget.CardView>
                 </FrameLayout>
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:orientation="vertical">
-
+                    <!--TextView Appears Name Of Product -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -176,6 +182,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="@{order.productName}" />
 
+                    <!--TextView Appears Total Price -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -185,10 +192,11 @@
                         android:fontFamily="@font/poppins_regular"
                         price="@{order.price}" />
 
+                    <!--RelativeLayout -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
+                        <!--TextView -->
                         <TextView
                             android:id="@+id/dateText_itemOrdersMerchant"
                             android:layout_width="wrap_content"
@@ -200,7 +208,7 @@
                             android:text="@string/date"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9ssp" />
-
+                        <!--TextView Appears Date-->
                         <TextView
                             android:id="@+id/date_itemOrdersMerchant"
                             android:layout_width="wrap_content"
@@ -211,16 +219,17 @@
                             android:layout_centerInParent="true"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_regular" />
-
+                        <!--ImageView Appears Status Of Order-->
                         <ImageView
                             android:id="@+id/statusImage_itemOrdersMerchant"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"
+                            android:contentDescription="@string/status_image"
                             android:src="@{order.status.equals(`Process`) ? @drawable/proccess_icon : order.status.equals(`Completed`) ? @drawable/success2_icon : @drawable/failed_icon}"
                             />
-
+                        <!--TextView Appears Status Of Order-->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -228,12 +237,12 @@
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_toStartOf="@+id/statusImage_itemOrdersMerchant"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@{order.status}"
+                            android:text="@{order.status.equals(`Process`) ? @string/process : order.status.equals(`Completed`) ? @string/completed : @string/canceled}"
                             android:textColor="@{order.status.equals(`Process`) ? @color/orange : order.status.equals(`Completed`) ? @color/green : @color/red}"
                             android:textSize="@dimen/_9ssp" />
 
                     </RelativeLayout>
-
+                    <!--LinearLayout-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -242,6 +251,7 @@
                         android:gravity="end"
                         android:visibility="@{order.status.equals(`Process`) ? View.VISIBLE : View.GONE}"
                         >
+                        <!--AppCompatButton To Cancel Order -->
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/cancelButton_itemOrderMerchant"
                             android:layout_width="wrap_content"
@@ -254,6 +264,8 @@
                             android:padding="@dimen/_8sdp"
                             android:fontFamily="@font/poppins_regular"
                             />
+
+                        <!--AppCompatButton To Done/Complete Order -->
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/doneButton_itemOrderMerchant"
                             android:layout_width="wrap_content"

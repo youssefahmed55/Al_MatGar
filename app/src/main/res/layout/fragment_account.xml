@@ -9,10 +9,12 @@
             type="com.example.e_commerce.ui.homemarket.account.AccountViewModel" />
     </data>
 
+    <!-- ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <!-- LinearLayout -->
         <LinearLayout
                 android:id="@+id/linear_accountFragment"
                 android:layout_width="match_parent"
@@ -22,13 +24,14 @@
                 android:background="@drawable/shape_top"
                 android:padding="@dimen/_10sdp"
                 >
+                <!-- CardView -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     app:cardCornerRadius="@dimen/_40sdp"
                     canClickable="@{viewModel.states}"
                     >
-
+                    <!-- ImageView Appears Profile Image -->
                     <ImageView
                         android:id="@+id/profileImage_accountFragment"
                         android:layout_width="match_parent"
@@ -41,6 +44,7 @@
 
                 </androidx.cardview.widget.CardView>
 
+               <!-- TextView Appears Full Name -->
                 <TextView
                     android:id="@+id/name_accountFragment"
                     android:layout_width="wrap_content"
@@ -59,7 +63,7 @@
 
             </LinearLayout>
 
-
+        <!-- ScrollView -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -67,7 +71,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:scrollbars="none"
             >
-
+         <!-- LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,7 +79,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_8sdp"
             >
-
+            <!-- TextView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,7 +89,7 @@
                 android:fontFamily="@font/poppins_semibold"
 
                 />
-
+            <!-- LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,25 +98,28 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!-- LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
 
                     >
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         >
-
+                        <!-- ImageView Appears Gender Icon -->
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_gender_icon"
+                            android:contentDescription="@string/gender_icon"
                             />
-
+                        <!-- TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -122,11 +129,11 @@
                             android:textColor="@color/black"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/poppins_semibold"
-
                             />
 
                     </LinearLayout>
 
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:id="@+id/genderLinear_accountFragment"
                         android:layout_width="match_parent"
@@ -137,25 +144,29 @@
                         canClickable="@{viewModel.states}"
                         >
 
-
+                        <!-- TextView Appears Gender Of User  -->
                         <TextView
                             android:id="@+id/gender_accountFragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.liveDataUserModel.gender}"
+                            android:text="@{viewModel.liveDataUserModel.gender.equals(`Male`) ? @string/male : viewModel.liveDataUserModel.gender.equals(`Female`) ? @string/female : ``}"
                             android:textSize="@dimen/_8ssp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
+
+                        <!-- ImageView Appears Arrow  -->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat = "@drawable/ic_right_arrow"
                             android:layout_marginStart="@dimen/_10sdp"
+                            android:contentDescription="@string/arrow"
                             />
                     </LinearLayout>
 
                 </LinearLayout>
+                <!--View -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -164,7 +175,7 @@
             </LinearLayout>
 
 
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -173,25 +184,27 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         >
-
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:contentDescription="@string/calender_icon"
                             app:srcCompat = "@drawable/ic_calender_icon"
                             />
-
+                        <!--TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -201,11 +214,10 @@
                             android:textColor="@color/black"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/poppins_semibold"
-
                             />
 
                     </LinearLayout>
-
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:id="@+id/birthdayLinear_accountFragment"
                         android:layout_width="match_parent"
@@ -216,7 +228,7 @@
                         canClickable="@{viewModel.states}"
                         >
 
-
+                        <!--TextView Appears Birthday Of User-->
                         <TextView
                             android:id="@+id/birthday_accountFragment"
                             android:layout_width="wrap_content"
@@ -226,15 +238,17 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat = "@drawable/ic_right_arrow"
+                            android:contentDescription="@string/arrow"
                             android:layout_marginStart="@dimen/_10sdp"
                             />
                     </LinearLayout>
-
                 </LinearLayout>
+                <!--View -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -243,7 +257,7 @@
             </LinearLayout>
 
 
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -252,27 +266,28 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
-
                         >
-
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:contentDescription="@string/email_icon"
                             app:srcCompat = "@drawable/ic_email_icon"
                             android:layout_gravity="center"
                             />
-
+                        <!--TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -286,7 +301,7 @@
                             />
 
                     </LinearLayout>
-
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:id="@+id/emailLinear_accountFragment"
                         android:layout_width="match_parent"
@@ -298,7 +313,7 @@
                         canClickable="@{viewModel.states}"
                         >
 
-
+                        <!--TextView Appears Email Of User -->
                         <TextView
                             android:id="@+id/email_accountFragment"
                             android:layout_width="wrap_content"
@@ -310,15 +325,18 @@
                             android:ellipsize="end"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat = "@drawable/ic_right_arrow"
+                            android:contentDescription="@string/arrow"
                             android:layout_marginStart="@dimen/_10sdp"
                             />
                     </LinearLayout>
 
                 </LinearLayout>
+                <!--View -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -327,7 +345,7 @@
             </LinearLayout>
 
 
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -336,25 +354,27 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         >
-
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             app:srcCompat = "@drawable/ic_phone_icon"
+                            android:contentDescription="@string/phone_icon"
                             />
-
+                        <!--TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -368,7 +388,7 @@
                             />
 
                     </LinearLayout>
-
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:id="@+id/phoneNumberLinear_accountFragment"
                         android:layout_width="match_parent"
@@ -379,7 +399,7 @@
                         canClickable="@{viewModel.states}"
                         >
 
-
+                        <!--TextView Appears Phone Number Of User -->
                         <TextView
                             android:id="@+id/phoneNumber_accountFragment"
                             android:layout_width="wrap_content"
@@ -389,15 +409,18 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat = "@drawable/ic_right_arrow"
+                            android:contentDescription="@string/arrow"
                             android:layout_marginStart="@dimen/_10sdp"
                             />
                     </LinearLayout>
 
                 </LinearLayout>
+                <!--View -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -406,7 +429,7 @@
             </LinearLayout>
 
 
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -415,29 +438,31 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         >
-
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:contentDescription="@string/password_icon"
                             app:srcCompat = "@drawable/ic_password_icon"
                             />
-
+                        <!--TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Change Password"
+                            android:text="@string/change_password"
                             android:textSize="@dimen/_8ssp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
@@ -447,7 +472,7 @@
                             />
 
                     </LinearLayout>
-
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:id="@+id/changePasswordLinear_accountFragment"
                         android:layout_width="match_parent"
@@ -458,7 +483,7 @@
                         canClickable="@{viewModel.states}"
                         >
 
-
+                        <!--TextView -->
                         <TextView
                             android:id="@+id/changePassword_accountFragment"
                             android:layout_width="wrap_content"
@@ -468,25 +493,26 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat = "@drawable/ic_right_arrow"
+                            android:contentDescription="@string/arrow"
                             android:layout_marginStart="@dimen/_10sdp"
                             />
                     </LinearLayout>
 
                 </LinearLayout>
+                <!--View -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/hintColor" />
 
-
-
             </LinearLayout>
-
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -495,25 +521,27 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 >
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
                     >
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         >
-
+                        <!--ImageView -->
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:contentDescription="@string/location_icon"
                             app:srcCompat = "@drawable/ic_baseline_location_on_24"
                             />
-
+                        <!--TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -527,7 +555,7 @@
                             />
 
                     </LinearLayout>
-
+                    <!--LinearLayout -->
                     <LinearLayout
                         android:id="@+id/locationLinear_accountFragment"
                         android:layout_width="match_parent"
@@ -539,41 +567,37 @@
                         canClickable="@{viewModel.states}"
                         >
 
-
+                        <!--TextView Appears Location Of User-->
                         <TextView
                             android:id="@+id/location_accountFragment"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.liveDataUserModel.location}"
+                            android:textSize="@dimen/_8ssp"
                             android:maxLines="1"
                             android:ellipsize="end"
-                            android:textSize="@dimen/_8ssp"
-                            android:gravity="end"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
+                        <!--ImageView-->
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             app:srcCompat = "@drawable/ic_right_arrow"
+                            android:contentDescription="@string/arrow"
                             android:layout_marginStart="@dimen/_10sdp"
                             />
                     </LinearLayout>
 
                 </LinearLayout>
+                <!--View -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/hintColor" />
-
-
-
             </LinearLayout>
-
-
+            <!--AppCompatButton To Save User Data Changes-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/saveButton_accountFragment"
                 android:layout_width="match_parent"
@@ -588,7 +612,7 @@
                 android:textAllCaps="false"
                 canClickable="@{viewModel.states}"
                 />
-
+            <!-- ProgressBar -->
             <ProgressBar
                 android:id="@+id/myProgress_accountFragment"
                 android:layout_width="wrap_content"
@@ -599,12 +623,14 @@
                 showOnLoading="@{viewModel.states}"
                 android:visibility="gone"
                 />
+            <!--LinearLayout-->
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="vertical"
                android:visibility="@{viewModel.liveDataUserModel.type.equals(`Customer`) ? View.VISIBLE : View.GONE}"
                >
+               <!--TextView-->
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -614,7 +640,7 @@
                    android:fontFamily="@font/poppins_semibold"
                    android:textSize="@dimen/_10ssp"
                    />
-
+               <!--LinearLayout-->
                <LinearLayout
                    android:id="@+id/favorites_accountFragment"
                    android:layout_width="match_parent"
@@ -624,12 +650,14 @@
                    android:layout_marginTop="@dimen/_10sdp"
                    canClickable="@{viewModel.states}"
                    >
+                   <!--ImageView-->
                    <ImageView
                        android:layout_width="@dimen/_20sdp"
                        android:layout_height="@dimen/_20sdp"
+                       android:contentDescription="@string/favorite_icon"
                        app:srcCompat = "@drawable/ic_love"
                        />
-
+                   <!--TextView-->
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -643,7 +671,7 @@
                        />
 
                </LinearLayout>
-
+               <!--View -->
                <View
                    android:layout_width="match_parent"
                    android:layout_height="1dp"
@@ -651,7 +679,7 @@
                    android:layout_marginStart="@dimen/_15sdp"
                    android:layout_marginEnd="@dimen/_15sdp"
                    android:background="@color/hintColor" />
-
+               <!--LinearLayout-->
                <LinearLayout
                    android:id="@+id/orders_accountFragment"
                    android:layout_width="match_parent"
@@ -661,12 +689,14 @@
                    android:layout_marginTop="@dimen/_10sdp"
                    canClickable="@{viewModel.states}"
                    >
+                   <!--ImageView-->
                    <ImageView
                        android:layout_width="@dimen/_20sdp"
                        android:layout_height="@dimen/_20sdp"
+                       android:contentDescription="@string/cart_icon"
                        app:srcCompat = "@drawable/ic_order"
                        />
-
+                   <!--TextView-->
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -680,7 +710,7 @@
                        />
 
                </LinearLayout>
-
+               <!--View -->
                <View
                    android:layout_width="match_parent"
                    android:layout_height="1dp"
@@ -691,7 +721,6 @@
                    android:background="@color/hintColor" />
 
            </LinearLayout>
-
 
         </LinearLayout>
         </ScrollView>

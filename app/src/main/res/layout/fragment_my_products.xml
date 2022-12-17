@@ -13,12 +13,12 @@
             name="productsMerchantRecyclerAdapter"
             type="com.example.e_commerce.adapters.ProductsMerchantRecyclerAdapter" />
     </data>
-
+    <!--ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
+        <!--FrameLayout -->
         <FrameLayout
             android:id="@+id/frame_myProductsFragment"
             android:layout_width="match_parent"
@@ -27,20 +27,20 @@
             android:background="@drawable/shape_top"
             android:padding="@dimen/_10sdp"
             >
-
+            <!--CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/searchBackgroundColor"
                 app:cardCornerRadius="@dimen/_2sdp"
                 >
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:orientation="horizontal">
-
+                    <!--EditText For Searching -->
                     <EditText
                         android:layout_width="0dp"
                         android:layout_weight="2"
@@ -52,20 +52,21 @@
                         android:inputType="text"
                         android:background="@null"
                         android:layout_marginStart="@dimen/_5sdp" />
+                    <!--ImageView -->
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/search_icon"
                         android:src="@drawable/ic_baseline_search_24_2" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-
         </FrameLayout>
 
-
+        <!--HorizontalScrollView -->
         <HorizontalScrollView
             android:id="@+id/scroll_myProductsFragment"
             android:layout_width="wrap_content"
@@ -77,6 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             >
+            <!--LinearLayout -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,6 +87,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:gravity="center_vertical"
                 >
+                <!--TextView -->
                 <TextView
                     android:id="@+id/all_myProductsFragment"
                     android:layout_width="wrap_content"
@@ -98,6 +101,7 @@
                     android:background="@drawable/shape2"
                     android:textColor="@color/white"
                     android:layout_marginEnd="@dimen/_10sdp" />
+                <!--TextView -->
                 <TextView
                     android:id="@+id/beauty_myProductsFragment"
                     android:layout_width="wrap_content"
@@ -111,21 +115,21 @@
                     android:background="@drawable/shape3"
                     android:textColor="@color/black"
                     android:layout_marginEnd="@dimen/_10sdp" />
-
+                <!--TextView -->
                 <TextView
-                    android:id="@+id/clothes_myProductsFragment"
+                    android:id="@+id/Electronics_myProductsFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"
-                    android:text="@string/clothes"
-                    android:onClick="@{()-> viewModel.getClothes()}"
+                    android:text="@string/electronics"
+                    android:onClick="@{()-> viewModel.getElectronics()}"
                     selectedType="@{viewModel.stateFlowType}"
                     android:fontFamily="@font/poppins_regular"
                     android:padding="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:background="@drawable/shape3"
                     android:textColor="@color/black" />
-
+                <!--TextView -->
                 <TextView
                     android:id="@+id/food_myProductsFragment"
                     android:layout_width="wrap_content"
@@ -139,7 +143,7 @@
                     android:background="@drawable/shape3"
                     android:textColor="@color/black"
                     android:layout_marginEnd="@dimen/_10sdp" />
-
+                <!--TextView -->
                 <TextView
                     android:id="@+id/houseWare_myProductsFragment"
                     android:layout_width="wrap_content"
@@ -154,14 +158,12 @@
                     android:textColor="@color/black"
                     android:layout_marginEnd="@dimen/_10sdp" />
 
-
-
             </LinearLayout>
 
         </HorizontalScrollView>
 
 
-
+        <!--RecyclerView Appears Products Of Merchant -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_myProductsFragment"
             android:layout_width="match_parent"
@@ -169,14 +171,15 @@
             app:layout_constrainedHeight="true"
             app:layout_constraintTop_toBottomOf="@id/scroll_myProductsFragment"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             productAdapterMerchant="@{productsMerchantRecyclerAdapter}"
             productListMerchant="@{viewModel.stateFlowProductModels}"
             searchProductTextMerchant="@{viewModel.mutableStateFlowTextSearch}"
             productTypeMerchant="@{viewModel.stateFlowType}"
             />
-
+        <!-- ProgressBar -->
         <ProgressBar
             android:id="@+id/myProgress_myProductsFragment"
             android:layout_width="wrap_content"
@@ -189,19 +192,20 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
-
+        <!--ImageView Appears Empty Cart Icon -->
         <ImageView
             android:id="@+id/emptyImage_myProductsFragment"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/empty_cart_icon"
             app:layout_constraintTop_toTopOf="@id/recycler_myProductsFragment"
             app:layout_constraintBottom_toBottomOf="@id/recycler_myProductsFragment"
             android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             app:srcCompat="@drawable/ic_empty_list"
             />
-
+        <!--TextView Appears No Data Text -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -216,7 +220,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:visibility="@{viewModel.stateFlowProductModels.size() == 0 &amp; !viewModel.isLoading() ? View.VISIBLE : View.GONE}"
             />
-
+        <!--FloatingActionButton To Add New Product -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addFloatingButton_myProductsFragment"
             android:layout_width="wrap_content"
@@ -230,7 +234,7 @@
             app:backgroundTint="@color/green"
 
             />
-
+        <!--FloatingActionButton To Show Orders -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/ordersFloatingButton_myProductsFragment"
             android:layout_width="wrap_content"

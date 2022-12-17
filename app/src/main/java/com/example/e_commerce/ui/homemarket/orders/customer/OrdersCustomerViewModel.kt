@@ -26,15 +26,15 @@ class OrdersCustomerViewModel @Inject constructor(private val ordersCustomerRepo
     private val _mutableStateFlowIsLoading = MutableStateFlow(true)
     val isLoading : StateFlow<Boolean> get() = _mutableStateFlowIsLoading
 
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
-
-    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
+    val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
     init {
         getOrders()
     }
-
+    //Get Orders Of Customer
     private fun getOrders(){
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -44,6 +44,7 @@ class OrdersCustomerViewModel @Inject constructor(private val ordersCustomerRepo
         }
     }
 
+     //get Product From FireStore
      fun getProduct(productId : String){
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true

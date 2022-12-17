@@ -12,13 +12,19 @@ import javax.inject.Inject
 
 class FavoritesRepo @Inject constructor(@ApplicationContext private val appContext: Context, private val db : FirebaseFirestore) {
 
-    suspend fun addToFavorite(id : String) = withContext(Dispatchers.IO) {
+    //Add To Favorite
+    suspend fun addToFavorite(id : String) { withContext(Dispatchers.IO) {
         Network.checkConnectionType(appContext)
         db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(id).set({null}).await()
     }
+    }
 
-    suspend fun deleteFromFavorite(id : String) = withContext(Dispatchers.IO) {
-        Network.checkConnectionType(appContext)
-        db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!).collection("MyFavorites").document(id).delete().await()
+    //Delete/Remove From Favorite
+    suspend fun deleteFromFavorite(id : String) {
+        withContext(Dispatchers.IO) {
+            Network.checkConnectionType(appContext)
+            db.collection("Favorites").document(SharedPrefsUtil.getId(appContext)!!)
+                .collection("MyFavorites").document(id).delete().await()
+        }
     }
 }

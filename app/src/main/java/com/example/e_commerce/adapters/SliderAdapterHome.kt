@@ -12,7 +12,6 @@ import com.smarteist.autoimageslider.SliderViewAdapter
 class SliderAdapterHome : SliderViewAdapter<SliderAdapterHome.SliderViewHolder>() {
 
     // on below line we are creating a
-    // new array list and initializing it.
     private lateinit var onClickOnItem : OnClickOnItem
     private lateinit var listOfSliders : List<SliderModel>
     interface OnClickOnItem {
@@ -36,14 +35,14 @@ class SliderAdapterHome : SliderViewAdapter<SliderAdapterHome.SliderViewHolder>(
 
     // on below line we are calling on create view holder method.
     override fun onCreateViewHolder(parent: ViewGroup): SliderViewHolder {
-        // inside this method we are inflating our layout file for our slider view.
+        //Initialize binding
         val binding: ItemSliderBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_slider,parent,false)
         // on below line we are simply passing
         // the view to our slider view holder.
         return SliderViewHolder(binding)
     }
 
-    // on below line we are calling on bind view holder method to set the data to our image view.
+    // on below line we are calling on bind view holder method to set the data.
     override fun onBindViewHolder(sliderViewHolder: SliderViewHolder, position: Int) {
         sliderViewHolder.holderBinding.image = listOfSliders[position].image
         sliderViewHolder.holderBinding.root.setOnClickListener {
@@ -60,8 +59,7 @@ class SliderAdapterHome : SliderViewAdapter<SliderAdapterHome.SliderViewHolder>(
 
     // on below line we are creating a class for slider view holder.
     class SliderViewHolder(binding: ItemSliderBinding) : SliderViewAdapter.ViewHolder(binding.root) {
-        // on below line we are creating a variable for our
-        // image view and initializing it with image id.
+        // Initialize holderBinding
         var holderBinding: ItemSliderBinding = binding
     }
 }

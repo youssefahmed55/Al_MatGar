@@ -2,6 +2,7 @@ package com.example.e_commerce.ui.homemarket.subcategory.productdetails
 
 
 import androidx.lifecycle.*
+import com.example.e_commerce.Constants.PRODUCT
 import com.example.e_commerce.pojo.Product
 import com.example.e_commerce.ui.homemarket.sharedrepo.FavoritesRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo: ProductDetailsRepo, private val favoritesRepo: FavoritesRepo, private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo: ProductDetailsRepo, private val favoritesRepo: FavoritesRepo, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _mutableLiveDataProduct = MutableLiveData<Product?>()
     val liveDataProduct : LiveData<Product?> get() = _mutableLiveDataProduct
@@ -20,18 +21,18 @@ class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo
     private val _mutableStateFlowSliderImagesList = MutableStateFlow(emptyList<String>())
     val stateFlowSliderImagesList : StateFlow<List<String>> get() = _mutableStateFlowSliderImagesList
 
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
+    val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
 
-    val _count = MutableLiveData("1")
-    val count : LiveData<String> get() = _count
+    val countNumber = MutableLiveData("1")
+    val count : LiveData<String> get() = countNumber
 
-    private val _mutableStateFlowType = MutableStateFlow<String>("")
+    private val _mutableStateFlowType = MutableStateFlow("")
     val stateType : StateFlow<String> get() = _mutableStateFlowType
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message!!)  }
 
-    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)  }
-
-    val product = savedStateHandle.get<Product>("product")
+    val product = savedStateHandle.get<Product>(PRODUCT)
 
     init {
         _mutableLiveDataProduct.value =  product
@@ -40,7 +41,7 @@ class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo
             _mutableStateFlowType.value = productDetailsRepo.getUserType()
         }
     }
-
+    //Add Or Delete/Remove Item From Favorites
     fun addOrDeleteToFavorite(){
         viewModelScope.launch(handler) {
             if (product?.isFavorite!!){
@@ -54,7 +55,7 @@ class ProductDetailsViewModel @Inject constructor(private val productDetailsRepo
         }
 
     }
-
+    //Add To Cart
     fun addToCart(count : String){
         viewModelScope.launch(handler) {
             productDetailsRepo.addToCard(product!!,count.toInt())

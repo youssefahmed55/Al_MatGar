@@ -1,6 +1,5 @@
-package com.example.e_commerce.ui.homemarket.users
+package com.example.e_commerce.ui.homemarket.users.profile
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentProfileBinding
-import com.example.e_commerce.pojo.UserModel
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,47 +22,38 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var userMoel:UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            userMoel = it.getSerializable("userModel") as UserModel?
         }
     }
 
     private lateinit var binding : FragmentProfileBinding
+    private val viewModel : ProfileViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile, container, false)
-        binding.lifecycleOwner = this
-        binding.userModel = userMoel
-        setOnClickOnBackIcon()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE         //Set Activity's RelativeLayout GONE
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile, container, false) //Initialize binding
+        binding.lifecycleOwner = this //Set lifecycleOwner
+        binding.viewModel = viewModel //Set Variable Of ViewModel (DataBinding)
+        setOnClickOnBackIcon()        //Set On Click On Back Icon
 
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-    }
-
-    override fun onDetach() {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        super.onDetach()
-    }
-
     private fun setOnClickOnBackIcon() {
         binding.backCardProfileFragment.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 

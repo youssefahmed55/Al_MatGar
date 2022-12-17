@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.Constants.BEAUTY
-import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.ELECTRONICS
 import com.example.e_commerce.Constants.FOOD
 import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.R
@@ -32,21 +32,21 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
     private val _mutableStateFlowIsLoading = MutableStateFlow(true)
     val isLoading : StateFlow<Boolean> get() = _mutableStateFlowIsLoading
 
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
+    val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
 
     private val _deletedFromFavorites = MutableLiveData<String?>()
     val deleteFromFavorites : LiveData<String?> get() = _deletedFromFavorites
 
     private val _addedToFavorites = MutableLiveData<String?>()
     val addedToFavorites : LiveData<String?> get() = _addedToFavorites
-
-    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message!!)   ;  _mutableStateFlowIsLoading.value = false}
 
     init {
         getBeautyProductFavorites()
     }
-
+    //Get Beauty Favorite Products
     fun getBeautyProductFavorites() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -55,16 +55,16 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
             _mutableStateFlowIsLoading.value = false
         }
     }
-
-    fun getClothesProductFavorites() {
+    //Get Electronics Favorite Products
+    fun getElectronicsProductFavorites() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
-            _mutableStateFlowType.value = R.id.clothes_favoritesFragment
-            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getListOfFavoritesByCategory(CLOTHES)
+            _mutableStateFlowType.value = R.id.electronics_favoritesFragment
+            _mutableStateFlowProductModels.value = favoritesFragmentRepo.getListOfFavoritesByCategory(ELECTRONICS)
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Get Food Favorite Products
     fun getFoodProductFavorites() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -73,7 +73,7 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Get HouseWare Favorite Products
     fun getHouseWareProductFavorites() {
         viewModelScope.launch(handler) {
             _mutableStateFlowIsLoading.value = true
@@ -82,7 +82,7 @@ class FavoritesFragmentViewModel @Inject constructor(private val favoritesFragme
             _mutableStateFlowIsLoading.value = false
         }
     }
-
+    //Edit Item (Add Or Remove Item From Favorites)
     fun editFavorite(id : String, isFavorite : Boolean){
         viewModelScope.launch(handler) {
             if (isFavorite) {

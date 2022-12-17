@@ -59,10 +59,12 @@ class AddProductViewModel @Inject constructor(private val addProductRepo: AddPro
 
     private val _mutableStateFlow = MutableStateFlow<DefaultStates>(DefaultStates.Idle)
     val states : StateFlow<DefaultStates> get() = _mutableStateFlow
-
+    //Initialize handler to handle Coroutine Exception
     private val handler = CoroutineExceptionHandler { _, throwable -> _mutableStateFlow.value  = DefaultStates.Error(throwable.message!!) ;}
 
+    //Save New Product
     fun saveNewProduct(listOfImages : List<Uri>){
+        // Get result Check Create Product Data Entered
          val result = NewProductUtil.checkCreateProductValid(nameOfProduct.toString(),description.toString(),price.toString(),hasOffer!!,offerPrice.toString(),listOfImages)
          if (result == R.string.success){
               viewModelScope.launch(handler) {

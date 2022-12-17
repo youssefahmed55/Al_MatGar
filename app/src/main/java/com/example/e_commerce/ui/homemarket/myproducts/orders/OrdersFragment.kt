@@ -1,6 +1,5 @@
 package com.example.e_commerce.ui.homemarket.myproducts.orders
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,19 +10,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import com.example.e_commerce.BuildConfig
+import com.example.e_commerce.Constants.PRODUCT
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.OrdersMerchantRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentOrdersBinding
 import com.example.e_commerce.ui.homemarket.subcategory.productdetails.ProductDetailsFragment
-import com.example.e_commerce.ui.login.MainActivity
-import com.example.e_commerce.utils.SharedPrefsUtil
-import com.example.e_commerce.utils.SignedInUtil
 import com.example.e_commerce.utils.ToastyUtil
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,18 +49,18 @@ class OrdersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE
-        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_orders, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        setOnClickOnRecyclerItem()
-        setOnClickOnCancelRecyclerItem()
-        setOnClickOnDoneRecyclerItem()
-        binding.adapter = ordersMerchantRecyclerAdapter
-        observeErrorMessage()
-        observeProduct()
-        setOnClickOnBackIcon()
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.GONE         //Set Activity's RelativeLayout GONE
+        activity!!.findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE  //Set Visibility Of BottomNavigationView VISIBLE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_orders, container, false) //Initialize binding
+        binding.lifecycleOwner = this                    //Set lifecycleOwner
+        binding.viewModel = viewModel                    //Set Variable Of ViewModel (DataBinding)
+        setOnClickOnRecyclerItem()                       //Set On Click On Recycler Item
+        setOnClickOnCancelRecyclerItem()                 //Set On Click On Cancel From Recycler Item
+        setOnClickOnDoneRecyclerItem()                   //Set On Click On Done From Recycler Item
+        binding.adapter = ordersMerchantRecyclerAdapter  //Set Variable Of adapter (DataBinding)
+        observeErrorMessage()                            //Observe Error
+        observeProduct()                                 //Observe Product If User Clicked On Recycler Item
+        setOnClickOnBackIcon()                           //Set On Click On Back Icon
         return binding.root
     }
 
@@ -76,9 +69,10 @@ class OrdersFragment : Fragment() {
     private fun observeProduct() {
         viewModel.liveDataProduct.observe(viewLifecycleOwner){
             it?.let {
+                //Pass Product To ProductDetailsFragment
                 viewModel.mutableLiveDataProduct.value = null
                 val args = Bundle()
-                args.putSerializable("product", it)
+                args.putSerializable(PRODUCT, it)
                 val productDetailsFragment = ProductDetailsFragment()
                 productDetailsFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
@@ -138,15 +132,15 @@ class OrdersFragment : Fragment() {
     }
     private fun setOnClickOnBackIcon() {
         binding.backCardOrdersFragment.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
+            activity!!.supportFragmentManager.popBackStack() //Pop Back To Previous Fragment
         }
     }
 
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                viewModel._error.value = null
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT) //Toast Error Message
+                viewModel.errorMessage.value = null
             }
         }
     }

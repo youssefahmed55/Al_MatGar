@@ -34,11 +34,11 @@ class ProductsInCartRecyclerAdapter : RecyclerView.Adapter<ProductsInCartRecycle
     }
 
     fun setList (List : List<Product>){
-        this.list = List
+        this.list = List.reversed()
     }
 
     fun setListOfCount (listOfCount : List<Int>){
-        this.listOfCount = listOfCount
+        this.listOfCount = listOfCount.reversed()
     }
 
     fun getList() : List<Product>{
@@ -73,7 +73,7 @@ class ProductsInCartRecyclerAdapter : RecyclerView.Adapter<ProductsInCartRecycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding : ItemIncartBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_incart,parent,false)
+        val binding : ItemIncartBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_incart,parent,false) //Initialize binding
         return Holder(binding)
     }
 

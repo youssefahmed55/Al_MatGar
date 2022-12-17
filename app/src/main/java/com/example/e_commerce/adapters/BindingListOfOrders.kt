@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.pojo.Order
 import com.example.e_commerce.utils.SearchUtil
 
-@BindingAdapter(*["ordersMerchantAdapter", "ordersMerchantList","searchMerchantOrdersText"])
+@BindingAdapter("ordersMerchantAdapter", "ordersMerchantList", "searchMerchantOrdersText")
 fun RecyclerView.setListOfOrdersMerchant(ordersMerchantRecyclerAdapter: OrdersMerchantRecyclerAdapter, listOfOrders : List<Order>, searchText : String) {
 
     var myList = listOfOrders

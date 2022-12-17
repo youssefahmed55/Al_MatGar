@@ -12,17 +12,18 @@
             name="sliderAdapter"
             type="com.example.e_commerce.adapters.SliderAdapterProductDetails" />
     </data>
-
+    <!-- ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <!-- ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/_15sdp"
         >
-
+        <!-- CardView -->
         <androidx.cardview.widget.CardView
             android:id="@+id/backCard_productDetailsFragment"
             android:layout_width="@dimen/_25sdp"
@@ -34,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             >
-
+            <!-- ImageView Appears Back Icon -->
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
@@ -45,7 +46,7 @@
 
         </androidx.cardview.widget.CardView>
 
-
+        <!-- CardView -->
         <androidx.cardview.widget.CardView
             android:id="@+id/favoriteCard_productDetailsFragment"
             android:layout_width="@dimen/_25sdp"
@@ -59,15 +60,17 @@
             android:onClick="@{()-> viewModel.addOrDeleteToFavorite()}"
             android:visibility="@{viewModel.stateType.equals(`Customer`) ? View.VISIBLE : View.GONE}"
             >
+            <!-- ImageView -->
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/favorite_icon"
                 android:src="@{viewModel.liveDataProduct.isFavorite() ?  @drawable/ic_favorite : @drawable/ic_favorite2 }"
                 />
 
         </androidx.cardview.widget.CardView>
-
+        <!-- CardView -->
         <androidx.cardview.widget.CardView
             android:id="@+id/shopCard_productDetailsFragment"
             android:layout_width="@dimen/_25sdp"
@@ -80,24 +83,25 @@
             app:layout_constraintEnd_toStartOf="@id/favoriteCard_productDetailsFragment"
             android:visibility="@{viewModel.stateType.equals(`Customer`) ? View.VISIBLE : View.GONE}"
             >
+            <!-- ImageView -->
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_shopp"
-
+                android:contentDescription="@string/cart_icon"
                 />
 
         </androidx.cardview.widget.CardView>
 
-
+        <!-- CardView -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardImageSlider_productDetailsFragment"
             app:cardCornerRadius="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_300sdp"
             app:layout_constraintTop_toTopOf="parent">
-
+            <!-- SliderView Appears Product Images-->
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/imageSlider_productDetailsFragment"
                 android:layout_width="match_parent"
@@ -122,7 +126,7 @@
         </androidx.cardview.widget.CardView>
 
 
-
+        <!-- LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,6 +135,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardImageSlider_productDetailsFragment"
                 >
+                <!-- TextView Appears Name Of Product-->
                 <TextView
                     android:id="@+id/productName_productDetailsFragment"
                     android:layout_width="match_parent"
@@ -138,9 +143,8 @@
                     android:textSize="@dimen/_16ssp"
                     android:text="@{viewModel.liveDataProduct.name}"
                     android:textColor="@color/black"
-                    android:paddingEnd="@dimen/_15sdp"
                     android:fontFamily="@font/poppins_semibold" />
-
+                <!-- TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -149,7 +153,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_semibold" />
-
+                <!-- TextView Appears Description Of Product -->
                 <TextView
                     android:id="@+id/description_productDetailsFragment"
                     android:layout_width="match_parent"
@@ -160,13 +164,14 @@
                     android:fontFamily="@font/poppins_regular" />
 
 
-
+                <!-- LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_15sdp"
                     >
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -174,6 +179,7 @@
                         android:orientation="vertical"
                         android:layout_marginEnd="@dimen/_5sdp"
                         >
+                        <!-- TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -181,7 +187,7 @@
                             android:text="@string/brand"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_semibold" />
-
+                        <!-- TextView Appears Brand -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -192,13 +198,14 @@
                             android:fontFamily="@font/poppins_semibold" />
 
                     </LinearLayout>
-
+                    <!-- LinearLayout -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         >
+                        <!-- TextView -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -211,6 +218,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             >
+                            <!--TextView Appears Offer Price Or Price If It Hasn't Offer Price -->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -219,7 +227,7 @@
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:textColor="@color/green"
                                 android:fontFamily="@font/poppins_semibold" />
-
+                            <!--TextView Appears Price If It Has Offer Price -->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -231,17 +239,18 @@
 
                         </LinearLayout>
 
-
                     </LinearLayout>
 
-
                 </LinearLayout>
+
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_5sdp"
                     >
+                    <!--TextView -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -251,7 +260,7 @@
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_semibold" />
-
+                    <!--TextView Appears Estimated Delivery Days -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -262,7 +271,7 @@
                         android:fontFamily="@font/poppins_semibold" />
 
                 </LinearLayout>
-
+                <!--LinearLayout -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -270,6 +279,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:visibility="@{viewModel.stateType.equals(`Customer`) ? View.VISIBLE : View.GONE}"
                     >
+                    <!--CardView -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/QTY_productDetailsFragment"
                         android:layout_width="0dp"
@@ -279,6 +289,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         app:cardBackgroundColor="@color/itemBackgroundColor"
                         >
+                        <!--LinearLayout -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -286,7 +297,7 @@
                             android:gravity="center"
                             android:layout_gravity="center"
                             >
-
+                            <!--TextView -->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -294,13 +305,13 @@
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/poppins_semibold"
-
                                 />
+                            <!--TextView Appears Quantity -->
                             <TextView
                                 android:id="@+id/QTYNumber_productDetailsFragment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@={viewModel._count}"
+                                android:text="@={viewModel.countNumber}"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/poppins_semibold"
@@ -311,6 +322,7 @@
 
                     </androidx.cardview.widget.CardView>
 
+                    <!--AppCompatButton To Add To Cart -->
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/checkOutButton_productDetailsFragment"
                         android:layout_width="0dp"
@@ -327,14 +339,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
-
-
-
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

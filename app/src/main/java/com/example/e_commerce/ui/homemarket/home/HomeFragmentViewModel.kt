@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.Constants.BEAUTY
-import com.example.e_commerce.Constants.CLOTHES
+import com.example.e_commerce.Constants.ELECTRONICS
 import com.example.e_commerce.Constants.FOOD
 import com.example.e_commerce.Constants.HOUSE_WARE
 import com.example.e_commerce.pojo.Category
@@ -27,8 +27,8 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     private val _mutableStateFlowFoodModels = MutableStateFlow(emptyList<Product>())
     val stateFlowFoodModels : StateFlow<List<Product>> get() = _mutableStateFlowFoodModels
 
-    private val _mutableStateFlowClothesModels = MutableStateFlow(emptyList<Product>())
-    val stateFlowClothesModels : StateFlow<List<Product>> get() = _mutableStateFlowClothesModels
+    private val _mutableStateFlowElectronicsModels = MutableStateFlow(emptyList<Product>())
+    val stateFlowElectronicsModels : StateFlow<List<Product>> get() = _mutableStateFlowElectronicsModels
 
     private val _mutableStateFlowHouseWareModels = MutableStateFlow(emptyList<Product>())
     val stateFlowHouseWareModels : StateFlow<List<Product>> get() = _mutableStateFlowHouseWareModels
@@ -39,31 +39,33 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
     private val _mutableStateFlowCategoryModels = MutableStateFlow(emptyList<Category>())
     val stateFlowCategoryModels : StateFlow<List<Category>> get() = _mutableStateFlowCategoryModels
 
+    val mutableLiveDataProduct = MutableLiveData<Product?>()
+    val liveDataProduct : LiveData<Product?> get() = mutableLiveDataProduct
+
 
     val mutableStateFlowHideCategories = MutableStateFlow(false)
     val mutableStateFlowHideBeauty = MutableStateFlow(false)
     val mutableStateFlowHideFood = MutableStateFlow(false)
-    val mutableStateFlowHideClothes = MutableStateFlow(false)
+    val mutableStateFlowHideElectronics = MutableStateFlow(false)
     val mutableStateFlowHideHouseWare = MutableStateFlow(false)
     val mutableStateFlowIsRefreshing = MutableStateFlow(false)
 
-    val _error = MutableLiveData<String>()
-    val error : LiveData<String> get() = _error
-
-    private val handler = CoroutineExceptionHandler { _, throwable -> _error.postValue(throwable.message!!) }
-    private val job = SupervisorJob() + handler
+    val errorMessage = MutableLiveData<String>()
+    val error : LiveData<String> get() = errorMessage
+    //Initialize handler to handle Coroutine Exception
+    private val handler = CoroutineExceptionHandler { _, throwable -> errorMessage.postValue(throwable.message!!) }
+    private val job = SupervisorJob() + handler   //Initialize Supervisor Job
     init {
-
-        refreshData()
+        refreshData() //Refresh Data
     }
 
     fun onRefresh(){
         mutableStateFlowIsRefreshing.value = true
-        refreshData()
+        refreshData() //Refresh Data
         mutableStateFlowIsRefreshing.value = false
     }
-
-    fun refreshData(){
+   //Refresh Data
+   private fun refreshData(){
         viewModelScope.launch{
 
         launch(job) {
@@ -83,9 +85,9 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
             mutableStateFlowHideBeauty.value = true
         }
         launch(job) {
-            homeFragmentRepo.getProductsByCategoryType(CLOTHES)
-            _mutableStateFlowClothesModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(CLOTHES)
-            mutableStateFlowHideClothes.value = true
+            homeFragmentRepo.getProductsByCategoryType(ELECTRONICS)
+            _mutableStateFlowElectronicsModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(ELECTRONICS)
+            mutableStateFlowHideElectronics.value = true
         }
         launch(job) {
             homeFragmentRepo.getProductsByCategoryType(FOOD)
@@ -101,6 +103,7 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
         }
 
     }
+    //Get Room DataBase
     fun getRoomDataBase(){
        viewModelScope.launch {
 
@@ -118,8 +121,8 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
                mutableStateFlowHideBeauty.value = true
            }
            launch(job) {
-               _mutableStateFlowClothesModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(CLOTHES)
-               mutableStateFlowHideClothes.value = true
+               _mutableStateFlowElectronicsModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(ELECTRONICS)
+               mutableStateFlowHideElectronics.value = true
            }
            launch(job) {
                _mutableStateFlowFoodModels.value = homeFragmentRepo.getProductsDataBaseByCategoryType(FOOD)
@@ -131,6 +134,13 @@ class HomeFragmentViewModel @Inject constructor(private val homeFragmentRepo: Ho
                mutableStateFlowHideHouseWare.value = true
            }
        }
+
+    }
+    //Get Product Of Slider By Id
+    fun getProductOfSliderById(productId : String){
+        viewModelScope.launch(handler) {
+            mutableLiveDataProduct.value = homeFragmentRepo.getProduct(productId)
+        }
 
     }
 }

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">المتجر</string>
+    <string name="sign_up">اشتراك</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="appicon">ايقونة التطبيق</string>
+    <string name="sign_in_to_your_account">تسجيل الدخول إلى حسابك</string>
+    <string name="forgot_passwordQ">هل نسيت كلمة السر؟</string>
+    <string name="password">كلمة المرور</string>
+    <string name="didn_t_hava_account_yet">ألم تملك حساب بعد؟</string>
+    <string name="green_logo">ايقونة خضراء</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="email_address">عنوان البريد الالكترونى</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="home">المنزل</string>
+    <string name="explore">اكتشف</string>
+    <string name="cart">عربة التسوق</string>
+    <string name="offer">عروض</string>
+    <string name="account">الحساب</string>
+    <string name="profile_image">صورة الملف الشخصي</string>
+    <string name="categories">الفئات</string>
+    <string name="beauty">التجميل</string>
+    <string name="food">غذاء</string>
+    <string name="search">بحث</string>
+    <string name="back_icon">ايقونة الرجوع</string>
+    <string name="account_details">تفاصيل الحساب</string>
+    <string name="gender">الجنس</string>
+    <string name="birthday">عيد الميلاد</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="save">حفظ</string>
+    <string name="success">نجح</string>
+    <string name="thank_you_for_shopping_using_our_store">شكرًا لك على التسوق باستخدام متجرنا</string>
+    <string name="back_to_home">العودة إلى المنزل</string>
+    <string name="success_icon">ايقونة نجاح العملية</string>
+    <string name="about_this_item">حول هذا المنتج</string>
+    <string name="price">السعر</string>
+    <string name="brand">ماركة</string>
+    <string name="qty">الكمية</string>
+    <string name="FullName_Is_Required">الإسم الكامل مطلوب</string>
+    <string name="Email_Is_Required">البريد الالكتروني مطلوب</string>
+    <string name="Phone_Number_Is_Required">رقم الهاتف مطلوب</string>
+    <string name="Password_Is_Required">كلمة المرور مطلوبة</string>
+    <string name="Confirm_Password_Is_Required">تأكيد كلمة المرور مطلوب</string>
+    <string name="Password_Donot_match">كلمة المرور لا تتطابق</string>
+    <string name="google">جوجل</string>
+    <string name="you_also_can_sign_in_with">يمكنك أيضًا تسجيل الدخول باستخدام</string>
+    <string name="estimated_delivery_Days">أيام التسليم المقدرة :</string>
+    <string name="your_orders_in_cart">طلباتك في عربة التسوق</string>
+    <string name="next">التالي</string>
+    <string name="date">التاريخ:</string>
+    <string name="ship_to">الشحن الي</string>
+    <string name="your_shipping_details">تفاصيل الشحن الخاصة بك</string>
+    <string name="receiver_name">اسم المستلم</string>
+    <string name="receiver_address">عنوان المستلم</string>
+    <string name="receiver_phone">هاتف المستلم</string>
+    <string name="edit">تعديل</string>
+    <string name="your_receipt">ايصالك</string>
+    <string name="shipping">شحن</string>
+    <string name="total_price">السعر الكلي</string>
+    <string name="cash_on_delivery">الدفع عند الاستلام</string>
+    <string name="process">معالجة</string>
+    <string name="users">المستخدمون</string>
+    <string name="all">الكل</string>
+    <string name="merchants">التجار</string>
+    <string name="admins">المشرفون</string>
+    <string name="new_user">مستخدم جديد</string>
+    <string name="address">العنوان</string>
+    <string name="create_user">إنشاء مستخدم</string>
+    <string name="houseware">أدوات منزلية</string>
+    <string name="my_products">منتجاتي</string>
+    <string name="products">منتجات</string>
+    <string name="receive_password">تلقي كلمة المرور</string>
+    <string name="please_Check_your_email_address">يرجى التحقق من عنوان بريدك الإلكتروني ، قد يستغرق الأمر بضع دقائق ، تأكد من التحقق من الرسائل غير المرغوب فيها</string>
+    <string name="orders">الطلبات</string>
+    <string name="completed">أكتمل</string>
+    <string name="canceled">الغيت</string>
+    <string name="location">الموقع</string>
+    <string name="Sign_In_Anonymous_Successfully">تسجيل دخول مجهول تمت بنجاح</string>
+    <string name="profile_details">تفاصيل الملف الشخصي</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="Sign_In_With_Google_Account_Successfully">تسجيل الدخول باستخدام حساب جوجل تمت بنجاح</string>
+    <string name="Please_Check_Your_Email_to_Verification_Make_Sure_To_Check_Spam_Messages">يرجى التحقق من بريدك الإلكتروني للتحقق ، وتأكد من التحقق من الرسائل غير المرغوب فيها</string>
+    <string name="Sign_In_Successfully">تسجيل الدخول تم بنجاح</string>
+    <string name="female">انثي</string>
+    <string name="male">ذكر</string>
+    <string name="put_your_new_email">ضع بريدك الإلكتروني الجديد</string>
+    <string name="put_your_phone_number">ضع رقم هاتفك</string>
+    <string name="new_password">كلمة السر الجديدة</string>
+    <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
+    <string name="put_your_location">ضع موقعك</string>
+    <string name="put_your_password">ضع كلمة مرورك</string>
+    <string name="Saved_Successfully">تم الحفظ بنجاح</string>
+    <string name="current_password">كلمة المرور الحالية</string>
+    <string name="You_canot_change_the_email_or_password_of_Google_account">لا يمكنك تغيير البريد الإلكتروني أو كلمة المرور لحساب جوجل</string>
+    <string name="customers">عملاء</string>
+    <string name="No_Network_Connection">لا يوجد اتصال شبكة</string>
+    <string name="Gender_Is_Required">الجنس مطلوب</string>
+    <string name="Type_Is_Required">النوع مطلوب</string>
+    <string name="Birthday_Is_Required">عيد الميلاد مطلوب</string>
+    <string name="Location_Is_Required">الموقع مطلوب</string>
+    <string name="Created_Account_Successfully">تم إنشاء الحساب بنجاح</string>
+    <string name="add_product">أضف منتج</string>
+    <string name="name_of_your_product">اسم منتجك :</string>
+    <string name="description">وصف :</string>
+    <string name="categorie">التصنيف :</string>
+    <string name="delivery_time">موعد التسليم :</string>
+    <string name="pricee">السعر :</string>
+    <string name="offer_price">سعر العرض :</string>
+    <string name="upload_images">تحميل الصور</string>
+    <string name="has_offer">لديه عرض</string>
+    <string name="Name_Of_Product_Is_Required">اسم المنتج مطلوب</string>
+    <string name="Description_Is_Required">الوصف مطلوب</string>
+    <string name="Price_Is_Required">السعر مطلوب</string>
+    <string name="Offer_Price_Is_Required">سعر العرض مطلوب</string>
+    <string name="You_Must_Upload_Between_Three_And_Seven_Images">يجب تحميل ما بين ثلاث وسبع صور</string>
+    <string name="Offer_Price_Must_Be_Less_than_Price">يجب أن يكون سعر العرض أقل من السعر</string>
+    <string name="Added_Product_Successfully">تمت إضافة المنتج بنجاح</string>
+    <string name="Photos_Uploaded">صور تم تحميلهم.</string>
+    <string name="Price_Must_Not_To_Be_Equal_Zero">يجب ألا يكون السعر مساويًا لـ 0</string>
+    <string name="Offer_Price_Must_Not_To_Be_Equal_Zero">يجب ألا يكون سعر العرض مساويًا لـ 0</string>
+    <string name="Are_you_sure_you_want_to_Logout">هل أنت متأكد أنك تريد تسجيل الخروج ؟</string>
+    <string name="Yes">نعم</string>
+    <string name="No">لا</string>
+    <string name="wish_you_have_a_good_day">أتمنى لك يوما طيبا</string>
+    <string name="welcome_back">مرحبًا بعودتك</string>
+    <string name="welcome">أهلا وسهلا</string>
+    <string name="no_data">لايوجد بيانات</string>
+    <string name="quantity">كمية</string>
+    <string name="favorites_and_order_details">المفضلة وتفاصيل الطلب</string>
+    <string name="favorites">المفضلة</string>
+    <string name="add_to_cart">أضف إلى السلة</string>
+    <string name="items">العناصر</string>
+    <string name="This_Product_Not_Available_Now">هذا المنتج غير متوفر الآن</string>
+    <string name="cancel">الغاء</string>
+    <string name="done">تم</string>
+    <string name="Do_You_Want_To_Cancel_This_Order">هل تريد إلغاء هذا الطلب؟</string>
+    <string name="Do_You_Want_To_Complete_This_Order">هل تريد إكمال هذا الطلب؟</string>
+    <string name="Added_To_Cart">تمت الإضافة إلى عربة التسوق</string>
+    <string name="start_shopping">ابدأ التسوق</string>
+    <string name="cart_is_empty">السلة فارغة</string>
+    <string name="This_section_requires_that_you_be_signed_in_Do_You_Want_To_Sign_In_Now">يتطلب هذا القسم تسجيل الدخول ، هل تريد تسجيل الدخول الآن؟</string>
+    <string name="You_Have_A_New_Order">لديك طلب جديد</string>
+    <string name="requested_a_new_order_From_You">سجل طلب جديد 😀</string>
+    <string name="Product_Name">اسم المنتج</string>
+    <string name="electronics">إلكترونيات</string>
+    <string name="change_password">تغيير كلمة المرور</string>
+    <string name="Please_Sign_Out_Then_Sign_In_And_Try_Again">حدث خطأ: الرجاء تسجيل الخروج ثم تسجيل الدخول والمحاولة مرة أخرى</string>
+    <string name="Are_you_sure_that_you_want_to_delete_it">هل أنت متأكد أنك تريد حذف هذا المنتج؟</string>
+    <string name="logout_image">Logout Image</string>
+    <string name="close_icon">Close Icon</string>
+    <string name="gender_icon">Gender Icon</string>
+    <string name="arrow">Arrow</string>
+    <string name="slider_image">Slider Image</string>
+    <string name="product_image">Product Image</string>
+    <string name="delete_icon">Delete Icon</string>
+    <string name="favorite_icon">Favorite Icon</string>
+    <string name="user_icon">User Icon</string>
+    <string name="phone_icon">Phone Icon</string>
+    <string name="location_icon">Location Icon</string>
+    <string name="status_image">Status Image</string>
+    <string name="minus_icon">Minus Icon</string>
+    <string name="plus_icon">Plus Icon</string>
+    <string name="category_image">Category Image</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="empty_cart_icon">Empty Cart Icon</string>
+    <string name="google_icon">Google Icon</string>
+    <string name="calender_icon">Calender Icon</string>
+    <string name="email_icon">Email Icon</string>
+    <string name="cart_icon">Cart Icon</string>
+    <string name="password_icon">Password Icon</string>
+
+
+    <string-array name="genders">
+        <item>الجنس</item>
+        <item>ذكر</item>
+        <item>انثي</item>
+    </string-array>
+    <string-array name="types">
+        <item>النوع</item>
+        <item>عميل</item>
+        <item>تاجر</item>
+        <item>مشرف</item>
+    </string-array>
+    <string-array name="categories">
+        <item>تجميل</item>
+        <item>إلكترونيات</item>
+        <item>غذاء</item>
+        <item>أدوات منزلية</item>
+    </string-array>
+
+    <string-array name="Days">
+        <item>1 يوم</item>
+        <item>2 أيام</item>
+        <item>3 أيام</item>
+        <item>4 أيام</item>
+        <item>5 أيام</item>
+        <item>6 أيام</item>
+        <item>7 أيام</item>
+        <item>8 أيام</item>
+        <item>9 أيام</item>
+        <item>10 أيام</item>
+    </string-array>
+
+
+</resources>

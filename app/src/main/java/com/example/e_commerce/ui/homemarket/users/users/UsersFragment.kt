@@ -10,12 +10,13 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.e_commerce.Constants.USER_MODEL
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.UsersRecyclerAdapter
 import com.example.e_commerce.databinding.FragmentUsersBinding
 import com.example.e_commerce.pojo.UserModel
-import com.example.e_commerce.ui.homemarket.users.ProfileFragment
 import com.example.e_commerce.ui.homemarket.users.newuser.NewUserFragment
+import com.example.e_commerce.ui.homemarket.users.profile.ProfileFragment
 import com.example.e_commerce.utils.ToastyUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,16 +49,16 @@ class UsersFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_users, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE
-        setOnClickOnItemOfRecycler()
-        binding.usersRecyclerAdapter = usersRecyclerAdapter
-        setOnClickOnAddButton()
-        observeErrorMessage()
-        setOnClickOnBack()
+    ): View {
+        activity!!.findViewById<RelativeLayout>(R.id.relative1_homeActivity).visibility = View.VISIBLE //Set Activity's RelativeLayout VISIBLE
+        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_users, container, false) //Initialize binding
+        binding.lifecycleOwner = this  //Set lifecycleOwner
+        binding.viewModel = viewModel  //Set Variable Of ViewModel (DataBinding)
+        setOnClickOnItemOfRecycler()   //Set On Click On Recycler Item
+        binding.usersRecyclerAdapter = usersRecyclerAdapter //Set Variable Of usersRecyclerAdapter (DataBinding)
+        setOnClickOnAddButton()        //Set On Click On Add Button
+        observeErrorMessage()          //Observe Error Message That Appears On EditTexts
+        setOnClickOnBack()             //Set On Press Back
 
 
         return binding.root
@@ -74,8 +75,8 @@ class UsersFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
-                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT)
-                viewModel._error.value = null
+                ToastyUtil.errorToasty(context!!, it, Toast.LENGTH_SHORT) //Toast Error Message
+                viewModel.errorMessage.value = null
             }
         }
     }
@@ -84,7 +85,7 @@ class UsersFragment : Fragment() {
         usersRecyclerAdapter.setOnItemClickListener(object : UsersRecyclerAdapter.OnClickOnItem{
             override fun onClick1(userModel: UserModel) {
                 val args = Bundle()
-                args.putSerializable("userModel", userModel)
+                args.putSerializable(USER_MODEL, userModel)
                 val profileFragment = ProfileFragment()
                 profileFragment.arguments = args
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
@@ -98,11 +99,12 @@ class UsersFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshData()
+        viewModel.refreshData() //Refresh Data
     }
 
     private fun setOnClickOnAddButton() {
         binding.addFloatingButtonUsersFragment.setOnClickListener {
+            //Replace NewUserFragment
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.flFragment, NewUserFragment())
             transaction.addToBackStack(null)

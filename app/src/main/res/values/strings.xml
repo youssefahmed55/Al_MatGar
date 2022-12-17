@@ -1,8 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">E-Commerce</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="TheShop">The Shop</string>
+    <string name="app_name">المتجر</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in">Sign in</string>
     <string name="appicon">AppIcon</string>
@@ -39,25 +37,18 @@
     <string name="price">Price</string>
     <string name="brand">Brand</string>
     <string name="qty">QTY</string>
-    <string name="check_out">Check out</string>
     <string name="FullName_Is_Required">FullName Is Required</string>
     <string name="Email_Is_Required">Email Is Required</string>
     <string name="Phone_Number_Is_Required">Phone Number Is Required</string>
     <string name="Password_Is_Required">Password Is Required</string>
     <string name="Confirm_Password_Is_Required">Confirm Password Is Required</string>
     <string name="Password_Donot_match">Password Don\'t match</string>
-    <string name="you_also_can_sign_up_with">You also can sign up with</string>
     <string name="google">Google</string>
     <string name="you_also_can_sign_in_with">You also can sign in with</string>
     <string name="estimated_delivery_Days">Estimated Delivery Days :</string>
-    <string name="clothes">Clothes</string>
-    <string name="your_cart">Your Cart</string>
-    <string name="your_orders_process">Your orders Process</string>
     <string name="your_orders_in_cart">Your Orders In Cart</string>
     <string name="next">Next</string>
-    <string name="orders_purchased">Orders Purchased</string>
     <string name="date">Date:</string>
-    <string name="order_purchased">Order Purchased</string>
     <string name="ship_to">Ship to</string>
     <string name="your_shipping_details">Your shipping details</string>
     <string name="receiver_name">Receiver Name</string>
@@ -76,7 +67,6 @@
     <string name="new_user">New User</string>
     <string name="address">Address</string>
     <string name="create_user">Create User</string>
-    <string name="favorite">Favorite</string>
     <string name="houseware">HouseWare</string>
     <string name="my_products">My Products</string>
     <string name="products">Products</string>
@@ -109,9 +99,6 @@
     <string name="Type_Is_Required">Type Is Required</string>
     <string name="Birthday_Is_Required">Birthday Is Required</string>
     <string name="Location_Is_Required">Location Is Required</string>
-    <string name="Customer">Customer</string>
-    <string name="Merchant">Merchant</string>
-    <string name="Admin">Admin</string>
     <string name="Created_Account_Successfully">Created Account Successfully</string>
     <string name="add_product">Add Product</string>
     <string name="name_of_your_product">Name of your product :</string>
@@ -136,8 +123,8 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="wish_you_have_a_good_day">Wish you have a good day</string>
-    <string name="welcome_back">Welcome Back,</string>
-    <string name="welcome">Welcome,</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="welcome">Welcome</string>
     <string name="no_data">No Data</string>
     <string name="quantity">Quantity</string>
     <string name="favorites_and_order_details">Favorites and order Details</string>
@@ -149,6 +136,39 @@
     <string name="done">Done</string>
     <string name="Do_You_Want_To_Cancel_This_Order">Do You Want To Cancel This Order?</string>
     <string name="Do_You_Want_To_Complete_This_Order">Do You Want To Complete This Order?</string>
+    <string name="Added_To_Cart">Added To Cart</string>
+    <string name="start_shopping">Start shopping</string>
+    <string name="cart_is_empty">Cart Is Empty</string>
+    <string name="This_section_requires_that_you_be_signed_in_Do_You_Want_To_Sign_In_Now">This section requires that you be signed in, Do You Want To Sign In Now?</string>
+    <string name="You_Have_A_New_Order">You Have A New Order</string>
+    <string name="requested_a_new_order_From_You">requested a new order from you 😀</string>
+    <string name="Product_Name">Product Name</string>
+    <string name="electronics">Electronics</string>
+    <string name="change_password">Change Password</string>
+    <string name="Please_Sign_Out_Then_Sign_In_And_Try_Again">Error : Please Sign Out Then Sign In And Try Again</string>
+    <string name="Are_you_sure_that_you_want_to_delete_it">Are you sure that you want to delete it ?</string>
+    <string name="logout_image">Logout Image</string>
+    <string name="close_icon">Close Icon</string>
+    <string name="gender_icon">Gender Icon</string>
+    <string name="arrow">Arrow</string>
+    <string name="slider_image">Slider Image</string>
+    <string name="product_image">Product Image</string>
+    <string name="delete_icon">Delete Icon</string>
+    <string name="favorite_icon">Favorite Icon</string>
+    <string name="user_icon">User Icon</string>
+    <string name="phone_icon">Phone Icon</string>
+    <string name="location_icon">Location Icon</string>
+    <string name="status_image">Status Image</string>
+    <string name="minus_icon">Minus Icon</string>
+    <string name="plus_icon">Plus Icon</string>
+    <string name="category_image">Category Image</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="empty_cart_icon">Empty Cart Icon</string>
+    <string name="google_icon">Google Icon</string>
+    <string name="calender_icon">Calender Icon</string>
+    <string name="email_icon">Email Icon</string>
+    <string name="cart_icon">Cart Icon</string>
+    <string name="password_icon">Password Icon</string>
 
 
     <string-array name="genders">
@@ -164,7 +184,7 @@
     </string-array>
     <string-array name="categories">
         <item>Beauty</item>
-        <item>Clothes</item>
+        <item>Electronics</item>
         <item>Food</item>
         <item>HouseWare</item>
     </string-array>

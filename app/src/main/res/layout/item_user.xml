@@ -7,40 +7,42 @@
          name="user"
          type="com.example.e_commerce.pojo.UserModel" />
     </data>
-
+    <!-- CardView -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_5sdp"
         android:background="@color/itemBackgroundColor"
         android:layout_margin="@dimen/_5sdp">
-
+        <!-- LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/_10sdp">
-
+            <!-- CardView -->
             <androidx.cardview.widget.CardView
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 app:cardCornerRadius="@dimen/_40sdp">
-
+                <!-- ImageView Appears Profile Image -->
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
                     imageUrl="@{user.image}"
+                    android:contentDescription="@string/profile_image"
                     app:srcCompat="@drawable/person_image" />
             </androidx.cardview.widget.CardView>
 
+            <!-- LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="vertical">
-
+                <!-- TextView -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -51,18 +53,22 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/black"
                     />
+
+                <!-- LinearLayout -->
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
                    android:layout_marginTop="@dimen/_5sdp"
                    >
-
+                   <!-- ImageView -->
                    <ImageView
                        android:layout_width="@dimen/_15sdp"
                        android:layout_height="@dimen/_15sdp"
                        app:srcCompat="@drawable/user2"
+                       android:contentDescription="@string/user_icon"
                        />
+                   <!-- TextView -->
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -75,10 +81,6 @@
                        android:textColor="@color/green"
                        />
                </LinearLayout>
-
-
-
-
 
             </LinearLayout>
 
