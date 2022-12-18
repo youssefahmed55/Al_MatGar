@@ -17,7 +17,10 @@
 - Using View Binding And Data Binding
 - Using Firebase Services
 - Improve marketing communication between Merchants And Customers
-
+- Discover/Explore the prices of merchants' products
+- Find out the offers available for the products
+- Order the product from the merchant
+- Follow up on the status of order
 
 ## Table of Contents
 
