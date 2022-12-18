@@ -284,7 +284,7 @@ __________________
 
 - Customer/User
 
-https://user-images.githubusercontent.com/99625111/208281887-ccdf2da7-23e4-4860-9c97-c4113ded687c.mp4
+https://user-images.githubusercontent.com/99625111/208282252-33893278-4012-414b-a711-97d4d8fe7a4e.mp4
 
 - Merchant
 
