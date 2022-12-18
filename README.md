@@ -280,14 +280,23 @@ __________________
 ![New User](https://user-images.githubusercontent.com/99625111/208276322-2288baa8-4017-4faf-8f63-27d320991f2f.png)
 
 
-
 ## View a video showing the app
 
+- Customer/User
 
+https://user-images.githubusercontent.com/99625111/208281887-ccdf2da7-23e4-4860-9c97-c4113ded687c.mp4
+
+- Merchant
+
+https://user-images.githubusercontent.com/99625111/208281966-bd78f7e4-3732-4ebc-9355-7f802a494726.mp4
+
+- Admin
+
+https://user-images.githubusercontent.com/99625111/208282013-d98b2860-9392-42e2-be02-6529499e7372.mp4
 
 
 ## Download Apk And Contact
 
-- Apk : 
+- Apk : https://www.mediafire.com/file/12jfrnf8z50q2k6/Al_MatGar.apk/file
 
-- Contact : youssefahmed505505@gmail.com
+- Contact : youssefahmed505505@gmail.com or joussefahmed2012@gmail.com
