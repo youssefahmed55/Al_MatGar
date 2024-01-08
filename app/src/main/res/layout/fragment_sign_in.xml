@@ -50,7 +50,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/sign_in_to_your_account"
             android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/black"
+            android:textColor = "?android:textColorPrimary"
             android:textSize="@dimen/_13ssp"
 
             />
@@ -225,7 +225,7 @@
                 android:textSize="@dimen/_13ssp"
                 android:text="@string/sign_up"
                 canClickable="@{viewModel.states}"
-                android:textColor="@color/black"
+                android:textColor = "?android:textColorPrimary"
                 android:fontFamily="@font/poppins_bold" />
             <!-- View -->
             <View

@@ -77,7 +77,7 @@ class SignInFragment : Fragment() {
                 .requestEmail()
                 .build()
 
-            val signInIntent: Intent = GoogleSignIn.getClient(context!!, gso).signInIntent
+            val signInIntent: Intent = GoogleSignIn.getClient(requireContext(), gso).signInIntent
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
         }
 
@@ -99,7 +99,7 @@ class SignInFragment : Fragment() {
                 account.idToken?.let { viewModel.firebaseAuthWithGoogle(it) }
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                ToastyUtil.errorToasty(context!!,"Google sign in failed: ${e.message}",Toast.LENGTH_SHORT) //Toast Error Message
+                ToastyUtil.errorToasty(requireContext(),"Google sign in failed: ${e.message}",Toast.LENGTH_SHORT) //Toast Error Message
                 Log.w(TAG, "Google sign in failed", e)
             }
         }
@@ -110,13 +110,13 @@ class SignInFragment : Fragment() {
             viewModel.states.collect{
                 when(it){
                     is DefaultStates.Success -> {
-                        ToastyUtil.successToasty(context!!,it.toastMessage,Toast.LENGTH_SHORT) //Toast Successful Message
+                        ToastyUtil.successToasty(requireContext(),it.toastMessage,Toast.LENGTH_SHORT) //Toast Successful Message
                         activity?.startActivity(Intent(activity, HomeActivity::class.java)) //Intent To HomeActivity
                         activity?.finish() //Finish Activity
                     }
                     is DefaultStates.Error -> {
                         Log.d(TAG, "render: Error ${it.error}")
-                        ToastyUtil.errorToasty(context!!,it.error,Toast.LENGTH_SHORT) //Toast Error Message
+                        ToastyUtil.errorToasty(requireContext(),it.error,Toast.LENGTH_SHORT) //Toast Error Message
                     }
 
                     else -> {}
@@ -143,6 +143,7 @@ class SignInFragment : Fragment() {
             when(it){
                 R.string.Email_Is_Required -> binding.editTextEmailSignIn.error =  getString(it)
                 R.string.Password_Is_Required -> binding.editTextPasswordSignIn.error =  getString(it)
+                R.string.no_data_exists -> {binding.editTextEmailSignIn.error =  getString(it); binding.editTextPasswordSignIn.error =  getString(it) }
             }
         }
     }

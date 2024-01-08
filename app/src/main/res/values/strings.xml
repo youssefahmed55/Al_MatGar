@@ -169,6 +169,7 @@
     <string name="email_icon">Email Icon</string>
     <string name="cart_icon">Cart Icon</string>
     <string name="password_icon">Password Icon</string>
+    <string name="no_data_exists">No Data Exists</string>
 
 
     <string-array name="genders">

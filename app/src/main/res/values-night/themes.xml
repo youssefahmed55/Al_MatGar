@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">@color/green</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/green</item>
-
+        <item name="android:textColorPrimary">@color/white</item>
         <!-- Defining that new color in ColorPrimaryDark -->
         <item name="colorPrimaryDark">@color/green</item>
         <item name="colorAccent">@color/green</item>
